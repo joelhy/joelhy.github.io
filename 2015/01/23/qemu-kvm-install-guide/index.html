@@ -1,0 +1,593 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>KVM安装配置 | Carpe Diem.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="joelhy">
+    
+
+    
+    <meta name="description" content="KVM虚拟化技术介绍概述KVM是基于内核的虚拟化技术（Kernel-based Virtual Machine），于2007年的Linux 2.6.20被合并进Linux内核。KVM要求CPU支持硬件虚拟化技术，即Intel的VT-x或AMD的AMD-V。KVM相对裸机有2%以内的性能损耗，XEN相对裸机有2.5%的性能损耗。由于XEN需要修改Linux内核，而KVM是集成到每个Linux内核的、">
+<meta name="keywords" content="虚拟化技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KVM安装配置">
+<meta property="og:url" content="http://yoursite.com/2015/01/23/qemu-kvm-install-guide/index.html">
+<meta property="og:site_name" content="Carpe Diem.">
+<meta property="og:description" content="KVM虚拟化技术介绍概述KVM是基于内核的虚拟化技术（Kernel-based Virtual Machine），于2007年的Linux 2.6.20被合并进Linux内核。KVM要求CPU支持硬件虚拟化技术，即Intel的VT-x或AMD的AMD-V。KVM相对裸机有2%以内的性能损耗，XEN相对裸机有2.5%的性能损耗。由于XEN需要修改Linux内核，而KVM是集成到每个Linux内核的、">
+<meta property="og:image" content="http://upload.wikimedia.org/wikipedia/commons/4/40/Kernel-based_Virtual_Machine.svg">
+<meta property="og:image" content="http://yoursite.com/img/QEMU-centos7_demo-TigerVNC.png">
+<meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KVM安装配置">
+<meta name="twitter:description" content="KVM虚拟化技术介绍概述KVM是基于内核的虚拟化技术（Kernel-based Virtual Machine），于2007年的Linux 2.6.20被合并进Linux内核。KVM要求CPU支持硬件虚拟化技术，即Intel的VT-x或AMD的AMD-V。KVM相对裸机有2%以内的性能损耗，XEN相对裸机有2.5%的性能损耗。由于XEN需要修改Linux内核，而KVM是集成到每个Linux内核的、">
+<meta name="twitter:image" content="http://upload.wikimedia.org/wikipedia/commons/4/40/Kernel-based_Virtual_Machine.svg">
+<meta name="twitter:creator" content="@joelhy">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Carpe Diem." title="Carpe Diem."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/01/23/qemu-kvm-install-guide/" title="KVM安装配置" itemprop="url">KVM安装配置</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
+		
+  <p class="article-time">
+    <time datetime="2015-01-23T08:14:25.000Z" itemprop="datePublished"> Published 2015-01-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#KVM虚拟化技术介绍"><span class="toc-number">1.</span> <span class="toc-text">KVM虚拟化技术介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#架构说明"><span class="toc-number">1.2.</span> <span class="toc-text">架构说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KVM与virtualbox等的区别"><span class="toc-number">1.3.</span> <span class="toc-text">KVM与virtualbox等的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作接口"><span class="toc-number">1.4.</span> <span class="toc-text">操作接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装说明"><span class="toc-number">2.</span> <span class="toc-text">安装说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统要求"><span class="toc-number">2.1.</span> <span class="toc-text">系统要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装KVM"><span class="toc-number">2.2.</span> <span class="toc-text">安装KVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭SELINUX防火墙"><span class="toc-number">2.3.</span> <span class="toc-text">关闭SELINUX防火墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络配置"><span class="toc-number">2.4.</span> <span class="toc-text">网络配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置桥接网络"><span class="toc-number">2.4.1.</span> <span class="toc-text">配置桥接网络</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装guest虚拟机"><span class="toc-number">2.5.</span> <span class="toc-text">安装guest虚拟机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机管理命令"><span class="toc-number">3.</span> <span class="toc-text">虚拟机管理命令</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="KVM虚拟化技术介绍"><a href="#KVM虚拟化技术介绍" class="headerlink" title="KVM虚拟化技术介绍"></a>KVM虚拟化技术介绍</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>KVM是基于内核的虚拟化技术（Kernel-based Virtual Machine），于2007年的Linux 2.6.20被合并进Linux内核。KVM要求CPU支持硬件虚拟化技术，即Intel的VT-x或AMD的AMD-V。<br>KVM相对裸机有<a href="https://major.io/2014/06/22/performance-benchmarks-kvm-vs-xen/" target="_blank" rel="external">2%</a>以内的性能损耗，XEN相对裸机有<a href="https://major.io/2014/06/22/performance-benchmarks-kvm-vs-xen/" target="_blank" rel="external">2.5%</a>的性能损耗。由于XEN需要修改Linux内核，而KVM是集成到每个Linux内核的、KVM相对XEN更加易用等原因，<a href="http://www.ibm.com/developerworks/cn/linux/l-using-kvm/" target="_blank" rel="external">KVM已经成为大多数Linux系统的推荐默认虚拟化机制</a>。<br>KVM只能完成CPU的虚拟化，而完整的硬件环境还需要网络、硬盘、键盘、鼠标等IO环境，这些硬件环境的模拟是通过QEMU-KVM完成的。</p>
+<h3 id="架构说明"><a href="#架构说明" class="headerlink" title="架构说明"></a>架构说明</h3><p>下图为<a href="http://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine" target="_blank" rel="external">维基百科</a>上的架构说明<br><img src="http://upload.wikimedia.org/wikipedia/commons/4/40/Kernel-based_Virtual_Machine.svg" alt=""></p>
+<h3 id="KVM与virtualbox等的区别"><a href="#KVM与virtualbox等的区别" class="headerlink" title="KVM与virtualbox等的区别"></a>KVM与virtualbox等的区别</h3><p>KVM适合于服务端的虚拟化，图形显示能力差，但是CPU的利用效率高；virtualbox图形支持较好，支持2D、3D加速。<br><a href="https://wiki.archlinux.org/index.php/libvirt_(简体中文)" target="_blank" rel="external"><em>注意：KVM与VirtualBox有冲突，二者不能同时使用</em></a></p>
+<h3 id="操作接口"><a href="#操作接口" class="headerlink" title="操作接口"></a>操作接口</h3><p>KVM可通过libvirt这个通用的虚拟机管理库进行管理，使用libvirt的客户端有：命令行下的virsh和GUI下的virt-manager。</p>
+<h2 id="安装说明"><a href="#安装说明" class="headerlink" title="安装说明"></a>安装说明</h2><h3 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h3><p>CPU支持硬件虚拟化，有的需要在BIOS中的CPU设置启用虚拟化，在BIOS中的英文通常为virtualization，如果是disabled状态要改成enabled状态。<br>Linux上查看是否支持虚拟化的方式有：</p>
+<ol>
+<li><code>$ lscpu</code>，输出的文本中带<code>Virtualization:        VT-x</code>或<code>Virtualization:        AMD-V</code>即说明支持硬件虚拟化，否则不支持</li>
+<li><code>$ grep -E &quot;(vmx|svm|0xc0f)&quot; --color=always /proc/cpuinfo</code>，如果没有匹配的内容则说明不支持硬件虚拟化，有匹配的内容说明支持硬件虚拟化</li>
+</ol>
+<h3 id="安装KVM"><a href="#安装KVM" class="headerlink" title="安装KVM"></a>安装KVM</h3><p><em>本安装说明以CentOS 7为例</em><br>假定CentOS 7 ISO安装文件已下载，并存储于路径/home/kvm/iso/CentOS-7.0-1406-x86_64-Minimal.iso<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# yum -y install qemu-kvm libvirt virt-install bridge-utils</div><div class="line">[root@localhost ~]# lsmod | grep kvm # make sure modules are loaded</div><div class="line">kvm_intel             138567  0 </div><div class="line">kvm                   441119  1 kvm_intel</div><div class="line">[root@localhost ~]# systemctl start libvirtd  # 启动libvirt服务</div><div class="line">[root@localhost ~]# systemctl enable libvirtd  # 启用libvirt服务</div></pre></td></tr></table></figure></p>
+<p>安装完后，运行<code>virsh -c qemu:///system list</code>，用于检查KVM是否安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# virsh -c qemu:///system list</div><div class="line">Id Name                 State</div><div class="line">----------------------------------</div></pre></td></tr></table></figure></p>
+<p>如果没有报错即是安装成功</p>
+<h3 id="关闭SELINUX防火墙"><a href="#关闭SELINUX防火墙" class="headerlink" title="关闭SELINUX防火墙"></a>关闭SELINUX防火墙</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# sed -i &apos;s/=enforcing/=disabled/g&apos; /etc/selinux/config</div></pre></td></tr></table></figure>
+<h3 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h3><p>安装完后，libvirt 会创建一个名为virbr0的 NAT 网络。我们测试时通常需要虚拟机具有单独的IP，而KVM只提供了NAT，桥接两种网络连接方式，故为了实现单独IP我们需要使用桥接网络。</p>
+<h4 id="配置桥接网络"><a href="#配置桥接网络" class="headerlink" title="配置桥接网络"></a>配置桥接网络</h4><p>注意，通常桥接网络的配置指的是在有线网卡上进行的配置，无线网卡鉴于安全因素不建议配置桥接网络，无线网卡的桥接配置也比较复杂，远没达到实用阶段。<br>假设宿主机上的有线网卡为enps30(可通过<code>ip addr show</code>命令查看网卡的名称)，则需要把enp3s0网卡的配置改成如下内容，并添加ifcfg-br0文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# cd /etc/sysconfig/network-scripts</div><div class="line">[root@localhost network-scripts]# bash -c &apos;cat &gt; ifcfg-enp3s0 &lt;&lt; EOF</div><div class="line">DEVICE=enp3s0</div><div class="line">TYPE=Ethernet</div><div class="line">ONBOOT=yes</div><div class="line">BRIDGE=br0</div><div class="line">EOF&apos;</div><div class="line">[root@localhost network-scripts]# bash -c &apos;cat &gt; ifcfg-br0 &lt;&lt; EOF</div><div class="line">TYPE=Bridge</div><div class="line">BOOTPROTO=none</div><div class="line">DEVICE=br0</div><div class="line">ONBOOT=yes</div><div class="line">IPADDR0=192.168.71.47</div><div class="line">PREFIX0=24</div><div class="line">GATEWAY0=192.168.71.1</div><div class="line">EOF&apos;</div></pre></td></tr></table></figure></p>
+<p>IPADDR0和GATEWAY0需要根据实际情况调整<br>配置完成后，需要运行<code>systemctl restart network</code>重启网络</p>
+<h3 id="安装guest虚拟机"><a href="#安装guest虚拟机" class="headerlink" title="安装guest虚拟机"></a>安装guest虚拟机</h3><p>首先运行如下命令，查看kvm支持的guest虚拟机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# virt-install --os-variant=list</div><div class="line">win7                 : Microsoft Windows 7</div><div class="line">vista                : Microsoft Windows Vista</div><div class="line">winxp64              : Microsoft Windows XP (x86_64)</div><div class="line">winxp                : Microsoft Windows XP</div><div class="line">win2k                : Microsoft Windows 2000</div><div class="line">win2k8               : Microsoft Windows Server 2008</div><div class="line">win2k3               : Microsoft Windows Server 2003</div><div class="line">openbsd4             : OpenBSD 4.x</div><div class="line">freebsd8             : FreeBSD 8.x</div><div class="line">freebsd7             : FreeBSD 7.x</div><div class="line">freebsd6             : FreeBSD 6.x</div><div class="line">solaris9             : Sun Solaris 9</div><div class="line">solaris10            : Sun Solaris 10</div><div class="line">opensolaris          : Sun OpenSolaris</div><div class="line">netware6             : Novell Netware 6</div><div class="line">netware5             : Novell Netware 5</div><div class="line">netware4             : Novell Netware 4</div><div class="line">msdos                : MS-DOS</div><div class="line">generic              : Generic</div><div class="line">debianwheezy         : Debian Wheezy</div><div class="line">debiansqueeze        : Debian Squeeze</div><div class="line">debianlenny          : Debian Lenny</div><div class="line">debianetch           : Debian Etch</div><div class="line">fedora19             : Fedora 19</div><div class="line">fedora18             : Fedora 18</div><div class="line">fedora17             : Fedora 17</div><div class="line">fedora16             : Fedora 16</div><div class="line">fedora15             : Fedora 15</div><div class="line">fedora14             : Fedora 14</div><div class="line">fedora13             : Fedora 13</div><div class="line">fedora12             : Fedora 12</div><div class="line">fedora11             : Fedora 11</div><div class="line">fedora10             : Fedora 10</div><div class="line">fedora9              : Fedora 9</div><div class="line">fedora8              : Fedora 8</div><div class="line">fedora7              : Fedora 7</div><div class="line">fedora6              : Fedora Core 6</div><div class="line">fedora5              : Fedora Core 5</div><div class="line">mageia1              : Mageia 1 and later</div><div class="line">mes5.1               : Mandriva Enterprise Server 5.1 and later</div><div class="line">mes5                 : Mandriva Enterprise Server 5.0</div><div class="line">mandriva2010         : Mandriva Linux 2010 and later</div><div class="line">mandriva2009         : Mandriva Linux 2009 and earlier</div><div class="line">rhel7                : Red Hat Enterprise Linux 7</div><div class="line">rhel6                : Red Hat Enterprise Linux 6</div><div class="line">rhel5.4              : Red Hat Enterprise Linux 5.4 or later</div><div class="line">rhel5                : Red Hat Enterprise Linux 5</div><div class="line">rhel4                : Red Hat Enterprise Linux 4</div><div class="line">rhel3                : Red Hat Enterprise Linux 3</div><div class="line">rhel2.1              : Red Hat Enterprise Linux 2.1</div><div class="line">sles11               : Suse Linux Enterprise Server 11</div><div class="line">sles10               : Suse Linux Enterprise Server</div><div class="line">opensuse12           : openSuse 12</div><div class="line">opensuse11           : openSuse 11</div><div class="line">ubuntusaucy          : Ubuntu 13.10 (Saucy Salamander)</div><div class="line">ubunturaring         : Ubuntu 13.04 (Raring Ringtail)</div><div class="line">ubuntuquantal        : Ubuntu 12.10 (Quantal Quetzal)</div><div class="line">ubuntuprecise        : Ubuntu 12.04 LTS (Precise Pangolin)</div><div class="line">ubuntuoneiric        : Ubuntu 11.10 (Oneiric Ocelot)</div><div class="line">ubuntunatty          : Ubuntu 11.04 (Natty Narwhal)</div><div class="line">ubuntumaverick       : Ubuntu 10.10 (Maverick Meerkat)</div><div class="line">ubuntulucid          : Ubuntu 10.04 LTS (Lucid Lynx)</div><div class="line">ubuntukarmic         : Ubuntu 9.10 (Karmic Koala)</div><div class="line">ubuntujaunty         : Ubuntu 9.04 (Jaunty Jackalope)</div><div class="line">ubuntuintrepid       : Ubuntu 8.10 (Intrepid Ibex)</div><div class="line">ubuntuhardy          : Ubuntu 8.04 LTS (Hardy Heron)</div><div class="line">virtio26             : Generic 2.6.25 or later kernel with virtio</div><div class="line">generic26            : Generic 2.6.x kernel</div><div class="line">generic24            : Generic 2.4.x kernel</div></pre></td></tr></table></figure></p>
+<p>guest OS 以CentOS 7的安装，列表中没有centos7，用其上游发行版rhel7代替<br>运行如下命令安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost kvm]# virt-install --connect qemu:///system -n centos7_demo \</div><div class="line">    -r 512 --vcpus=4 --disk path=/home/kvm/images/centos7_demo.img,size=15 \</div><div class="line">    --graphics vnc,listen=0.0.0.0 --noautoconsole --os-type linux \</div><div class="line">    --os-variant rhel7 --accelerate --network=bridge:br0 --hvm \</div><div class="line">    --cdrom /home/kvm/iso/CentOS-7.0-1406-x86_64-Minimal.iso</div></pre></td></tr></table></figure></p>
+<p>参数说明：</p>
+<ul>
+<li><code>--connect qemu:///system</code> 连接到本地系统上的KVM，也可以连接到其他主机上的KVM</li>
+<li><code>-n centos7_demo</code> 虚拟机的名称，这个例子中叫 centos7_demo</li>
+<li><code>-r 512</code> 分配给虚拟机的内存，此处为512M</li>
+<li><code>-vcpus=4</code> 虚拟CPU个数：2 </li>
+<li><code>--disk path=/home/kvm/images/centos7_demo.img,size=15</code> 虚拟机磁盘镜像文件存储路径，存储目录必须是已经存在的目录，文件大小为10GB</li>
+<li><code>--graphics vnc,listen=0.0.0.0</code> 图形化访问虚拟机的方式：通过VNC协议。也可以使用效率更高的spice协议，spice协议支持音频和USB设备，不过配置较为复杂</li>
+<li><code>--noautoconsole</code> 不自动连接到控制台</li>
+<li><code>--os-type linux</code> 操作系统类型，如果是Windows操作系统，则是windows</li>
+<li><code>--os-variant rehel7</code> guest操作系统类型，即上面<code>virt-install --os-variant=list</code>中显示的</li>
+<li><code>--accelerate</code> 使用硬件加速</li>
+<li><code>--network=bridge:br0</code>  使用类型为桥接的br0网卡</li>
+<li><code>–hvm</code> 全虚拟化</li>
+<li><code>--cdrom</code> /home/kvm/iso/CentOS-7.0-1406-x86_64-Minimal.iso ISO安装文件的存储路径</li>
+</ul>
+<p>该命令执行后，我们需要使用VNC客户端连接到安装控制台上<br>查看本地的VNC连接地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# virsh vncdisplay centos7_demo</div><div class="line">:0</div></pre></td></tr></table></figure></p>
+<p><code>:0</code>代表第一个屏幕，VNC的默认连接端口为5900，<code>:0</code>即端口5900，如果是<code>:1</code>则端口是5901，<code>:2</code>端口是5902，以此类推。支持VNC的客户端有TightVNC，TigerVNC，realvnc等。本文使用的是tigervnc。</p>
+<p>开放防火墙访问vnc端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# firewall-cmd --zone=public --add-port=5900/tcp --permanent</div><div class="line">[root@localhost ~]# firewall-cmd --reload</div></pre></td></tr></table></figure></p>
+<p>从另一台支持图形化界面的主机连接到guest虚拟机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">joelhy@arminix: ~ $ vncviewer 192.168.71.47::5900</div></pre></td></tr></table></figure></p>
+<p>其中，192.168.71.47为KVM宿主机的IP地址，5900是根据上面vncdisplay结果得到的端口，也可以用<code>vncviewer 192.168.71.47:0</code>访问。192.168.71.47需要改成实际使用的IP。</p>
+<p>运行vncviewer命令后会打开如下图形化窗口<br><img src="/img/QEMU-centos7_demo-TigerVNC.png" alt="VNC客户端"><br>在此VNC图形化窗口中即可完成安装</p>
+<h2 id="虚拟机管理命令"><a href="#虚拟机管理命令" class="headerlink" title="虚拟机管理命令"></a>虚拟机管理命令</h2><p>virsh 命令提供了操作虚拟机的一系列命令：</p>
+<ol>
+<li><strong>virsh list –all</strong> 获取虚拟机列表</li>
+<li><strong>virsh dominfo {servername}</strong> 获取虚拟机信息</li>
+<li><strong>virsh shutdown {servername}</strong> 关闭虚拟机</li>
+<li><strong>virsh reboot {servername}</strong> 重启虚拟机</li>
+<li><strong>virsh start {servername}</strong> 启动虚拟机</li>
+<li><strong>virsh undefine {servername}</strong> 删除虚拟机定义文件，即删除/etc/libvirt/qemu目录下相应的xml文件，注意_这个命令并不会删除磁盘img文件，磁盘img文件需要手动删除</li>
+<li><strong>virsh edit {servername}</strong> 编辑虚拟机配置文件，即修改虚拟机的内存、CPU以及VNC连接端口等配置</li>
+<li><strong>virt-clone -o {old_servername} -n {new_servername} -f /path/to/img/file.img</strong> 复制虚拟机，复制完成后需要登录进虚拟机更改IP地址、hostname</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/虚拟化技术/">虚拟化技术</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"1744486440"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2133502" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/01/27/FastDFS-v5-06-deploy/" title="FastDFS v5.06 部署">
+  <strong>上一篇：</strong><br/>
+  <span>
+  FastDFS v5.06 部署</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/01/23/centos7-minimal-install/"  title="CentOS 7 最小化安装">
+ <strong>下一篇：</strong><br/> 
+ <span>CentOS 7 最小化安装
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#KVM虚拟化技术介绍"><span class="toc-number">1.</span> <span class="toc-text">KVM虚拟化技术介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#架构说明"><span class="toc-number">1.2.</span> <span class="toc-text">架构说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KVM与virtualbox等的区别"><span class="toc-number">1.3.</span> <span class="toc-text">KVM与virtualbox等的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作接口"><span class="toc-number">1.4.</span> <span class="toc-text">操作接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装说明"><span class="toc-number">2.</span> <span class="toc-text">安装说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统要求"><span class="toc-number">2.1.</span> <span class="toc-text">系统要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装KVM"><span class="toc-number">2.2.</span> <span class="toc-text">安装KVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭SELINUX防火墙"><span class="toc-number">2.3.</span> <span class="toc-text">关闭SELINUX防火墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络配置"><span class="toc-number">2.4.</span> <span class="toc-text">网络配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置桥接网络"><span class="toc-number">2.4.1.</span> <span class="toc-text">配置桥接网络</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装guest虚拟机"><span class="toc-number">2.5.</span> <span class="toc-text">安装guest虚拟机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机管理命令"><span class="toc-number">3.</span> <span class="toc-text">虚拟机管理命令</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="joelhy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ArchLinux/" title="ArchLinux">ArchLinux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MariaDB/" title="MariaDB">MariaDB<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cryptography/" title="Cryptography">Cryptography<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GBK/" title="GBK">GBK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Composer/" title="Composer">Composer<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+<div class="doubanshow">
+<p class="asidetitle">Douban Show</p>
+<div>
+<script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
+</div>
+</div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1744486440&verifier=ef05663d&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Carpe Diem. <br/>
+			by joelhy</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/g14npr" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/joelhy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/1662247" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/joelhy" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/Joelhy.Huang" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		
+		<a href="https://www.douban.com/people/joelhy" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="joelhy">joelhy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'g14npr';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c7994595385c35d684ab33f94761d2c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

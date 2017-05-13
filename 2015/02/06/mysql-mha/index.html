@@ -1,0 +1,568 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>MySQL MHA高可用架构 | Carpe Diem.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="joelhy">
+    
+
+    
+    <meta name="description" content="MHA for MySQL是MySQL的一个高可用方案，本文介绍MHA的安装配置。MHA分管理节点和数据库节点，支持一主多从、多主多从等配置，本文为一主多从方式，原理都相同，详见官方文档。可实现主库挂掉之后自动将一个从库提升为主库，并自动保持新主库和从库的一致性。 环境介绍操作系统都为CentOS 7 x86_64，数据库版本为MariaDB 10，EPEL已启用（有些依赖的软件包需要从EPEL软">
+<meta name="keywords" content="MHA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL MHA高可用架构">
+<meta property="og:url" content="http://yoursite.com/2015/02/06/mysql-mha/index.html">
+<meta property="og:site_name" content="Carpe Diem.">
+<meta property="og:description" content="MHA for MySQL是MySQL的一个高可用方案，本文介绍MHA的安装配置。MHA分管理节点和数据库节点，支持一主多从、多主多从等配置，本文为一主多从方式，原理都相同，详见官方文档。可实现主库挂掉之后自动将一个从库提升为主库，并自动保持新主库和从库的一致性。 环境介绍操作系统都为CentOS 7 x86_64，数据库版本为MariaDB 10，EPEL已启用（有些依赖的软件包需要从EPEL软">
+<meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL MHA高可用架构">
+<meta name="twitter:description" content="MHA for MySQL是MySQL的一个高可用方案，本文介绍MHA的安装配置。MHA分管理节点和数据库节点，支持一主多从、多主多从等配置，本文为一主多从方式，原理都相同，详见官方文档。可实现主库挂掉之后自动将一个从库提升为主库，并自动保持新主库和从库的一致性。 环境介绍操作系统都为CentOS 7 x86_64，数据库版本为MariaDB 10，EPEL已启用（有些依赖的软件包需要从EPEL软">
+<meta name="twitter:creator" content="@joelhy">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Carpe Diem." title="Carpe Diem."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/06/mysql-mha/" title="MySQL MHA高可用架构" itemprop="url">MySQL MHA高可用架构</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-06T09:09:22.000Z" itemprop="datePublished"> Published 2015-02-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境介绍"><span class="toc-number">1.</span> <span class="toc-text">环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装MHA"><span class="toc-number">2.</span> <span class="toc-text">安装MHA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载MHA-Node和MHA-Manager"><span class="toc-number">2.1.</span> <span class="toc-text">下载MHA Node和MHA Manager</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#下载MHA-Manager"><span class="toc-number">2.1.1.</span> <span class="toc-text">下载MHA Manager</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#下载MHA-Node"><span class="toc-number">2.1.2.</span> <span class="toc-text">下载MHA Node</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">2.2.</span> <span class="toc-text">安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH密钥登录方式设置"><span class="toc-number">3.</span> <span class="toc-text">SSH密钥登录方式设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置MHA管理节点"><span class="toc-number">4.</span> <span class="toc-text">配置MHA管理节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试节点间的SSH登录"><span class="toc-number">5.</span> <span class="toc-text">测试节点间的SSH登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查候选主库的log-bin是否都启用"><span class="toc-number">6.</span> <span class="toc-text">检查候选主库的log-bin是否都启用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查复制过滤规则"><span class="toc-number">7.</span> <span class="toc-text">检查复制过滤规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查复制配置"><span class="toc-number">8.</span> <span class="toc-text">检查复制配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动MHA-Manager"><span class="toc-number">9.</span> <span class="toc-text">启动MHA Manager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#停止MHA-Manager"><span class="toc-number">10.</span> <span class="toc-text">停止MHA Manager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试failover"><span class="toc-number">11.</span> <span class="toc-text">测试failover</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">12.</span> <span class="toc-text">参考文献</span></a></li></ol>
+		
+		</div>
+		
+		<p>MHA for MySQL是MySQL的一个高可用方案，本文介绍MHA的安装配置。MHA分管理节点和数据库节点，支持一主多从、多主多从等配置，本文为一主多从方式，原理都相同，详见<a href="https://code.google.com/p/mysql-master-ha/wiki/UseCases" target="_blank" rel="external">官方文档</a>。可实现主库挂掉之后自动将一个从库提升为主库，并自动保持新主库和从库的一致性。</p>
+<h2 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h2><p>操作系统都为CentOS 7 x86_64，数据库版本为MariaDB 10，<a href="https://fedoraproject.org/wiki/EPEL/zh-cn" target="_blank" rel="external">EPEL</a>已启用（有些依赖的软件包需要从EPEL软件仓库中下载）。 主从复制需要已经配置好。</p>
+<p>服务器详情如下：<br>主库：192.168.71.151<br>从库1：192.168.71.152<br>从库2：192.168.71.153<br>管理节点：192.168.71.154</p>
+<h2 id="安装MHA"><a href="#安装MHA" class="headerlink" title="安装MHA"></a>安装MHA</h2><p>MHA由MHA Manager和MHA Node两个软件包组成。MHA Manager运行在管理节点上，MHSA Node运行的每个数据库服务器上。MHA Node程序在需要的时候（配置检查、failover）时由MHA Manager调用。MHA Manger和MHA Node程序都是Perl语言写的。</p>
+<h3 id="下载MHA-Node和MHA-Manager"><a href="#下载MHA-Node和MHA-Manager" class="headerlink" title="下载MHA Node和MHA Manager"></a>下载MHA Node和MHA Manager</h3><p>v0.56程序可从地址 <a href="https://code.google.com/p/mysql-master-ha/wiki/Downloads?tm=2" target="_blank" rel="external">https://code.google.com/p/mysql-master-ha/wiki/Downloads?tm=2</a> 页面里提供的下载地址下载，旧版程序可从地址 <a href="http://code.google.com/p/mysql-master-ha/downloads/list" target="_blank" rel="external">http://code.google.com/p/mysql-master-ha/downloads/list</a> 下载。本文以v0.56程序为例。官网只有使用于CentOS 5和CentOS 6的rpm包，没有提供适用于CentOS 7的rpm包，经测试适用于CentOS 6的rpm包在CentOS 7也可以安装成功。</p>
+<h4 id="下载MHA-Manager"><a href="#下载MHA-Manager" class="headerlink" title="下载MHA Manager"></a>下载MHA Manager</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl http://www.mysql.gr.jp/frame/modules/bwiki/index.php\?plugin\=attach\&amp;pcmd\=open\&amp;file\=mha4mysql-manager-0.56-0.el6.noarch.rpm\&amp;refer\=matsunobu -o mha4mysql-manager-0.56-0.el6.noarch.rpm</div></pre></td></tr></table></figure>
+<h4 id="下载MHA-Node"><a href="#下载MHA-Node" class="headerlink" title="下载MHA Node"></a>下载MHA Node</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl http://www.mysql.gr.jp/frame/modules/bwiki/index.php\?plugin\=attach\&amp;pcmd\=open\&amp;file\=mha4mysql-node-0.56-0.el6.noarch.rpm\&amp;refer\=matsunobu -o mha4mysql-node-0.56-0.el6.noarch.rpm</div></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>MHA依赖一系列的软件包，MHA Node依赖软件包perl-DBD-MySQL，MHA Manager依赖perl-DBD-MySQL，perl-Config-Tiny，perl-Log-Dispatch，perl-Parallel-ForkManager。MHA Manager依赖MHA Node的一些模块，所以管理节点上也需要安装MHA Node。为自动安装MHA的依赖包，使用<code>yum localinstall</code>方式安装。<br>在所有的服务器上安装MHA Node：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum localinstall -y mha4mysql-node-0.56-0.el6.noarch.rpm</div></pre></td></tr></table></figure></p>
+<p>在管理节点(192.168.71.154)上安装MHA Manager：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum localinstall -y mha4mysql-manager-0.56-0.el6.noarch.rpm</div></pre></td></tr></table></figure></p>
+<h2 id="SSH密钥登录方式设置"><a href="#SSH密钥登录方式设置" class="headerlink" title="SSH密钥登录方式设置"></a>SSH密钥登录方式设置</h2><p>MHA Manager内部使用SSH连接到各个MySQL服务器，最新从库节点上的MHA Node也需要使用SSH (scp)把relay log文件发给各个从库节点，故需要各台服务器见需要配置SSH密钥登录方式。</p>
+<p>在服务器 192.168.71.151 上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.151</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.152</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.153</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.154</div></pre></td></tr></table></figure></p>
+<p>在服务器 192.168.71.152 上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.151</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.152</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.153</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.154</div></pre></td></tr></table></figure></p>
+<p>在服务器 192.168.71.153 上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.151</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.152</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.153</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.154</div></pre></td></tr></table></figure></p>
+<p>在服务器 192.168.71.154 上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.151</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.152</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.153</div><div class="line">ssh-copy-id -i /root/id_rsa.pub root@192.168.71.154</div></pre></td></tr></table></figure></p>
+<p>注意：<strong>MHA也是通过SSH方式登录本机操作的</strong>，故在本机上也需要执行ssh-copy-id，例如在 192.168.71.151 上也需要执行 <code>ssh-copy-id -i /root/id_rsa.pub root@192.168.71.151</code>。</p>
+<h2 id="配置MHA管理节点"><a href="#配置MHA管理节点" class="headerlink" title="配置MHA管理节点"></a>配置MHA管理节点</h2><p>以下操作在管理节点 192.168.71.154。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">mkdir -p /usr/local/mha</div><div class="line">mkdir -p /etc/mha</div><div class="line">cat &gt; /etc/mha/mha.conf &lt;&lt; EOF</div><div class="line">[server default]</div><div class="line"># mysql user and password</div><div class="line">user=joelhy</div><div class="line">password=root123</div><div class="line">ssh_user=root</div><div class="line"># working directory on the manager</div><div class="line">manager_workdir=/usr/local/mha</div><div class="line"># working directory on MySQL servers</div><div class="line">remote_workdir=/usr/local/mha</div><div class="line">repl_user=slave_user</div><div class="line">repl_password=bigs3cret</div><div class="line"></div><div class="line">[server1]</div><div class="line">hostname=192.168.71.151</div><div class="line"></div><div class="line">[server2]</div><div class="line">hostname=192.168.71.152</div><div class="line"></div><div class="line">[server3]</div><div class="line">hostname=192.168.71.153</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
+<p>repl_user帐号slave_user用于主从复制时，从库连接到主库复制数据，故有可能由从库上升为主库的都需要添加该帐号，<br>本文两个从库都作为failover时的主库候选，故除了当前主库需要 添加该帐号外，在这两个数据库节点上也需要创建slave_user帐号，即在所有的数据库节点的MariaDB shell上都需要执行如下语句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MariaDB [(none)]&gt; GRANT REPLICATION SLAVE ON *.* TO &apos;slave_user&apos;@&apos;192.168.71.%&apos; IDENTIFIED BY &apos;bigs3cret&apos;;</div><div class="line">Query OK, 0 rows affected (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>其中<em>joelhy</em>是具有管理权限的帐号，当然可以不叫<em>joelhy</em>取做其他名称，例如foo，同理也需要在各个数据库上创建该帐号。在数据库节点192.168.71.151, 192.168.71.152, 192.168.71.153上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MariaDB [(none)]&gt; GRANT ALL ON *.* TO joelhy@&apos;192.168.71.%&apos; IDENTIFIED BY &apos;root123&apos;;</div><div class="line">Query OK, 0 rows affected (0.00 sec)</div></pre></td></tr></table></figure></p>
+<h2 id="测试节点间的SSH登录"><a href="#测试节点间的SSH登录" class="headerlink" title="测试节点间的SSH登录"></a>测试节点间的SSH登录</h2><p>在管理节点 192.168.71.154 上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# masterha_check_ssh  --conf=/etc/mha/mha.conf</div><div class="line">Fri Feb  6 19:51:30 2015 - [warning] Global configuration file /etc/masterha_default.cnf not found. Skipping.</div><div class="line">Fri Feb  6 19:51:30 2015 - [info] Reading application default configuration from /etc/mha/mha.conf..</div><div class="line">Fri Feb  6 19:51:30 2015 - [info] Reading server configuration from /etc/mha/mha.conf..</div><div class="line">Fri Feb  6 19:51:30 2015 - [info] Starting SSH connection tests..</div><div class="line">Fri Feb  6 19:51:31 2015 - [debug] </div><div class="line">Fri Feb  6 19:51:30 2015 - [debug]  Connecting via SSH from root@192.168.71.151(192.168.71.151:22) to root@192.168.71.152(192.168.71.152:22)..</div><div class="line">Fri Feb  6 19:51:30 2015 - [debug]   ok.</div><div class="line">Fri Feb  6 19:51:30 2015 - [debug]  Connecting via SSH from root@192.168.71.151(192.168.71.151:22) to root@192.168.71.153(192.168.71.153:22)..</div><div class="line">Fri Feb  6 19:51:31 2015 - [debug]   ok.</div><div class="line">Fri Feb  6 19:51:31 2015 - [debug] </div><div class="line">Fri Feb  6 19:51:30 2015 - [debug]  Connecting via SSH from root@192.168.71.152(192.168.71.152:22) to root@192.168.71.151(192.168.71.151:22)..</div><div class="line">Fri Feb  6 19:51:31 2015 - [debug]   ok.</div><div class="line">Fri Feb  6 19:51:31 2015 - [debug]  Connecting via SSH from root@192.168.71.152(192.168.71.152:22) to root@192.168.71.153(192.168.71.153:22)..</div><div class="line">Fri Feb  6 19:51:31 2015 - [debug]   ok.</div><div class="line">Fri Feb  6 19:51:32 2015 - [debug] </div><div class="line">Fri Feb  6 19:51:31 2015 - [debug]  Connecting via SSH from root@192.168.71.153(192.168.71.153:22) to root@192.168.71.151(192.168.71.151:22)..</div><div class="line">Fri Feb  6 19:51:31 2015 - [debug]   ok.</div><div class="line">Fri Feb  6 19:51:31 2015 - [debug]  Connecting via SSH from root@192.168.71.153(192.168.71.153:22) to root@192.168.71.152(192.168.71.152:22)..</div><div class="line">Fri Feb  6 19:51:32 2015 - [debug]   ok.</div><div class="line">Fri Feb  6 19:51:32 2015 - [info] All SSH connection tests passed successfully.</div></pre></td></tr></table></figure></p>
+<p>反馈信息显示<code>All SSH connection tests passed successfully.</code>才是SSH登录配置正确，否则需要根据错误信息需要配置。</p>
+<h2 id="检查候选主库的log-bin是否都启用"><a href="#检查候选主库的log-bin是否都启用" class="headerlink" title="检查候选主库的log-bin是否都启用"></a>检查候选主库的log-bin是否都启用</h2><p>如果当前的从库没有设置log-bin，很明显按照主从复制的要求，是不能作为新的主库的，所以作为候选主库的从库节点必须启用log-bin，本例中只有2个从库节点，且都打算作为候选主库，故都需要启用log-bin。</p>
+<h2 id="检查复制过滤规则"><a href="#检查复制过滤规则" class="headerlink" title="检查复制过滤规则"></a>检查复制过滤规则</h2><p>MHA要求各个数据库节点的复制过滤规则(binlog-do-db, replicate-ignore-db)都一样。</p>
+<h2 id="检查复制配置"><a href="#检查复制配置" class="headerlink" title="检查复制配置"></a>检查复制配置</h2><p>使用masterha_check_repl检查当前的MySQL集群拓扑结构是否符合MHA的要求。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# masterha_check_repl --conf=/etc/mha/mha.conf</div><div class="line">Fri Feb  6 20:16:18 2015 - [warning] Global configuration file /etc/masterha_default.cnf not found. Skipping.</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] Reading application default configuration from /etc/mha/mha.conf..</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] Reading server configuration from /etc/mha/mha.conf..</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] MHA::MasterMonitor version 0.56.</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] GTID failover mode = 0</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] Dead Servers:</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] Alive Servers:</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]   192.168.71.151(192.168.71.151:3306)</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]   192.168.71.152(192.168.71.152:3306)</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]   192.168.71.153(192.168.71.153:3306)</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] Alive Slaves:</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]   192.168.71.152(192.168.71.152:3306)  Version=10.0.16-MariaDB-log (oldest major version between slaves) log-bin:enabled</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]     Replicating from 192.168.71.151(192.168.71.151:3306)</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]   192.168.71.153(192.168.71.153:3306)  Version=10.0.16-MariaDB-log (oldest major version between slaves) log-bin:enabled</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]     Replicating from 192.168.71.151(192.168.71.151:3306)</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] Current Alive Master: 192.168.71.151(192.168.71.151:3306)</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] Checking slave configurations..</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]  read_only=1 is not set on slave 192.168.71.152(192.168.71.152:3306).</div><div class="line">Fri Feb  6 20:16:18 2015 - [warning]  relay_log_purge=0 is not set on slave 192.168.71.152(192.168.71.152:3306).</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]  read_only=1 is not set on slave 192.168.71.153(192.168.71.153:3306).</div><div class="line">Fri Feb  6 20:16:18 2015 - [warning]  relay_log_purge=0 is not set on slave 192.168.71.153(192.168.71.153:3306).</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] Checking replication filtering settings..</div><div class="line">Fri Feb  6 20:16:18 2015 - [info]  binlog_do_db= , binlog_ignore_db= </div><div class="line">Fri Feb  6 20:16:18 2015 - [info]  Replication filtering check ok.</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] GTID (with auto-pos) is not supported</div><div class="line">Fri Feb  6 20:16:18 2015 - [info] Starting SSH connection tests..</div><div class="line">Fri Feb  6 20:16:20 2015 - [info] All SSH connection tests passed successfully.</div><div class="line">Fri Feb  6 20:16:20 2015 - [info] Checking MHA Node version..</div><div class="line">Fri Feb  6 20:16:20 2015 - [info]  Version check ok.</div><div class="line">Fri Feb  6 20:16:20 2015 - [info] Checking SSH publickey authentication settings on the current master..</div><div class="line">Fri Feb  6 20:16:20 2015 - [info] HealthCheck: SSH to 192.168.71.151 is reachable.</div><div class="line">Fri Feb  6 20:16:21 2015 - [info] Master MHA Node version is 0.56.</div><div class="line">Fri Feb  6 20:16:21 2015 - [info] Checking recovery script configurations on 192.168.71.151(192.168.71.151:3306)..</div><div class="line">Fri Feb  6 20:16:21 2015 - [info]   Executing command: save_binary_logs --command=test --start_pos=4 --binlog_dir=/var/lib/mysql,/var/log/mysql --output_file=/usr/local/mha/save_binary_logs_test --manager_version=0.56 --start_file=mysql-bin.000011 </div><div class="line">Fri Feb  6 20:16:21 2015 - [info]   Connecting to root@192.168.71.151(192.168.71.151:22).. </div><div class="line">  Creating /usr/local/mha if not exists..    ok.</div><div class="line">  Checking output directory is accessible or not..</div><div class="line">   ok.</div><div class="line">  Binlog found at /var/lib/mysql, up to mysql-bin.000011</div><div class="line">Fri Feb  6 20:16:21 2015 - [info] Binlog setting check done.</div><div class="line">Fri Feb  6 20:16:21 2015 - [info] Checking SSH publickey authentication and checking recovery script configurations on all alive slave servers..</div><div class="line">Fri Feb  6 20:16:21 2015 - [info]   Executing command : apply_diff_relay_logs --command=test --slave_user=&apos;joelhy&apos; --slave_host=192.168.71.152 --slave_ip=192.168.71.152 --slave_port=3306 --workdir=/usr/local/mha --target_version=10.0.16-MariaDB-log --manager_version=0.56 --relay_log_info=/var/lib/mysql/relay-log.info  --relay_dir=/var/lib/mysql/  --slave_pass=xxx</div><div class="line">Fri Feb  6 20:16:21 2015 - [info]   Connecting to root@192.168.71.152(192.168.71.152:22).. </div><div class="line">  Checking slave recovery environment settings..</div><div class="line">    Opening /var/lib/mysql/relay-log.info ... ok.</div><div class="line">    Relay log found at /var/lib/mysql, up to relay-bin.000002</div><div class="line">    Temporary relay log file is /var/lib/mysql/relay-bin.000002</div><div class="line">    Testing mysql connection and privileges.. done.</div><div class="line">    Testing mysqlbinlog output.. done.</div><div class="line">    Cleaning up test file(s).. done.</div><div class="line">Fri Feb  6 20:16:22 2015 - [info]   Executing command : apply_diff_relay_logs --command=test --slave_user=&apos;joelhy&apos; --slave_host=192.168.71.153 --slave_ip=192.168.71.153 --slave_port=3306 --workdir=/usr/local/mha --target_version=10.0.16-MariaDB-log --manager_version=0.56 --relay_log_info=/var/lib/mysql/relay-log.info  --relay_dir=/var/lib/mysql/  --slave_pass=xxx</div><div class="line">Fri Feb  6 20:16:22 2015 - [info]   Connecting to root@192.168.71.153(192.168.71.153:22).. </div><div class="line">  Checking slave recovery environment settings..</div><div class="line">    Opening /var/lib/mysql/relay-log.info ... ok.</div><div class="line">    Relay log found at /var/lib/mysql, up to relay-bin.000005</div><div class="line">    Temporary relay log file is /var/lib/mysql/relay-bin.000005</div><div class="line">    Testing mysql connection and privileges.. done.</div><div class="line">    Testing mysqlbinlog output.. done.</div><div class="line">    Cleaning up test file(s).. done.</div><div class="line">Fri Feb  6 20:16:23 2015 - [info] Slaves settings check done.</div><div class="line">Fri Feb  6 20:16:23 2015 - [info] </div><div class="line">192.168.71.151(192.168.71.151:3306) (current master)</div><div class="line"> +--192.168.71.152(192.168.71.152:3306)</div><div class="line"> +--192.168.71.153(192.168.71.153:3306)</div><div class="line"></div><div class="line">Fri Feb  6 20:16:23 2015 - [info] Checking replication health on 192.168.71.152..</div><div class="line">Fri Feb  6 20:16:23 2015 - [info]  ok.</div><div class="line">Fri Feb  6 20:16:23 2015 - [info] Checking replication health on 192.168.71.153..</div><div class="line">Fri Feb  6 20:16:23 2015 - [info]  ok.</div><div class="line">Fri Feb  6 20:16:23 2015 - [warning] master_ip_failover_script is not defined.</div><div class="line">Fri Feb  6 20:16:23 2015 - [warning] shutdown_script is not defined.</div><div class="line">Fri Feb  6 20:16:23 2015 - [info] Got exit code 0 (Not master dead).</div><div class="line"></div><div class="line">MySQL Replication Health is OK.</div></pre></td></tr></table></figure></p>
+<p>注意最后一句为<code>MySQL Replication Health is OK.</code>，如果是<code>MySQL Replication Health is NOT OK!</code>，则需要根据反馈的错误信息修改配置。</p>
+<h2 id="启动MHA-Manager"><a href="#启动MHA-Manager" class="headerlink" title="启动MHA Manager"></a>启动MHA Manager</h2><p>在管理节点 192.168.71.154 上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# nohup  masterha_manager  --conf=/etc/mha/mha.conf &amp;</div></pre></td></tr></table></figure></p>
+<h2 id="停止MHA-Manager"><a href="#停止MHA-Manager" class="headerlink" title="停止MHA Manager"></a>停止MHA Manager</h2><p>如果需要停止MHA Mnager，可运行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# masterha_stop --conf=/etc/mha/mha.conf</div><div class="line">Stopped mha successfully.</div></pre></td></tr></table></figure></p>
+<h2 id="测试failover"><a href="#测试failover" class="headerlink" title="测试failover"></a>测试failover</h2><p>可在MHA Manager管理节点运行MHA Manager时，测试failover。例如直接关闭主库的操作系统或者关闭主库的MySQL服务<br>在主库节点 192.168.71.151上关闭MySQL：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# service mysql stop</div><div class="line">Shutting down MySQL.. SUCCESS!</div></pre></td></tr></table></figure></p>
+<p>注意此时管理节点的MHA Manager会有很长的输出，最后一句为<code>Master failover to 192.168.71.152(192.168.71.152:3306) completed successfully.</code>，说明主库已经failover到192.168.71.152从库节点了。<br>注意：<strong>MHA Manager在failover成功后会自动退出</strong>。出故障的原主库在配置更改完后，重新启用后，需要在管理节点上再次运行<code>masterha_check_ssh  --conf=/etc/mha/mha.conf</code>，没问题的话，再启动MHA Manager:<code>nohup  masterha_manager  --conf=/etc/mha/mha.conf &amp;</code>。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] <a href="https://code.google.com/p/mysql-master-ha/wiki/TableOfContents?tm=6" target="_blank" rel="external">https://code.google.com/p/mysql-master-ha/wiki/TableOfContents?tm=6</a><br>[2] <a href="http://ylw6006.blog.51cto.com/470441/1568853" target="_blank" rel="external">再谈Mysql MHA</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/MHA/">MHA</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"1744486440"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2133502" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/02/26/install-zabbix-2-4-on-centOS-7-using-yum/" title="CentOS 7上使用yum安装zabbix 2.4">
+  <strong>上一篇：</strong><br/>
+  <span>
+  CentOS 7上使用yum安装zabbix 2.4</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/02/06/mariadb-master-slave-replication/"  title="MariaDB主从复制">
+ <strong>下一篇：</strong><br/> 
+ <span>MariaDB主从复制
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境介绍"><span class="toc-number">1.</span> <span class="toc-text">环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装MHA"><span class="toc-number">2.</span> <span class="toc-text">安装MHA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载MHA-Node和MHA-Manager"><span class="toc-number">2.1.</span> <span class="toc-text">下载MHA Node和MHA Manager</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#下载MHA-Manager"><span class="toc-number">2.1.1.</span> <span class="toc-text">下载MHA Manager</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#下载MHA-Node"><span class="toc-number">2.1.2.</span> <span class="toc-text">下载MHA Node</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">2.2.</span> <span class="toc-text">安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH密钥登录方式设置"><span class="toc-number">3.</span> <span class="toc-text">SSH密钥登录方式设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置MHA管理节点"><span class="toc-number">4.</span> <span class="toc-text">配置MHA管理节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试节点间的SSH登录"><span class="toc-number">5.</span> <span class="toc-text">测试节点间的SSH登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查候选主库的log-bin是否都启用"><span class="toc-number">6.</span> <span class="toc-text">检查候选主库的log-bin是否都启用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查复制过滤规则"><span class="toc-number">7.</span> <span class="toc-text">检查复制过滤规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查复制配置"><span class="toc-number">8.</span> <span class="toc-text">检查复制配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动MHA-Manager"><span class="toc-number">9.</span> <span class="toc-text">启动MHA Manager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#停止MHA-Manager"><span class="toc-number">10.</span> <span class="toc-text">停止MHA Manager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试failover"><span class="toc-number">11.</span> <span class="toc-text">测试failover</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">12.</span> <span class="toc-text">参考文献</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="joelhy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ArchLinux/" title="ArchLinux">ArchLinux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MariaDB/" title="MariaDB">MariaDB<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cryptography/" title="Cryptography">Cryptography<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GBK/" title="GBK">GBK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Composer/" title="Composer">Composer<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+<div class="doubanshow">
+<p class="asidetitle">Douban Show</p>
+<div>
+<script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
+</div>
+</div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1744486440&verifier=ef05663d&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Carpe Diem. <br/>
+			by joelhy</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/g14npr" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/joelhy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/1662247" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/joelhy" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/Joelhy.Huang" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		
+		<a href="https://www.douban.com/people/joelhy" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="joelhy">joelhy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'g14npr';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c7994595385c35d684ab33f94761d2c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

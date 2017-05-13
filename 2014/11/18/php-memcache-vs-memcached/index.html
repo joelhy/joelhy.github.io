@@ -1,0 +1,541 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>PHP memcache扩展和memcached扩展比较 | Carpe Diem.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="joelhy">
+    
+
+    
+    <meta name="description" content="PHP有两个memcache相关的扩展：memcache 和 memcached (多了个英文字母d)。两者都是用来连接 memcache服务器的。他们的区别如下：  memcached 扩展只能用于 Linux系统，memcache 扩展既可以用于 windows 也可以用于 Linux。之所以 memcached扩展，只能用于 Linux是因为 它依赖于Linux下的 libmemcached">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP memcache扩展和memcached扩展比较">
+<meta property="og:url" content="http://yoursite.com/2014/11/18/php-memcache-vs-memcached/index.html">
+<meta property="og:site_name" content="Carpe Diem.">
+<meta property="og:description" content="PHP有两个memcache相关的扩展：memcache 和 memcached (多了个英文字母d)。两者都是用来连接 memcache服务器的。他们的区别如下：  memcached 扩展只能用于 Linux系统，memcache 扩展既可以用于 windows 也可以用于 Linux。之所以 memcached扩展，只能用于 Linux是因为 它依赖于Linux下的 libmemcached">
+<meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP memcache扩展和memcached扩展比较">
+<meta name="twitter:description" content="PHP有两个memcache相关的扩展：memcache 和 memcached (多了个英文字母d)。两者都是用来连接 memcache服务器的。他们的区别如下：  memcached 扩展只能用于 Linux系统，memcache 扩展既可以用于 windows 也可以用于 Linux。之所以 memcached扩展，只能用于 Linux是因为 它依赖于Linux下的 libmemcached">
+<meta name="twitter:creator" content="@joelhy">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Carpe Diem." title="Carpe Diem."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/11/18/php-memcache-vs-memcached/" title="PHP memcache扩展和memcached扩展比较" itemprop="url">PHP memcache扩展和memcached扩展比较</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
+		
+  <p class="article-time">
+    <time datetime="2014-11-18T06:11:30.000Z" itemprop="datePublished"> Published 2014-11-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			
+		
+		</div>
+		
+		<p>PHP有两个memcache相关的扩展：<a href="http://pecl.php.net/package/memcache" target="_blank" rel="external">memcache</a> 和 <a href="http://pecl.php.net/package/memcached" target="_blank" rel="external">memcache<strong>d</strong></a> (多了个英文字母d)。两者都是用来连接 memcache服务器的。他们的区别如下：</p>
+<ol>
+<li>memcached 扩展只能用于 Linux系统，memcache 扩展既可以用于 windows 也可以用于 Linux。之所以 memcached扩展，只能用于 Linux是因为 它依赖于Linux下的 libmemcached 库。</li>
+<li>memcached扩展对 <a href="http://code.sixapart.com/svn/memcached/trunk/server/doc/protocol.txt" target="_blank" rel="external">memcached 协议</a> 的支持更完整。</li>
+<li>当 Memcached::get() 方法返回 false时，有可能存储的值就是 false，或者memcache服务器中不存在该key的值，此时 可以调用 Memcached::getResultCode() 方法判断是值为 false，还是该key不存在；而 memcache 扩展的 Memcache::get() 方法，返回 false时，没法知道是哪种情况。</li>
+<li>memcached 扩展支持 <a href="http://www.php.net/manual/en/memcached.cas.php" target="_blank" rel="external">Cas tokens</a>，cas 用于解决多个进程同时修改相同数据的更新问题，在高并发下很有用。</li>
+<li>memcached扩展和 memcache 扩展的相同功能方法的参数可能不同，例如 Memcache::set()方法就比 Memcached::set() 方法多了个 $flag 参数。</li>
+<li>在Ubuntu/Debian中，安装可使用 <code>sudo apt-get install php5-memcached</code>；安装 memcached 扩展，可使用 php5-memcache 安装 memcache 扩展。</li>
+<li>更详细的区别，请看 stackflow的文章： <a href="http://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-of-memcached" target="_blank" rel="external">http://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-of-memcached</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/PHP/">PHP</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"1744486440"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2133502" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/12/03/php-x-sendfile/" title="使用X-Sendfile机制加快PHP下文件的下载">
+  <strong>上一篇：</strong><br/>
+  <span>
+  使用X-Sendfile机制加快PHP下文件的下载</span>
+</a>
+</div>
+
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="joelhy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ArchLinux/" title="ArchLinux">ArchLinux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MariaDB/" title="MariaDB">MariaDB<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cryptography/" title="Cryptography">Cryptography<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GBK/" title="GBK">GBK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Composer/" title="Composer">Composer<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+<div class="doubanshow">
+<p class="asidetitle">Douban Show</p>
+<div>
+<script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
+</div>
+</div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1744486440&verifier=ef05663d&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Carpe Diem. <br/>
+			by joelhy</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/g14npr" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/joelhy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/1662247" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/joelhy" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/Joelhy.Huang" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		
+		<a href="https://www.douban.com/people/joelhy" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="joelhy">joelhy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'g14npr';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c7994595385c35d684ab33f94761d2c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

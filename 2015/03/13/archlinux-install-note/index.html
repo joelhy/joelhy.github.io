@@ -1,0 +1,640 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Arch Linux 安装配置 | Carpe Diem.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="joelhy">
+    
+
+    
+    <meta name="description" content="本文记录 Arch Linux 2015.03.01 的安装配置，方便自己重装系统时参考。 下载ISO文件及制作安装U盘下载ISO文件从 https://www.archlinux.org/download/ 选择速度较快的下载镜像，通常只需选择China下面的，例如： 163.com。或者从社区维基上的镜像选择安装： https://wiki.archlinux.org/index.php/Mi">
+<meta name="keywords" content="ArchLinux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arch Linux 安装配置">
+<meta property="og:url" content="http://yoursite.com/2015/03/13/archlinux-install-note/index.html">
+<meta property="og:site_name" content="Carpe Diem.">
+<meta property="og:description" content="本文记录 Arch Linux 2015.03.01 的安装配置，方便自己重装系统时参考。 下载ISO文件及制作安装U盘下载ISO文件从 https://www.archlinux.org/download/ 选择速度较快的下载镜像，通常只需选择China下面的，例如： 163.com。或者从社区维基上的镜像选择安装： https://wiki.archlinux.org/index.php/Mi">
+<meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Arch Linux 安装配置">
+<meta name="twitter:description" content="本文记录 Arch Linux 2015.03.01 的安装配置，方便自己重装系统时参考。 下载ISO文件及制作安装U盘下载ISO文件从 https://www.archlinux.org/download/ 选择速度较快的下载镜像，通常只需选择China下面的，例如： 163.com。或者从社区维基上的镜像选择安装： https://wiki.archlinux.org/index.php/Mi">
+<meta name="twitter:creator" content="@joelhy">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Carpe Diem." title="Carpe Diem."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/13/archlinux-install-note/" title="Arch Linux 安装配置" itemprop="url">Arch Linux 安装配置</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-13T06:17:37.000Z" itemprop="datePublished"> Published 2015-03-13</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载ISO文件及制作安装U盘"><span class="toc-number">1.</span> <span class="toc-text">下载ISO文件及制作安装U盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载ISO文件"><span class="toc-number">1.1.</span> <span class="toc-text">下载ISO文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作安装U盘"><span class="toc-number">1.2.</span> <span class="toc-text">制作安装U盘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始安装"><span class="toc-number">2.</span> <span class="toc-text">开始安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更改BIOS启动顺序"><span class="toc-number">2.1.</span> <span class="toc-text">更改BIOS启动顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置网络"><span class="toc-number">2.2.</span> <span class="toc-text">配置网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看网卡类型"><span class="toc-number">2.2.1.</span> <span class="toc-text">查看网卡类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有线网络配置"><span class="toc-number">2.2.2.</span> <span class="toc-text">有线网络配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无线网络配置"><span class="toc-number">2.2.3.</span> <span class="toc-text">无线网络配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#硬盘分区和格式化"><span class="toc-number">2.3.</span> <span class="toc-text">硬盘分区和格式化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看现有磁盘分区"><span class="toc-number">2.3.1.</span> <span class="toc-text">查看现有磁盘分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#硬盘分区"><span class="toc-number">2.3.2.</span> <span class="toc-text">硬盘分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#格式化"><span class="toc-number">2.3.3.</span> <span class="toc-text">格式化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#挂载分区"><span class="toc-number">2.3.4.</span> <span class="toc-text">挂载分区</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择镜像服务器"><span class="toc-number">2.4.</span> <span class="toc-text">选择镜像服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装基本系统"><span class="toc-number">2.5.</span> <span class="toc-text">安装基本系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成fstab"><span class="toc-number">2.6.</span> <span class="toc-text">生成fstab</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chroot到新系统"><span class="toc-number">2.7.</span> <span class="toc-text">chroot到新系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置locale"><span class="toc-number">2.8.</span> <span class="toc-text">配置locale</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置时区"><span class="toc-number">2.9.</span> <span class="toc-text">配置时区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置硬件时间"><span class="toc-number">2.10.</span> <span class="toc-text">配置硬件时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置主机名"><span class="toc-number">2.11.</span> <span class="toc-text">设置主机名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置网络-1"><span class="toc-number">2.12.</span> <span class="toc-text">配置网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置root密码"><span class="toc-number">2.13.</span> <span class="toc-text">设置root密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装配置引导程序"><span class="toc-number">2.14.</span> <span class="toc-text">安装配置引导程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#卸载分区并重启"><span class="toc-number">2.15.</span> <span class="toc-text">卸载分区并重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pacman配置"><span class="toc-number">2.16.</span> <span class="toc-text">pacman配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新系统"><span class="toc-number">2.17.</span> <span class="toc-text">更新系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装图形用户界面及常用软件"><span class="toc-number">3.</span> <span class="toc-text">安装图形用户界面及常用软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装显卡驱动"><span class="toc-number">3.1.</span> <span class="toc-text">安装显卡驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Xorg"><span class="toc-number">3.2.</span> <span class="toc-text">安装Xorg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置声音"><span class="toc-number">3.3.</span> <span class="toc-text">配置声音</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加普通帐号"><span class="toc-number">3.4.</span> <span class="toc-text">添加普通帐号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小化安装KDE"><span class="toc-number">3.5.</span> <span class="toc-text">最小化安装KDE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#或者安装-LXQt"><span class="toc-number">3.6.</span> <span class="toc-text">或者安装 LXQt</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#改用kwin窗口管理器"><span class="toc-number">3.6.1.</span> <span class="toc-text">改用kwin窗口管理器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加archlinuxfr源并安装yaourt"><span class="toc-number">3.7.</span> <span class="toc-text">添加archlinuxfr源并安装yaourt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加中文社区仓库"><span class="toc-number">3.8.</span> <span class="toc-text">添加中文社区仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置字体"><span class="toc-number">3.9.</span> <span class="toc-text">配置字体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装配置fcitx输入法"><span class="toc-number">3.10.</span> <span class="toc-text">安装配置fcitx输入法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装常用软件"><span class="toc-number">3.11.</span> <span class="toc-text">安装常用软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装KDE常用软件"><span class="toc-number">3.12.</span> <span class="toc-text">安装KDE常用软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用配置"><span class="toc-number">3.13.</span> <span class="toc-text">常用配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#git配置"><span class="toc-number">3.13.1.</span> <span class="toc-text">git配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gtk2程序使用oxygen主题"><span class="toc-number">3.13.2.</span> <span class="toc-text">gtk2程序使用oxygen主题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zsh"><span class="toc-number">3.13.3.</span> <span class="toc-text">zsh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置vim"><span class="toc-number">3.13.4.</span> <span class="toc-text">配置vim</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#geany"><span class="toc-number">3.13.5.</span> <span class="toc-text">geany</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sublime-text"><span class="toc-number">3.13.6.</span> <span class="toc-text">sublime text</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置firefox"><span class="toc-number">3.13.7.</span> <span class="toc-text">配置firefox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开机自启动Virtualbox"><span class="toc-number">3.13.8.</span> <span class="toc-text">开机自启动Virtualbox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装配置LNMP"><span class="toc-number">3.13.9.</span> <span class="toc-text">安装配置LNMP</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<p>本文记录 Arch Linux 2015.03.01 的安装配置，方便自己重装系统时参考。</p>
+<h2 id="下载ISO文件及制作安装U盘"><a href="#下载ISO文件及制作安装U盘" class="headerlink" title="下载ISO文件及制作安装U盘"></a>下载ISO文件及制作安装U盘</h2><h3 id="下载ISO文件"><a href="#下载ISO文件" class="headerlink" title="下载ISO文件"></a>下载ISO文件</h3><p>从 <a href="https://www.archlinux.org/download/" target="_blank" rel="external">https://www.archlinux.org/download/</a> 选择速度较快的下载镜像，通常只需选择<em>China</em>下面的，例如： <a href="http://mirrors.163.com/archlinux/iso/latest/" target="_blank" rel="external">163.com</a>。或者从社区维基上的镜像选择安装： <a href="https://wiki.archlinux.org/index.php/Mirrors_(简体中文)#.E4.B8.AD.E5.9B.BD" target="_blank" rel="external">https://wiki.archlinux.org/index.php/Mirrors_(简体中文)#.E4.B8.AD.E5.9B.BD</a>，例如：<a href="http://mirrors.aliyun.com/archlinux/iso/2015.03.01/" target="_blank" rel="external">阿里云</a>。 </p>
+<h3 id="制作安装U盘"><a href="#制作安装U盘" class="headerlink" title="制作安装U盘"></a>制作安装U盘</h3><p>可参照 <a href="https://wiki.archlinux.org/index.php/USB_flash_installation_media" target="_blank" rel="external">https://wiki.archlinux.org/index.php/USB_flash_installation_media</a> 制作安装U盘，推荐采用<em>dd</em>命令制作安装U盘。<br>使用<em>dd</em>制作安装U盘的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx &amp;&amp; sync</div></pre></td></tr></table></figure></p>
+<p>用U盘的盘符代替 /dev/<strong>sdx</strong>，<strong>不</strong>用添加分区号，即<strong>不</strong>用键入类似 /dev/sdb<strong>1</strong> 的东西。</p>
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>插入制作好的U盘启动盘，开始安装。<br>详细安装过程可参考官方文档 <a href="https://wiki.archlinux.org/index.php/Beginners%27_guide" target="_blank" rel="external">Beginners’ guide</a>。<br>在GRUB启动菜单中，推荐使用64位的版本，即选择<em>Boot Arch Linux (x86_64)</em>安装。</p>
+<h3 id="更改BIOS启动顺序"><a href="#更改BIOS启动顺序" class="headerlink" title="更改BIOS启动顺序"></a>更改BIOS启动顺序</h3><p>台式机通常为按<em>Del</em>键，少部分为按<em>Esc</em>键进入BIOS；笔记本通常为<em>F2</em>，有的为<em>F10</em>或<em>F1</em>。具体使用哪个键进入BIOS，需要看开机时的提示。</p>
+<h3 id="配置网络"><a href="#配置网络" class="headerlink" title="配置网络"></a>配置网络</h3><p>启动过程中系统会自动启动<em>dhcpd</em>守护进程，如果网络是使用DHCP分配IP的，则此时就可以联网了，可用ping命令测试是否能连接外网：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ping -c 3 www.baidu.com</div></pre></td></tr></table></figure></p>
+<p>ping得通则说明网络连接正常，<strong>不</strong>用再进行下面的「有线网络配置」或「无线网络配置」操作。否则按照下面的设置，详细的各种网络配置说明见 <a href="https://wiki.archlinux.org/index.php/Network_configuration" target="_blank" rel="external">https://wiki.archlinux.org/index.php/Network_configuration</a>。</p>
+<h4 id="查看网卡类型"><a href="#查看网卡类型" class="headerlink" title="查看网卡类型"></a>查看网卡类型</h4><p>使用<code>ip link</code>命令查看本机的网卡，lo为本地环路地址，enp开头的为有线网卡，wlp开头的为无线网卡。</p>
+<h4 id="有线网络配置"><a href="#有线网络配置" class="headerlink" title="有线网络配置"></a>有线网络配置</h4><p>假设有线网卡在<code>ip link</code>中显示的网卡名为<em>enp0s3</em>，网管指定的网络信息如下：</p>
+<ul>
+<li>IP: 10.0.2.15</li>
+<li>网关： 10.0.2.2</li>
+<li>DNS: 114.114.114.114<br>则，按如下配置静态IP<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">systemctl stop dhcpcd.service</div><div class="line">ip link set enp0s3 up</div><div class="line">ip addr add 10.0.2.15/24 dev enp0s3</div><div class="line">ip route add default via 10.0.2.2</div><div class="line">echo &quot;nameserver 114.114.114.114&quot; &gt;&gt; /etc/resolv.conf</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="无线网络配置"><a href="#无线网络配置" class="headerlink" title="无线网络配置"></a>无线网络配置</h4><p>在命令行中执行<code>wifi-menu</code>命令，然后选择可用的无线网络并输入相应的密码即可。</p>
+<h3 id="硬盘分区和格式化"><a href="#硬盘分区和格式化" class="headerlink" title="硬盘分区和格式化"></a>硬盘分区和格式化</h3><h4 id="查看现有磁盘分区"><a href="#查看现有磁盘分区" class="headerlink" title="查看现有磁盘分区"></a>查看现有磁盘分区</h4><p>使用<em>lsblk</em>可查看现有的磁盘分区</p>
+<h4 id="硬盘分区"><a href="#硬盘分区" class="headerlink" title="硬盘分区"></a>硬盘分区</h4><p>使用<code>cfdisk</code>命令格式化硬盘分区<br>目前的硬盘通常都有500GB，推荐如下分区方案：<br>/       40G     sda1<br>/swap   4G      sda2<br>/home           sda3    剩下的都分给 /home 分区</p>
+<h4 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h4><p>推荐采用<em>ext4</em>分区格式，操作命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mkfs.ext4 /dev/sda1</div><div class="line">mkswap /dev/sda2</div><div class="line">swapon /dev/sda2</div><div class="line">mkfs.ext4 /dev/sda3</div><div class="line">lsblk -f</div></pre></td></tr></table></figure></p>
+<h4 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h4><p>根分区<em>/</em>必须首先挂载，才能挂载其他分区，<em>/mnt</em>目录用于挂载分区<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount /dev/sda1 /mnt</div></pre></td></tr></table></figure></p>
+<p>挂载<em>/home</em>分区<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir -p /mnt/home</div><div class="line">mount /dev/sda3 /mnt/home</div></pre></td></tr></table></figure></p>
+<h3 id="选择镜像服务器"><a href="#选择镜像服务器" class="headerlink" title="选择镜像服务器"></a>选择镜像服务器</h3><p>编辑 /etc/pacman.d/mirrorlist，建议保留5个<em>China</em>的镜像，其它的删除，最好不要只留一个镜像，不然万一那个镜像暂时不可用，就无法安装软件了。</p>
+<h3 id="安装基本系统"><a href="#安装基本系统" class="headerlink" title="安装基本系统"></a>安装基本系统</h3><p>使用<em>pacstrap</em>安装基本系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacstrap /mnt base base-devel</div></pre></td></tr></table></figure></p>
+<h3 id="生成fstab"><a href="#生成fstab" class="headerlink" title="生成fstab"></a>生成fstab</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</div><div class="line">vi /mnt/etc/fstab</div></pre></td></tr></table></figure>
+<h3 id="chroot到新系统"><a href="#chroot到新系统" class="headerlink" title="chroot到新系统"></a>chroot到新系统</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">arch-chroot /mnt /bin/bash</div></pre></td></tr></table></figure>
+<h3 id="配置locale"><a href="#配置locale" class="headerlink" title="配置locale"></a>配置locale</h3><p><code>vi /etc/locale.gen</code>，保留<code>en_US.UTF-8 UTF-8</code>和<code>zh_CN.UTF-8 UTF-8</code>处于非注释状态，保存文件退出。<br>运行<code>locale-gen</code>重新生成locale。<br>设置locale：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo LANG=en_US.UTF-8 &gt; /etc/locale.conf</div><div class="line">echo LC_CTYPE=zh_CN.UTF-8 &gt;&gt; /etc/locale.conf</div></pre></td></tr></table></figure></p>
+<h3 id="配置时区"><a href="#配置时区" class="headerlink" title="配置时区"></a>配置时区</h3><p><code>ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</code></p>
+<h3 id="配置硬件时间"><a href="#配置硬件时间" class="headerlink" title="配置硬件时间"></a>配置硬件时间</h3><p><code>hwclock --systohc --utc</code></p>
+<h3 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h3><p><code>echo arminix &gt; /etc/hostname</code><br>并把主机名加到 /etc/hosts中，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#&lt;ip-address&gt;   &lt;hostname.domain.org&gt;   &lt;hostname&gt;</div><div class="line">127.0.0.1       localhost.localdomain   localhost arminix</div><div class="line">::1             localhost.localdomain   localhost</div></pre></td></tr></table></figure></p>
+<h3 id="配置网络-1"><a href="#配置网络-1" class="headerlink" title="配置网络"></a>配置网络</h3><p><code>cd /etc/netctl</code><br>有线静态IP网络使用：<code>cp examples/ethernet-static my_network</code><br>有线DHCPD配置的使用：<code>cp examples/ethernet-dhcp my_network</code><br>无线网络使用：<code>cp examples/wireless-wpa my_network</code><br>根据实际情况修改 my_network 文件的内容<br>启用配置：<code>netctl enable my_network</code></p>
+<h3 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">passwd</div></pre></td></tr></table></figure>
+<h3 id="安装配置引导程序"><a href="#安装配置引导程序" class="headerlink" title="安装配置引导程序"></a>安装配置引导程序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pacman -S grub</div><div class="line">pacman -S os-prober  ## 如果本机有安装其它操作系统</div><div class="line">grub-install --target=i386-pc --recheck /dev/sda</div><div class="line">grub-mkconfig -o /boot/grub/grub.cfg</div></pre></td></tr></table></figure>
+<h3 id="卸载分区并重启"><a href="#卸载分区并重启" class="headerlink" title="卸载分区并重启"></a>卸载分区并重启</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">exit</div><div class="line">reboot</div></pre></td></tr></table></figure>
+<h3 id="pacman配置"><a href="#pacman配置" class="headerlink" title="pacman配置"></a>pacman配置</h3><ul>
+<li>pacman显示彩色输出<br>编辑 /etc/pacman.conf，取消第34行Color前的井号“#”。</li>
+<li>更改mirror list<br>编辑 /etc/pacman.d/mirrorlist，保留<em>China</em>部分的即可，<strong>非</strong>教育网的推荐使用以下这两个镜像：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Server = http://mirrors.163.com/archlinux/$repo/os/$arch</div><div class="line">Server = http://mirrors.aliyun.com/archlinux/$repo/os/$arch</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="更新系统"><a href="#更新系统" class="headerlink" title="更新系统"></a>更新系统</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -Syu</div></pre></td></tr></table></figure>
+<h2 id="安装图形用户界面及常用软件"><a href="#安装图形用户界面及常用软件" class="headerlink" title="安装图形用户界面及常用软件"></a>安装图形用户界面及常用软件</h2><h3 id="安装显卡驱动"><a href="#安装显卡驱动" class="headerlink" title="安装显卡驱动"></a>安装显卡驱动</h3><p>查看显卡类型：<code>lspci | grep VGA</code><br>安装默认显卡驱动：<code>pacman -S xf86-video-vesa</code><br>根据显卡类型安装相应的驱动，查看仓库里的驱动程序用<code>pacman -Ss xf86-video</code></p>
+<ul>
+<li>AMD: <code>pacman -S xf86-video-ati</code></li>
+<li>Intel: <code>pacman -S xf86-video-intel</code></li>
+<li>Nvidia: <code>pacman -S xf86-video-nouveau</code></li>
+<li>Virtualbox虚拟机: <code>pacman -S virtualbox-guest-utils</code></li>
+</ul>
+<h3 id="安装Xorg"><a href="#安装Xorg" class="headerlink" title="安装Xorg"></a>安装Xorg</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pacman -S xorg-server </div><div class="line">pacman -S xorg-xinit xorg-twm xterm xorg-xclock</div><div class="line">startx  ## 测试Xorg是否可启动</div></pre></td></tr></table></figure>
+<h3 id="配置声音"><a href="#配置声音" class="headerlink" title="配置声音"></a>配置声音</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pacman -S alsa-utils </div><div class="line">amixer sset Master unmute  # 取消静音</div></pre></td></tr></table></figure>
+<h3 id="添加普通帐号"><a href="#添加普通帐号" class="headerlink" title="添加普通帐号"></a>添加普通帐号</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">useradd -m -G wheel -s /bin/bash joelhy </div><div class="line">passwd joelhy</div></pre></td></tr></table></figure>
+<h3 id="最小化安装KDE"><a href="#最小化安装KDE" class="headerlink" title="最小化安装KDE"></a>最小化安装KDE</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pacman -S kdebase-workspace </div><div class="line">systemctl enable kdm.service  # 启用KDM</div><div class="line">systemctl start kdm.service  # 启动KDM</div></pre></td></tr></table></figure>
+<h3 id="或者安装-LXQt"><a href="#或者安装-LXQt" class="headerlink" title="或者安装 LXQt"></a>或者安装 LXQt</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">pacman -S lxqt openbox</div><div class="line">#pacman -S oxygen-icons qtcurve</div><div class="line">#pacman -S oxygen systemsettings</div><div class="line">pacman -S oxygen-icons kwin</div><div class="line">#pacman -S oxygen-icons xfwm4</div><div class="line">pacman -S xscreensaver</div><div class="line">pacman -S numlockx</div><div class="line">numlockx on</div><div class="line">pacman -S sddm</div><div class="line">systemctl enable sddm.service</div><div class="line">systemctl start sddm.service</div></pre></td></tr></table></figure>
+<p>使用sddm登录进LXQT，此时桌面显示是异常的，点击左下角的按钮，选择<em>Preferences-&gt;LXQt settings-&gt;Appearance</em>，然后点击<em>LXQt Theme</em>图标，选择一个主题，推荐<em>Frost</em>主题，点击完成后桌面即会变成正常的。<br>点击LXQt里左下角的按钮，选择<em>Preferences-&gt;LXQt settings-&gt;Shortcut Keys</em>，新增一个快捷键<em>Control+Alt_L</em>，命令设为『xscreensaver-command –lock」。</p>
+<h4 id="改用kwin窗口管理器"><a href="#改用kwin窗口管理器" class="headerlink" title="改用kwin窗口管理器"></a>改用kwin窗口管理器</h4><p>点击LXQt里左下角的按钮，选择<em>Preferences-&gt;LXQt settings-&gt;Session Settings</em>， 把<em>Window Manager</em>下拉框选中的<em>openbox</em>改成<em>kwin_x11</em>。<br><del>点击LXQt里左下角的按钮，选择<em>Preferences-&gt;LXQt settings-&gt;Session Settings</em>， 把<em>Window Manager</em>下拉框选中的<em>openbox</em>改成<em>xfwm4</em>。</del></p>
+<h3 id="添加archlinuxfr源并安装yaourt"><a href="#添加archlinuxfr源并安装yaourt" class="headerlink" title="添加archlinuxfr源并安装yaourt"></a>添加archlinuxfr源并安装yaourt</h3><p>编辑 /etc/pacman.conf，把<em>SigLevel</em>改成<code>Optional TrustAll</code>，并在文件末尾加入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[archlinuxfr]</div><div class="line">Server = http://repo-fr.archlinuxcn.org/$arch</div></pre></td></tr></table></figure></p>
+<p>安装yaourt：<code>pacman -Sy yaourt</code></p>
+<h3 id="添加中文社区仓库"><a href="#添加中文社区仓库" class="headerlink" title="添加中文社区仓库"></a>添加中文社区仓库</h3><p>编辑 /etc/pacman.conf，在文件末尾添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[archlinuxcn]</div><div class="line">SigLevel = Optional TrustAll</div><div class="line">Server = http://repo.archlinuxcn.org/$arch</div></pre></td></tr></table></figure></p>
+<p>添加GPG密钥：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -Syy &amp;&amp; pacman -S archlinuxcn-keyring</div></pre></td></tr></table></figure></p>
+<h3 id="配置字体"><a href="#配置字体" class="headerlink" title="配置字体"></a>配置字体</h3><p>创建目录<code>/usr/share/fonts/truetype</code>，并复制msyh.ttf，msyhbd.ttf，yahei_mono.ttf到该目录<br>然后运行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkfontscale</div><div class="line">mkfontdir</div><div class="line">fc-cache -fv</div></pre></td></tr></table></figure></p>
+<h3 id="安装配置fcitx输入法"><a href="#安装配置fcitx输入法" class="headerlink" title="安装配置fcitx输入法"></a>安装配置fcitx输入法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># pacman -S fcitx-im fcitx-qt5 fcitx-rime</div><div class="line">pacman -S fcitx-gtk2 fcitx-qt4 fcitx-qt5 fcitx-sunpinyin</div><div class="line">yaourt -S fcitx-sogoupinyin</div></pre></td></tr></table></figure>
+<p>往<em>/home/joelhy/.xprofile</em>添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">export GTK_IM_MODULE=fcitx</div><div class="line">export QT_IM_MODULE=fcitx</div><div class="line">export XMODIFIERS=@im=fcitx</div><div class="line">fcitx -r --enable fcitx-qimpanel &amp;</div></pre></td></tr></table></figure></p>
+<p>修改完退出KDE/LXQt，重新登录。</p>
+<h3 id="安装常用软件"><a href="#安装常用软件" class="headerlink" title="安装常用软件"></a>安装常用软件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">pacman -S firefox flashplugin w3m</div><div class="line">pacman -S zsh openssh</div><div class="line">pacman -S vim ctags geany</div><div class="line">pacman -S unrar zip unzip p7zip </div><div class="line">pacman -S tree wget ntfs-3g</div><div class="line">#pacman -S lilyterm</div><div class="line">#pacman -S xfce4-terminal</div><div class="line">pacman -S konsole</div><div class="line">pacman -S dnsutils nmap</div><div class="line">pacman -S smplayer </div><div class="line">pacman -S archlinuxfr/downgrade</div><div class="line">pacman -S kchmviewer gpicview </div><div class="line">pacman -S the_silver_searcher</div><div class="line">pacman -S redshift enca</div><div class="line">pacman -S subversion git qgit meld</div><div class="line">pacman -S go nodejs</div><div class="line">pacman -S jdk7-openjdk</div><div class="line">pacman -S virtualbox virtualbox-host-modules virtualbox-guest-iso</div><div class="line">pacman -S archlinuxcn/ccal</div></pre></td></tr></table></figure>
+<h3 id="安装KDE常用软件"><a href="#安装KDE常用软件" class="headerlink" title="安装KDE常用软件"></a>安装KDE常用软件</h3><p>如果是KDE环境，则安装以下常用软件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pacman -S kdesu4 kdegraphics-okular gwenview kdeartwork-kscreensaver </div><div class="line">pacman -S kdemultimedia-kmix kdegraphics-kcolorchooser kdegraphics-kolourpaint kdegraphics-ksnapshot</div><div class="line">pacman -S kdebase-dolphin kde-gtk-config oxygen-gtk2</div></pre></td></tr></table></figure></p>
+<h3 id="常用配置"><a href="#常用配置" class="headerlink" title="常用配置"></a>常用配置</h3><h4 id="git配置"><a href="#git配置" class="headerlink" title="git配置"></a>git配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git config --global user.name &quot;FirstName LastName&quot;</div><div class="line">git config --global user.email &quot;user@example.com&quot;</div><div class="line">git config --global color.ui &quot;auto&quot;</div><div class="line">git config --global core.filemode false</div><div class="line">git config --global core.quotepath false</div></pre></td></tr></table></figure>
+<h4 id="gtk2程序使用oxygen主题"><a href="#gtk2程序使用oxygen主题" class="headerlink" title="gtk2程序使用oxygen主题"></a>gtk2程序使用oxygen主题</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S lxappearance oxygen-gtk2</div></pre></td></tr></table></figure>
+<p>然后运行lxappearance，把默认的gtk主题改成oxygen。</p>
+<h4 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h4><ul>
+<li><p>更改默认SHELL为zsh<br>详细修改可参照官方文档：<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">https://github.com/robbyrussell/oh-my-zsh</a>，步骤概述如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh</div><div class="line">chsh -s /bin/zsh</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置zsh<br>添加以下内容到 /home/joelhy/.zshrc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">ZSH_THEME=&quot;tjkirch_mod&quot;</div><div class="line"></div><div class="line">alias cdd=&quot;cd /home/joelhy/Downloads&quot;</div><div class="line">alias cw=&quot;cd /home/joelhy/workspace&quot;</div><div class="line">alias cf=&quot;cd /home/joelhy/code/open_source/php/frameworks&quot;</div><div class="line"></div><div class="line">export NVM_DIR=&quot;/home/joelhy/.nvm&quot;</div><div class="line">export NVM_NODEJS_ORG_MIRROR=http://dist.u.qiniudn.com</div><div class="line">[ -s &quot;$NVM_DIR/nvm.sh&quot; ] &amp;&amp; . &quot;$NVM_DIR/nvm.sh&quot;  # This loads nvm</div><div class="line"></div><div class="line">export GOPATH=/home/joelhy/mygo</div><div class="line">export PATH=&quot;$PATH:$GOPATH/bin&quot;</div><div class="line">export SYSTEMD_EDITOR=&quot;/usr/bin/vim&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="配置vim"><a href="#配置vim" class="headerlink" title="配置vim"></a>配置vim</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/joelhy/Vim.git .vim</div><div class="line">ln -s /home/joelhy/.vim/vimrc /home/joelhy/.vimrc</div><div class="line">cd ~/.vim/bundle</div><div class="line">git clone https://github.com/gmarik/Vundle.vim.git</div><div class="line">vim +PluginInstall +qall</div></pre></td></tr></table></figure>
+<h4 id="geany"><a href="#geany" class="headerlink" title="geany"></a>geany</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd /home/joelhy/.config/geany</div><div class="line">git clone https://github.com/codebrainz/geany-themes.git</div><div class="line">ln -s /home/joelhy/.config/geany/geany-themes/colorschemes /home/joelhy/.config/geany/colorschemes</div><div class="line">curl -O https://raw.githubusercontent.com/joelhy/geany_config/master/geany.conf</div><div class="line">curl -O https://raw.githubusercontent.com/joelhy/geany_config/master/keybindings.conf</div></pre></td></tr></table></figure>
+<p>修改 <code>/home/joelhy/.config/geany/geany-themes/colorschemes/dark.conf</code> 把<code>default=#fff;#1e1e1e;false;false</code>改成<code>default=#00ff00;#1e1e1e;false;false</code>， 把<code>caret=#fff;#000;true;false</code>改成<code>caret=#fff;#000;false;false</code>。<br><del>打开geany，在<em>View -&gt; Change Color Scheme…</em>选择<em>Dark</em>。</del></p>
+<h4 id="sublime-text"><a href="#sublime-text" class="headerlink" title="sublime text"></a>sublime text</h4><p>从<a href="http://pan.baidu.com/" target="_blank" rel="external">http://pan.baidu.com/</a>下载并解压到目录<em>/usr/local/</em><br>新建可执行文件<em>/usr/local/bin/s3</em>，内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"> </div><div class="line">SUBLIME_HOME=&quot;/usr/local/sublime_text_3&quot;</div><div class="line">LD_LIB=$SUBLIME_HOME/libsublime-imfix.so</div><div class="line">sh -c &quot;LD_PRELOAD=$LD_LIB $SUBLIME_HOME/sublime_text $@&quot;</div></pre></td></tr></table></figure></p>
+<p>配置文件设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd ~/.config/sublime-text-3/Packages/User</div><div class="line">mv Preferences.sublime-settings&#123;,.`date +&apos;%Y%m%d&apos;`&#125;</div><div class="line">mv Default\ \(Linux\).sublime-keymap&#123;,.`date +&apos;%Y%m%d&apos;`&#125;</div><div class="line">curl -O https://raw.githubusercontent.com/joelhy/sublime_text_config/master/Preferences.sublime-settings</div><div class="line">curl -O https://raw.githubusercontent.com/joelhy/sublime_text_config/master/Default%20%28Linux%29.sublime-keymap</div></pre></td></tr></table></figure></p>
+<p>按照<a href="https://packagecontrol.io/installation" target="_blank" rel="external">https://packagecontrol.io/installation</a>在sublime text 3里按`ctrl + ``，输入以下内容，安装Package Control：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import urllib.request,os,hashlib; h = &apos;eb2297e1a458f27d836c04bb0cbaf282&apos; + &apos;d0e7a3098092775ccb37ca9d6b2e4b7d&apos;; pf = &apos;Package Control.sublime-package&apos;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( &apos;http://packagecontrol.io/&apos; + pf.replace(&apos; &apos;, &apos;%20&apos;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&apos;Error validating download (got %s instead of %s), please try manual install&apos; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &apos;wb&apos; ).write(by)</div></pre></td></tr></table></figure></p>
+<p>然后安装以下插件：</p>
+<pre><code>Markdown Preview
+DocBlockr
+Emmet (Zen Coding)
+jQuery
+JsFormat
+placeholders
+ApplySyntax
+JsMinifier
+Sublime CodeIntel
+Bracket Highlighter
+GBK Encoding Support
+ConvertToUTF8
+Git
+SidebarEnhancements
+Theme Soda
+GoSublime
+</code></pre><h4 id="配置firefox"><a href="#配置firefox" class="headerlink" title="配置firefox"></a>配置firefox</h4><p>安装插件： Adblock Plus, AutoProxy, Charset SWitcher, Firebug, FireGestures, FirePHP, gooreplacer, Tab Mix Plus, Tree Style Tab, UnloadTab, Web Developer</p>
+<h4 id="开机自启动Virtualbox"><a href="#开机自启动Virtualbox" class="headerlink" title="开机自启动Virtualbox"></a>开机自启动Virtualbox</h4><p>编辑 /etc/modules-load.d/virtualbox.conf 文件，添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vboxdrv</div><div class="line">vboxnetadp</div><div class="line">vboxnetflt</div><div class="line">vboxpci</div></pre></td></tr></table></figure></p>
+<h4 id="安装配置LNMP"><a href="#安装配置LNMP" class="headerlink" title="安装配置LNMP"></a>安装配置LNMP</h4><p>详见 <a href="/2015/03/16/archlinux-lnmp/">Arch Linux 搭建 LNMP 环境</a>。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/ArchLinux/">ArchLinux</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"1744486440"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2133502" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/03/16/archlinux-lnmp/" title="Arch Linux 搭建 LNMP 环境">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Arch Linux 搭建 LNMP 环境</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/02/26/install-zabbix-2-4-on-centOS-7-using-yum/"  title="CentOS 7上使用yum安装zabbix 2.4">
+ <strong>下一篇：</strong><br/> 
+ <span>CentOS 7上使用yum安装zabbix 2.4
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载ISO文件及制作安装U盘"><span class="toc-number">1.</span> <span class="toc-text">下载ISO文件及制作安装U盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载ISO文件"><span class="toc-number">1.1.</span> <span class="toc-text">下载ISO文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作安装U盘"><span class="toc-number">1.2.</span> <span class="toc-text">制作安装U盘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始安装"><span class="toc-number">2.</span> <span class="toc-text">开始安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更改BIOS启动顺序"><span class="toc-number">2.1.</span> <span class="toc-text">更改BIOS启动顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置网络"><span class="toc-number">2.2.</span> <span class="toc-text">配置网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看网卡类型"><span class="toc-number">2.2.1.</span> <span class="toc-text">查看网卡类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有线网络配置"><span class="toc-number">2.2.2.</span> <span class="toc-text">有线网络配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无线网络配置"><span class="toc-number">2.2.3.</span> <span class="toc-text">无线网络配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#硬盘分区和格式化"><span class="toc-number">2.3.</span> <span class="toc-text">硬盘分区和格式化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看现有磁盘分区"><span class="toc-number">2.3.1.</span> <span class="toc-text">查看现有磁盘分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#硬盘分区"><span class="toc-number">2.3.2.</span> <span class="toc-text">硬盘分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#格式化"><span class="toc-number">2.3.3.</span> <span class="toc-text">格式化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#挂载分区"><span class="toc-number">2.3.4.</span> <span class="toc-text">挂载分区</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择镜像服务器"><span class="toc-number">2.4.</span> <span class="toc-text">选择镜像服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装基本系统"><span class="toc-number">2.5.</span> <span class="toc-text">安装基本系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成fstab"><span class="toc-number">2.6.</span> <span class="toc-text">生成fstab</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chroot到新系统"><span class="toc-number">2.7.</span> <span class="toc-text">chroot到新系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置locale"><span class="toc-number">2.8.</span> <span class="toc-text">配置locale</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置时区"><span class="toc-number">2.9.</span> <span class="toc-text">配置时区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置硬件时间"><span class="toc-number">2.10.</span> <span class="toc-text">配置硬件时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置主机名"><span class="toc-number">2.11.</span> <span class="toc-text">设置主机名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置网络-1"><span class="toc-number">2.12.</span> <span class="toc-text">配置网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置root密码"><span class="toc-number">2.13.</span> <span class="toc-text">设置root密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装配置引导程序"><span class="toc-number">2.14.</span> <span class="toc-text">安装配置引导程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#卸载分区并重启"><span class="toc-number">2.15.</span> <span class="toc-text">卸载分区并重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pacman配置"><span class="toc-number">2.16.</span> <span class="toc-text">pacman配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新系统"><span class="toc-number">2.17.</span> <span class="toc-text">更新系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装图形用户界面及常用软件"><span class="toc-number">3.</span> <span class="toc-text">安装图形用户界面及常用软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装显卡驱动"><span class="toc-number">3.1.</span> <span class="toc-text">安装显卡驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Xorg"><span class="toc-number">3.2.</span> <span class="toc-text">安装Xorg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置声音"><span class="toc-number">3.3.</span> <span class="toc-text">配置声音</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加普通帐号"><span class="toc-number">3.4.</span> <span class="toc-text">添加普通帐号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小化安装KDE"><span class="toc-number">3.5.</span> <span class="toc-text">最小化安装KDE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#或者安装-LXQt"><span class="toc-number">3.6.</span> <span class="toc-text">或者安装 LXQt</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#改用kwin窗口管理器"><span class="toc-number">3.6.1.</span> <span class="toc-text">改用kwin窗口管理器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加archlinuxfr源并安装yaourt"><span class="toc-number">3.7.</span> <span class="toc-text">添加archlinuxfr源并安装yaourt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加中文社区仓库"><span class="toc-number">3.8.</span> <span class="toc-text">添加中文社区仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置字体"><span class="toc-number">3.9.</span> <span class="toc-text">配置字体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装配置fcitx输入法"><span class="toc-number">3.10.</span> <span class="toc-text">安装配置fcitx输入法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装常用软件"><span class="toc-number">3.11.</span> <span class="toc-text">安装常用软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装KDE常用软件"><span class="toc-number">3.12.</span> <span class="toc-text">安装KDE常用软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用配置"><span class="toc-number">3.13.</span> <span class="toc-text">常用配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#git配置"><span class="toc-number">3.13.1.</span> <span class="toc-text">git配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gtk2程序使用oxygen主题"><span class="toc-number">3.13.2.</span> <span class="toc-text">gtk2程序使用oxygen主题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zsh"><span class="toc-number">3.13.3.</span> <span class="toc-text">zsh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置vim"><span class="toc-number">3.13.4.</span> <span class="toc-text">配置vim</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#geany"><span class="toc-number">3.13.5.</span> <span class="toc-text">geany</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sublime-text"><span class="toc-number">3.13.6.</span> <span class="toc-text">sublime text</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置firefox"><span class="toc-number">3.13.7.</span> <span class="toc-text">配置firefox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开机自启动Virtualbox"><span class="toc-number">3.13.8.</span> <span class="toc-text">开机自启动Virtualbox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装配置LNMP"><span class="toc-number">3.13.9.</span> <span class="toc-text">安装配置LNMP</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="joelhy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ArchLinux/" title="ArchLinux">ArchLinux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MariaDB/" title="MariaDB">MariaDB<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cryptography/" title="Cryptography">Cryptography<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GBK/" title="GBK">GBK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Composer/" title="Composer">Composer<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+<div class="doubanshow">
+<p class="asidetitle">Douban Show</p>
+<div>
+<script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
+</div>
+</div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1744486440&verifier=ef05663d&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Carpe Diem. <br/>
+			by joelhy</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/g14npr" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/joelhy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/1662247" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/joelhy" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/Joelhy.Huang" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		
+		<a href="https://www.douban.com/people/joelhy" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="joelhy">joelhy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'g14npr';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c7994595385c35d684ab33f94761d2c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

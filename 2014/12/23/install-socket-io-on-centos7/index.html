@@ -1,0 +1,548 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>在CentOS 7上安装配置socket.io | Carpe Diem.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="joelhy">
+    
+
+    
+    <meta name="description" content="本文介绍 socket.io 在CentOS 7上的安装过程，需要启用EPEL仓库。 启用 EPELyum install -y epel-release 安装 nodejs, npmyum install -y nodejs npmnode --version    # 确认 nodejs 是否安装成功 安装 forever 守护进程npm install -g forever 安装并运行 re">
+<meta name="keywords" content="nodejs,socket.io">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在CentOS 7上安装配置socket.io">
+<meta property="og:url" content="http://yoursite.com/2014/12/23/install-socket-io-on-centos7/index.html">
+<meta property="og:site_name" content="Carpe Diem.">
+<meta property="og:description" content="本文介绍 socket.io 在CentOS 7上的安装过程，需要启用EPEL仓库。 启用 EPELyum install -y epel-release 安装 nodejs, npmyum install -y nodejs npmnode --version    # 确认 nodejs 是否安装成功 安装 forever 守护进程npm install -g forever 安装并运行 re">
+<meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在CentOS 7上安装配置socket.io">
+<meta name="twitter:description" content="本文介绍 socket.io 在CentOS 7上的安装过程，需要启用EPEL仓库。 启用 EPELyum install -y epel-release 安装 nodejs, npmyum install -y nodejs npmnode --version    # 确认 nodejs 是否安装成功 安装 forever 守护进程npm install -g forever 安装并运行 re">
+<meta name="twitter:creator" content="@joelhy">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Carpe Diem." title="Carpe Diem."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/12/23/install-socket-io-on-centos7/" title="在CentOS 7上安装配置socket.io" itemprop="url">在CentOS 7上安装配置socket.io</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
+		
+  <p class="article-time">
+    <time datetime="2014-12-23T12:05:04.000Z" itemprop="datePublished"> Published 2014-12-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#启用-EPEL"><span class="toc-number">1.</span> <span class="toc-text">启用 EPEL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-nodejs-npm"><span class="toc-number">2.</span> <span class="toc-text">安装 nodejs, npm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-forever-守护进程"><span class="toc-number">3.</span> <span class="toc-text">安装 forever 守护进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装并运行-redis-服务-可安装到另一台服务器上"><span class="toc-number">4.</span> <span class="toc-text">安装并运行 redis 服务(可安装到另一台服务器上)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上传代码到服务器上"><span class="toc-number">5.</span> <span class="toc-text">上传代码到服务器上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行服务"><span class="toc-number">6.</span> <span class="toc-text">运行服务</span></a></li></ol>
+		
+		</div>
+		
+		<p>本文介绍 socket.io 在CentOS 7上的安装过程，需要启用<a href="https://fedoraproject.org/wiki/EPEL/zh-cn" target="_blank" rel="external">EPEL仓库</a>。</p>
+<h2 id="启用-EPEL"><a href="#启用-EPEL" class="headerlink" title="启用 EPEL"></a>启用 EPEL</h2><p><code>yum install -y epel-release</code></p>
+<h2 id="安装-nodejs-npm"><a href="#安装-nodejs-npm" class="headerlink" title="安装 nodejs, npm"></a>安装 nodejs, npm</h2><p><code>yum install -y nodejs npm</code><br><code>node --version    # 确认 nodejs 是否安装成功</code></p>
+<h2 id="安装-forever-守护进程"><a href="#安装-forever-守护进程" class="headerlink" title="安装 forever 守护进程"></a>安装 forever 守护进程</h2><p><code>npm install -g forever</code></p>
+<h2 id="安装并运行-redis-服务-可安装到另一台服务器上"><a href="#安装并运行-redis-服务-可安装到另一台服务器上" class="headerlink" title="安装并运行 redis 服务(可安装到另一台服务器上)"></a>安装并运行 redis 服务(可安装到另一台服务器上)</h2><p><code>yum install -y redis   # 安装 redis</code><br><code>systemctl enable redis    # 启用 redis 服务</code><br><code>systemctl start redis    # 运行 redis 服务</code></p>
+<h2 id="上传代码到服务器上"><a href="#上传代码到服务器上" class="headerlink" title="上传代码到服务器上"></a>上传代码到服务器上</h2><p><code>scp app.tar.bz2 root@192.168.56.101:/root/    # 192.168.56.101 需要改成实际的服务器IP地址</code><br><code>tar xvf app.tar.bz2    # 解压代码</code><br><code>cd app</code><br><code>npm install    # 安装软件包依赖</code><br>如果 redis 是安装到另外的服务器，则需要更改 index.js 中的 127.0.0.1 为 redis 服务器的 IP 地址</p>
+<h2 id="运行服务"><a href="#运行服务" class="headerlink" title="运行服务"></a>运行服务</h2><p>为保证系统重启后自动运行服务，需要配置systemd service:<br><code>cd /usr/lib/systemd/system</code><br>建立 service 文件：<br><code>vim napp.service</code><br>写入如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=socket.io server</div><div class="line">After=network.target redis.service</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=forking</div><div class="line">PIDFile=/run/napp.pid</div><div class="line">ExecStart=/usr/bin/forever start --pidFile /run/napp.pid /var/nodejs/napp/index.js</div><div class="line">ExecReload=/usr/bin/forever restart --pidFile /run/napp.pid /var/nodejs/napp/index.js</div><div class="line">ExecStop=/usr/bin/forever stop --pidFile /run/napp.pid /var/nodejs/napp/index.js</div><div class="line">PrivateTmp=true</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
+<p><code>systemctl enable napp.service    # 启用服务</code><br><code>systemctl start napp.service   # 运行服务</code><br><code>ss -atln | fgrep 3000</code><br>结果中如果有如下内容，则说明运行成功：<br><code>LISTEN     0      128                       *:3000                     *:*</code><br>否则说明运行失败，需要执行<code>systemctl status napp.service</code>，以查看运行日志</p>
+<p>当客户端的连接数非常多时，可改用 nginx做负载均衡服务器，详细的配置方式见 <a href="http://socket.io/docs/using-multiple-nodes/" target="_blank" rel="external">http://socket.io/docs/using-multiple-nodes/</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/nodejs/">nodejs</a><a href="/tags/socket-io/">socket.io</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"1744486440"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2133502" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/01/23/centos7-minimal-install/" title="CentOS 7 最小化安装">
+  <strong>上一篇：</strong><br/>
+  <span>
+  CentOS 7 最小化安装</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/12/03/php-x-sendfile/"  title="使用X-Sendfile机制加快PHP下文件的下载">
+ <strong>下一篇：</strong><br/> 
+ <span>使用X-Sendfile机制加快PHP下文件的下载
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#启用-EPEL"><span class="toc-number">1.</span> <span class="toc-text">启用 EPEL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-nodejs-npm"><span class="toc-number">2.</span> <span class="toc-text">安装 nodejs, npm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-forever-守护进程"><span class="toc-number">3.</span> <span class="toc-text">安装 forever 守护进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装并运行-redis-服务-可安装到另一台服务器上"><span class="toc-number">4.</span> <span class="toc-text">安装并运行 redis 服务(可安装到另一台服务器上)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上传代码到服务器上"><span class="toc-number">5.</span> <span class="toc-text">上传代码到服务器上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行服务"><span class="toc-number">6.</span> <span class="toc-text">运行服务</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="joelhy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ArchLinux/" title="ArchLinux">ArchLinux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MariaDB/" title="MariaDB">MariaDB<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cryptography/" title="Cryptography">Cryptography<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GBK/" title="GBK">GBK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Composer/" title="Composer">Composer<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+<div class="doubanshow">
+<p class="asidetitle">Douban Show</p>
+<div>
+<script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
+</div>
+</div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1744486440&verifier=ef05663d&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Carpe Diem. <br/>
+			by joelhy</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/g14npr" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/joelhy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/1662247" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/joelhy" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/Joelhy.Huang" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		
+		<a href="https://www.douban.com/people/joelhy" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="joelhy">joelhy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'g14npr';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c7994595385c35d684ab33f94761d2c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

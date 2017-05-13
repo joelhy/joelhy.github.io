@@ -1,0 +1,638 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Vagrant 基于 VirtualBox 制作的 Ubuntu 16.04 box 的安装笔记 | Carpe Diem.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="joelhy">
+    
+
+    
+    <meta name="description" content="安装 语言选择英语 按 F4，选择”Install a minimal system” 按 F6，选择”Expert mode” 国家选择 中国 locale 选择 en_US.UTF-8 Additional locales 选择 zh_CN.UTF-8, zh_CN.GB18030, zh_CN.GBK system locale 选择 en_US.UTF-8 跳过 Access softwa">
+<meta name="keywords" content="vagrant,Ubuntu,VirtualBox">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vagrant 基于 VirtualBox 制作的 Ubuntu 16.04 box 的安装笔记">
+<meta property="og:url" content="http://yoursite.com/2016/06/27/vagrant-ubuntu-box/index.html">
+<meta property="og:site_name" content="Carpe Diem.">
+<meta property="og:description" content="安装 语言选择英语 按 F4，选择”Install a minimal system” 按 F6，选择”Expert mode” 国家选择 中国 locale 选择 en_US.UTF-8 Additional locales 选择 zh_CN.UTF-8, zh_CN.GB18030, zh_CN.GBK system locale 选择 en_US.UTF-8 跳过 Access softwa">
+<meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vagrant 基于 VirtualBox 制作的 Ubuntu 16.04 box 的安装笔记">
+<meta name="twitter:description" content="安装 语言选择英语 按 F4，选择”Install a minimal system” 按 F6，选择”Expert mode” 国家选择 中国 locale 选择 en_US.UTF-8 Additional locales 选择 zh_CN.UTF-8, zh_CN.GB18030, zh_CN.GBK system locale 选择 en_US.UTF-8 跳过 Access softwa">
+<meta name="twitter:creator" content="@joelhy">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Carpe Diem." title="Carpe Diem."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/06/27/vagrant-ubuntu-box/" title="Vagrant 基于 VirtualBox 制作的 Ubuntu 16.04 box 的安装笔记" itemprop="url">Vagrant 基于 VirtualBox 制作的 Ubuntu 16.04 box 的安装笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
+		
+  <p class="article-time">
+    <time datetime="2016-06-27T03:21:39.000Z" itemprop="datePublished"> Published 2016-06-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh-远程登录支持"><span class="toc-number">2.1.</span> <span class="toc-text">ssh 远程登录支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更改-apt-源"><span class="toc-number">2.2.</span> <span class="toc-text">更改 apt 源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-oh-my-zsh"><span class="toc-number">2.3.</span> <span class="toc-text">安装 oh my zsh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置-oh-my-zsh"><span class="toc-number">2.4.</span> <span class="toc-text">配置 oh my zsh</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装其他软件包"><span class="toc-number">3.</span> <span class="toc-text">安装其他软件包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-php-redis-扩展"><span class="toc-number">3.1.</span> <span class="toc-text">安装 php-redis 扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-memcached-扩展"><span class="toc-number">3.2.</span> <span class="toc-text">安装 memcached 扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-msgpack-扩展"><span class="toc-number">3.3.</span> <span class="toc-text">安装 msgpack 扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-yar-扩展"><span class="toc-number">3.4.</span> <span class="toc-text">安装 yar 扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-composer"><span class="toc-number">3.5.</span> <span class="toc-text">安装 composer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-配置修改"><span class="toc-number">3.6.</span> <span class="toc-text">PHP 配置修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-配置"><span class="toc-number">3.7.</span> <span class="toc-text">MySQL 配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vagrant-打包-box"><span class="toc-number">4.</span> <span class="toc-text">vagrant 打包 box</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
+<li>语言选择英语</li>
+<li>按 F4，选择”Install a minimal system”</li>
+<li>按 F6，选择”Expert mode”</li>
+<li>国家选择 中国</li>
+<li>locale 选择 en_US.UTF-8</li>
+<li>Additional locales 选择 zh_CN.UTF-8, zh_CN.GB18030, zh_CN.GBK</li>
+<li>system locale 选择 en_US.UTF-8</li>
+<li>跳过 Access software for a blind person using a braille display</li>
+<li>选择不自动检测键盘布局</li>
+<li>Country of origin for the keyboard，选择 English (US)</li>
+<li>Installer components to load: 不选择任何组件</li>
+<li>Allow login as root? 选择 Yes</li>
+<li>Create a normal user account now? 选择 Yes</li>
+<li>Full name for the new user: 输入 vagrant</li>
+<li>Username for your account: 使用默认的 vagrant</li>
+<li>密码设置为: vagrant</li>
+<li>Use weak password? 选择 Yes</li>
+<li>Encrypt your home directory? 选择 No</li>
+<li>Set the clock using NTP? 选择 YES</li>
+<li>Partioning method: 选择 “Guided - use entire disk”</li>
+<li>Partioning scheme: 选择 “Separate /home partition”</li>
+<li>Kernel to install: 选择 “linux-generic”</li>
+<li>Drivers to include in the initrd: 选择 “generic: include all available drivers”</li>
+<li>Use a network mirror? 选择 “No”</li>
+<li>Services to use: 只启用 “security updates”</li>
+<li>How do you want to manage upgrades on this system? 选择 “No automatic updates”</li>
+<li>Choose software to install: 选择<ul>
+<li>OpenSSH server</li>
+</ul>
+</li>
+<li>Force GRUB installation to the EFI removable media path? 选择 No</li>
+<li>Is the system clock set to UTC? 选择 Yes</li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>以下操作除特别说明，都是以 root 账号操作。</p>
+<h3 id="ssh-远程登录支持"><a href="#ssh-远程登录支持" class="headerlink" title="ssh 远程登录支持"></a>ssh 远程登录支持</h3><ul>
+<li>选择虚拟机的网络配置，在默认的 NAT 网卡上添加端口映射 127.0.0.1:2222 =&gt; 22</li>
+<li>SSH 登录到虚拟机里： <code>ssh -p 2222 vagrant@127.0.0.1</code></li>
+<li>运行命令 su，以切换到 root 账号</li>
+<li>更改完后，重启操作系统</li>
+</ul>
+<blockquote>
+<p><strong>注:</strong> SSH 登录到虚拟机里是为了方便复制粘贴命令等操作；ubuntu 16.04 默认不允许 root 账号远程登录，故只能使用普通账号登录，再切换到 root 账号</p>
+</blockquote>
+<h3 id="更改-apt-源"><a href="#更改-apt-源" class="headerlink" title="更改 apt 源"></a>更改 apt 源</h3><ul>
+<li>备份 sources.list 文件： </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp sources.list&#123;,.`date +&apos;%F&apos;`&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>把以下内容写入到 sources.list 中</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse</div><div class="line">deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse</div><div class="line"># deb http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse</div><div class="line">deb http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse</div><div class="line">deb http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse</div><div class="line"></div><div class="line">#deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse</div><div class="line">#deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse</div><div class="line">#deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse</div><div class="line">#deb http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse</div><div class="line">#deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse</div></pre></td></tr></table></figure>
+<ul>
+<li>安装 vim: <code>apt-get install -y vim-nox</code></li>
+<li>安装 git:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apt-get install -y git</div><div class="line">apt-get install -y git-extras</div></pre></td></tr></table></figure>
+<ul>
+<li>保存 sources.list 后，运行 <code>apt-get update</code>命令</li>
+</ul>
+<h3 id="安装-oh-my-zsh"><a href="#安装-oh-my-zsh" class="headerlink" title="安装 oh my zsh"></a>安装 oh my zsh</h3><ul>
+<li>安装 zsh: <code>apt-get install zsh</code></li>
+<li>参照<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">官方文档</a>安装</li>
+<li>以 <strong>vagrant</strong> 账号运行如下命令：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh -c &quot;$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)&quot;</div></pre></td></tr></table></figure>
+<h3 id="配置-oh-my-zsh"><a href="#配置-oh-my-zsh" class="headerlink" title="配置 oh my zsh"></a>配置 oh my zsh</h3><ul>
+<li>更改 oh my zsh 主题： <code>vim ~/.zshrc</code>，把<code>ZSH_THEME=&quot;robbyrussell&quot;</code>改成 <code>ZSH_THEME=&quot;tjkirch_mod&quot;</code></li>
+<li>添加插件git-extras，即把 .zshrc 文件中的<code>plugins=(git)</code>改成<code>plugins=(git git-extras)</code></li>
+<li>取消 oh my zsh 的自动更新： 取消 .zshrc 文件中 <code>DISABLE_AUTO_UPDATE=&quot;true&quot;</code> 前的井号”#”</li>
+<li>设置编辑时使用的默认编辑器：往 .zshrc 文件末尾加上：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export EDITOR=&apos;vim&apos;</div><div class="line">export SYSTEMD_EDITOR=&quot;/usr/bin/vim&quot;</div><div class="line">export GIT_EDITOR=vim</div></pre></td></tr></table></figure>
+<ul>
+<li>切换到 root，创建 zsh 的相关软链接</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ln <span class="_">-s</span> /home/vagrant/.zshrc /root/.zshrc</div><div class="line">ln <span class="_">-s</span> /home/vagrant/.oh-my-zsh/ /root/.oh-my-zsh</div></pre></td></tr></table></figure>
+<ul>
+<li>退出账号，并重新登录，以使 shell 的设置更改生效</li>
+<li>vagrant 无密码 sudo 配置</li>
+</ul>
+<p>命令行运行 <code>visudo</code>，往文件的最末尾加上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vagrant ALL=(ALL) NOPASSWD: ALL</div></pre></td></tr></table></figure>
+<h2 id="安装其他软件包"><a href="#安装其他软件包" class="headerlink" title="安装其他软件包"></a>安装其他软件包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">apt-get install -y tree silversearcher-ag ack-grep net-tools dnsutils</div><div class="line">apt-get install -y git-svn subversion npm nodejs nodejs-legacy # nodejs-legacy 用于创建 /usr/bin/node 软链接</div><div class="line">apt-get install -y nginx mysql-client mysql-server memcached redis-server redis-tools</div><div class="line">systemctl enable nginx mysql memcached redis-server php7.0-fpm</div><div class="line">systemctl start nginx mysql memcached redis-server php7.0-fpm</div><div class="line">npm --registry=https://registry.npm.taobao.org install -g cnpm</div><div class="line">cnpm install -g bower gulp gitbook-cli</div><div class="line">apt-get install -y build-essential unzip p7zip-full p7zip-full</div><div class="line">apt-get install -y php php-cli php-fpm php-mcrypt php-mysql php-curl php-pear php-dev php-phpdbg php-mcrypt php-mbstring</div><div class="line"></div><div class="line">mkdir /usr/local/src/php7-exts # PHP 扩展安装目录</div></pre></td></tr></table></figure>
+<h3 id="安装-php-redis-扩展"><a href="#安装-php-redis-扩展" class="headerlink" title="安装 php-redis 扩展"></a>安装 php-redis 扩展</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">pecl install redis</div><div class="line"></div><div class="line"></div><div class="line">cat &gt; /etc/php/7.0/mods-available/redis.ini &lt;&lt; EOF</div><div class="line">; configuration for php common module</div><div class="line">; priority=20</div><div class="line">extension=redis.so</div><div class="line">EOF</div><div class="line"></div><div class="line">phpenmod redis # 等价于下面的2条命令</div><div class="line"># ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/cli/conf.d/20-redis.ini</div><div class="line"># ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/fpm/conf.d/20-redis.ini</div></pre></td></tr></table></figure>
+<h3 id="安装-memcached-扩展"><a href="#安装-memcached-扩展" class="headerlink" title="安装 memcached 扩展"></a>安装 memcached 扩展</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">apt-get install -y pkg-config libmemcached-dev</div><div class="line">cd /usr/local/src/php7-exts</div><div class="line">git clone -b php7 https://github.com/php-memcached-dev/php-memcached.git memcached</div><div class="line">cd memcached</div><div class="line">phpize</div><div class="line">./configure</div><div class="line">make &amp;&amp; make install</div><div class="line"></div><div class="line"></div><div class="line">cat &gt; /etc/php/7.0/mods-available/memcached.ini &lt;&lt; EOF</div><div class="line">; configuration for php common module</div><div class="line">; priority=20</div><div class="line">extension=memcached.so</div><div class="line">EOF</div><div class="line"></div><div class="line">phpenmod memcached</div></pre></td></tr></table></figure>
+<h3 id="安装-msgpack-扩展"><a href="#安装-msgpack-扩展" class="headerlink" title="安装 msgpack 扩展"></a>安装 msgpack 扩展</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">pecl install msgpack-beta</div><div class="line"></div><div class="line"></div><div class="line">cat &gt; /etc/php/7.0/mods-available/msgpack.ini &lt;&lt; EOF</div><div class="line">; configuration for php common module</div><div class="line">; priority=20</div><div class="line">extension=msgpack.so</div><div class="line">EOF</div><div class="line"></div><div class="line"></div><div class="line">phpenmod msgpack</div></pre></td></tr></table></figure>
+<h3 id="安装-yar-扩展"><a href="#安装-yar-扩展" class="headerlink" title="安装 yar 扩展"></a>安装 yar 扩展</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">apt-get install -y libcurl4-openssl-dev</div><div class="line">cd /usr/local/src/php7-exts</div><div class="line">git clone -b php7 https://github.com/laruence/yar.git yar</div><div class="line">cd yar</div><div class="line">phpize</div><div class="line">./configure</div><div class="line">make &amp;&amp; make install</div><div class="line"></div><div class="line"></div><div class="line">cat &gt; /etc/php/7.0/mods-available/yar.ini &lt;&lt; EOF</div><div class="line">; configuration for php common module</div><div class="line">; priority=20</div><div class="line">extension=yar.so</div><div class="line">EOF</div><div class="line"></div><div class="line"></div><div class="line">phpenmod yar</div></pre></td></tr></table></figure>
+<h3 id="安装-composer"><a href="#安装-composer" class="headerlink" title="安装 composer"></a>安装 composer</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">php -r &quot;copy(&apos;https://getcomposer.org/installer&apos;, &apos;composer-setup.php&apos;);&quot;</div><div class="line">php composer-setup.php</div><div class="line">php -r &quot;unlink(&apos;composer-setup.php&apos;);&quot;</div><div class="line">mv composer.phar /usr/local/bin/composer</div><div class="line"></div><div class="line"># 配置使用国内的Packagist镜像，以 vagrant 账号执行：</div><div class="line">composer config -g repo.packagist composer https://packagist.phpcomposer.com</div></pre></td></tr></table></figure>
+<h3 id="PHP-配置修改"><a href="#PHP-配置修改" class="headerlink" title="PHP 配置修改"></a>PHP 配置修改</h3><p>使用 vim 打开文件 <code>/etc/php/7.0/fpm/pool.d/www.conf</code>，然后把 <code>listen = /run/php/php7.0-fpm.sock</code> 改成 <code>listen = 127.0.0.1:9000</code></p>
+<h3 id="MySQL-配置"><a href="#MySQL-配置" class="headerlink" title="MySQL 配置"></a>MySQL 配置</h3><ul>
+<li>安全增强，命令行下运行命令：<code>mysql_secure_installation</code></li>
+</ul>
+<h2 id="vagrant-打包-box"><a href="#vagrant-打包-box" class="headerlink" title="vagrant 打包 box"></a>vagrant 打包 box</h2><ul>
+<li>安装 VBoxAddition: 宿主机上运行 <code>vagrant plugin install vagrant-vbguest</code>(vagrant-vbguest 会自动安装 VBoxAddtion)</li>
+<li>在虚拟机里运行： ssh-keygen 生成公钥、私钥</li>
+<li>在宿主机上执行： <code>vagrant package --base ubuntu_1604</code>, <code>ubuntu_1604</code> 是创建的虚拟机的名称</li>
+<li>Vagrantfile 使用 <a href="/attach/Vagrantfile">附件</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/vagrant/">vagrant</a><a href="/tags/Ubuntu/">Ubuntu</a><a href="/tags/VirtualBox/">VirtualBox</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"1744486440"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2133502" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/08/10/composer-private-packages-with-satis/" title="使用 satis 搭建 Composer 私有库">
+  <strong>上一篇：</strong><br/>
+  <span>
+  使用 satis 搭建 Composer 私有库</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/03/21/shift-crypto/"  title="移位密码解密题">
+ <strong>下一篇：</strong><br/> 
+ <span>移位密码解密题
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh-远程登录支持"><span class="toc-number">2.1.</span> <span class="toc-text">ssh 远程登录支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更改-apt-源"><span class="toc-number">2.2.</span> <span class="toc-text">更改 apt 源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-oh-my-zsh"><span class="toc-number">2.3.</span> <span class="toc-text">安装 oh my zsh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置-oh-my-zsh"><span class="toc-number">2.4.</span> <span class="toc-text">配置 oh my zsh</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装其他软件包"><span class="toc-number">3.</span> <span class="toc-text">安装其他软件包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-php-redis-扩展"><span class="toc-number">3.1.</span> <span class="toc-text">安装 php-redis 扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-memcached-扩展"><span class="toc-number">3.2.</span> <span class="toc-text">安装 memcached 扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-msgpack-扩展"><span class="toc-number">3.3.</span> <span class="toc-text">安装 msgpack 扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-yar-扩展"><span class="toc-number">3.4.</span> <span class="toc-text">安装 yar 扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-composer"><span class="toc-number">3.5.</span> <span class="toc-text">安装 composer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-配置修改"><span class="toc-number">3.6.</span> <span class="toc-text">PHP 配置修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-配置"><span class="toc-number">3.7.</span> <span class="toc-text">MySQL 配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vagrant-打包-box"><span class="toc-number">4.</span> <span class="toc-text">vagrant 打包 box</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="joelhy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ArchLinux/" title="ArchLinux">ArchLinux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MariaDB/" title="MariaDB">MariaDB<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cryptography/" title="Cryptography">Cryptography<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GBK/" title="GBK">GBK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Composer/" title="Composer">Composer<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+<div class="doubanshow">
+<p class="asidetitle">Douban Show</p>
+<div>
+<script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
+</div>
+</div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1744486440&verifier=ef05663d&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Carpe Diem. <br/>
+			by joelhy</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/g14npr" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/joelhy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/1662247" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/joelhy" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/Joelhy.Huang" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		
+		<a href="https://www.douban.com/people/joelhy" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="joelhy">joelhy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'g14npr';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c7994595385c35d684ab33f94761d2c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

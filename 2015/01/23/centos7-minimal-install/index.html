@@ -1,0 +1,590 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>CentOS 7 最小化安装 | Carpe Diem.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="joelhy">
+    
+
+    
+    <meta name="description" content="下载ISO文件及制作安装U盘下载ISO安装文件 使用浏览器打开CentOS下载页面 http://www.centos.org/download/ 点击页面中的Download the Minimal ISO链接 在打开的页面中选择一个下载镜像地址，建议选择Actual Country下面的地址，即从国内的下载镜像中下载，速度比较有保证。 以 http://mirrors.aliyun.com/c">
+<meta name="keywords" content="CentOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 7 最小化安装">
+<meta property="og:url" content="http://yoursite.com/2015/01/23/centos7-minimal-install/index.html">
+<meta property="og:site_name" content="Carpe Diem.">
+<meta property="og:description" content="下载ISO文件及制作安装U盘下载ISO安装文件 使用浏览器打开CentOS下载页面 http://www.centos.org/download/ 点击页面中的Download the Minimal ISO链接 在打开的页面中选择一个下载镜像地址，建议选择Actual Country下面的地址，即从国内的下载镜像中下载，速度比较有保证。 以 http://mirrors.aliyun.com/c">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/01.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/02.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/03.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/04.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/05.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/06.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/07.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/08.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/09.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/10.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/11.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/12.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/13.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/14.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/15.png">
+<meta property="og:image" content="http://yoursite.com/img/centos7_install/16.png">
+<meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS 7 最小化安装">
+<meta name="twitter:description" content="下载ISO文件及制作安装U盘下载ISO安装文件 使用浏览器打开CentOS下载页面 http://www.centos.org/download/ 点击页面中的Download the Minimal ISO链接 在打开的页面中选择一个下载镜像地址，建议选择Actual Country下面的地址，即从国内的下载镜像中下载，速度比较有保证。 以 http://mirrors.aliyun.com/c">
+<meta name="twitter:image" content="http://yoursite.com/img/centos7_install/01.png">
+<meta name="twitter:creator" content="@joelhy">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Carpe Diem." title="Carpe Diem."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/01/23/centos7-minimal-install/" title="CentOS 7 最小化安装" itemprop="url">CentOS 7 最小化安装</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
+		
+  <p class="article-time">
+    <time datetime="2015-01-23T03:08:49.000Z" itemprop="datePublished"> Published 2015-01-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载ISO文件及制作安装U盘"><span class="toc-number">1.</span> <span class="toc-text">下载ISO文件及制作安装U盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载ISO安装文件"><span class="toc-number">1.1.</span> <span class="toc-text">下载ISO安装文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作安装U盘"><span class="toc-number">1.2.</span> <span class="toc-text">制作安装U盘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小化安装CentOS"><span class="toc-number">2.</span> <span class="toc-text">最小化安装CentOS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CentOS7相对CentOS6-x的重大变化"><span class="toc-number">3.</span> <span class="toc-text">CentOS7相对CentOS6.x的重大变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置说明"><span class="toc-number">4.</span> <span class="toc-text">配置说明</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="下载ISO文件及制作安装U盘"><a href="#下载ISO文件及制作安装U盘" class="headerlink" title="下载ISO文件及制作安装U盘"></a>下载ISO文件及制作安装U盘</h2><h3 id="下载ISO安装文件"><a href="#下载ISO安装文件" class="headerlink" title="下载ISO安装文件"></a>下载ISO安装文件</h3><ol>
+<li>使用浏览器打开CentOS下载页面 <a href="http://www.centos.org/download/" target="_blank" rel="external">http://www.centos.org/download/</a></li>
+<li>点击页面中的<a href="http://isoredirect.centos.org/centos/7/isos/x86_64/" target="_blank" rel="external">Download the Minimal ISO</a>链接</li>
+<li>在打开的页面中选择一个下载镜像地址，建议选择<em>Actual Country</em>下面的地址，即从国内的下载镜像中下载，速度比较有保证。</li>
+<li>以 <a href="http://mirrors.aliyun.com/centos/7.0.1406/isos/x86_64/" target="_blank" rel="external">http://mirrors.aliyun.com/centos/7.0.1406/isos/x86_64/</a> 页面为例，打开后有各种ISO文件，用鼠标点击页面中的<em><a href="http://mirrors.aliyun.com/centos/7.0.1406/isos/x86_64/CentOS-7.0-1406-x86_64-Minimal.iso" target="_blank" rel="external">CentOS-7.0-1406-x86_64-Minimal.iso</a></em>即可下载ISO安装文件</li>
+</ol>
+<h3 id="制作安装U盘"><a href="#制作安装U盘" class="headerlink" title="制作安装U盘"></a>制作安装U盘</h3><ol>
+<li>安装U盘制作推荐使用dd，windows版的dd下载的地址为 <a href="http://www.chrysocome.net/download" target="_blank" rel="external">http://www.chrysocome.net/download</a></li>
+<li>进入ISO文件所在目录，如果是Linux系统，在命令行下执行：<code>dd bs=4M if=CentOS-7.0-1406-x86_64-Minimal.iso of=/dev/sdb &amp;&amp; sync</code>。<code>bs=4M</code>用于限制写入速度，如果不用这个参数限制写入速度，写入速度很快的话，有可能会有写入错误；sync用于强制将磁盘缓存数据写到U盘，命令执行完后没有调用这个命令的话，可能系统还没真正往U盘中写入数据。</li>
+<li>windows上U盘的制作可参照官方文档： <a href="http://wiki.centos.org/zh/HowTos/InstallFromUSBkey" target="_blank" rel="external">如何通过 USB 设备来安装 CentOS</a></li>
+</ol>
+<h2 id="最小化安装CentOS"><a href="#最小化安装CentOS" class="headerlink" title="最小化安装CentOS"></a>最小化安装CentOS</h2><ol>
+<li>BIOS中设置从U盘启动</li>
+<li>启动后进入安装选择界面，使用键盘上的上、下箭头选择图片中红色箭头所指的选项，按回车，就会进入图形化的安装界面。如果喜欢文本界面安装方式，则是在此页面时，按<code>Esc</code>键，在提示符<code>boot:</code>后输入<code>linux text</code>并按回车，即可进入文本界面安装方式。本文后续介绍的是默认的图形化安装方式，能够以文本界面方式安装的也不需要第三方的安装说明。<br><img src="/img/centos7_install/01.png" alt="安装选择界面"></li>
+<li>选择语言及区域，按默认的English/Engilsh(United States)即可，点击右下角的<code>Continue</code>按钮进入下一步<br><img src="/img/centos7_install/02.png" alt="语言及区域选择"></li>
+<li>时间时区设置<br>点击图中红色框框的<code>DATE &amp; TIME</code>进入时间时区设置页面<br><img src="/img/centos7_install/03.png" alt="时间时区设置入口"><br>鼠标点击选择图中箭头指向的点，此时左上角红色框框的是<code>Shanghai</code>，如果是<code>Taipei</code>则需要把鼠标往上移动一些重新点选<br><img src="/img/centos7_install/04.png" alt="时区设置"></li>
+<li>网络设置<br>点击图中红色框框的<code>NETWORK &amp; HOSTNAME</code>进入网络设置页面<br><img src="/img/centos7_install/05.png" alt="网络设置入口"><br>点击图中红色箭头所指按钮启用网络，点击右下角的<code>Configure...</code>按钮打开网卡的详细设置页面<br><img src="/img/centos7_install/06.png" alt="启用网络"><br>点击红色圆圈的复选框，启用网络的自动连接，如果不选择该项，系统安装完重启后，网卡是默认没启用的<br><img src="/img/centos7_install/07.png" alt="启用自动连接网络设置"></li>
+<li>硬盘分区设置<br>点击图中红色框框的<code>INSTALLATION DESTINATION</code>进入硬盘分区设置页面<br><img src="/img/centos7_install/08.png" alt="硬盘分区入口"><br>未使用过的硬盘CentOS默认选择自动给硬盘分区，如果只是测试用，直接点击左上角的<code>Done</code>按钮即可<br><img src="/img/centos7_install/09.png" alt="硬盘分区设置"></li>
+<li>开始安装<br>点击红色框框按钮，开始安装系统<br><img src="/img/centos7_install/10.png" alt="开始安装"></li>
+<li>帐号设置<br>点击红色框框的<code>ROOT PASSWORD</code>设置root用户的密码<br><img src="/img/centos7_install/11.png" alt="ROOT帐号密码设置入口"><br>设置ROOT帐号密码，密码长度最好大于或等于8个字符，同时包含大写、小写字母、数字以及特殊字符<br><img src="/img/centos7_install/12.png" alt="ROOT帐号密码设置界面"><br>点击红色框框的<code>USER CREATION</code>设置普通用户的密码<br><img src="/img/centos7_install/13.png" alt="普通帐号密码设置入口"><br>设置普通帐号密码<br><img src="/img/centos7_install/14.png" alt="普通帐号密码设置界面"><br>弱密码提醒：如果输入的密码太过简单，例如长度小于8个字符或者只包含数字，则在页面的下方会出现橘色的提示信息；如果一定要使用该弱密码，则需要点击左上角的<code>Done</code>按钮<strong>两</strong>次<br><img src="/img/centos7_install/15.png" alt="弱密码提醒"></li>
+<li>重启系统<br>等待蓝色安装进度条显示安装完成后，点击右下角的<code>Reboot</code>按钮重启系统就完成安装了。<br><img src="/img/centos7_install/16.png" alt="重启系统"></li>
+</ol>
+<h2 id="CentOS7相对CentOS6-x的重大变化"><a href="#CentOS7相对CentOS6-x的重大变化" class="headerlink" title="CentOS7相对CentOS6.x的重大变化"></a>CentOS7相对CentOS6.x的重大变化</h2><ol>
+<li>Linux 内核升级到 3.10.0，这意味着能够使用 Linux 容器技术 Docker</li>
+<li>支持从 CentOS 6.5 平滑升级到 CentOS 7</li>
+<li>System V init初始化服务换成<a href="http://www.freedesktop.org/wiki/Software/systemd/" target="_blank" rel="external">systemd</a>了，有涉及到个性化启动脚本的都需要重写，不过systemd相对System V启动脚本简单非常多，很容易转换过来</li>
+<li>默认的防火墙从iptable换成简单、易用的<a href="http://www.certdepot.net/rhel7-get-started-firewalld/" target="_blank" rel="external">firewalld</a>。firewalld 只是基于iptable的封装，底层仍然用的是iptable来和linux内核交互</li>
+<li>引导程序换成 grub2 了。建议把配置文件 /etc/default/grub 中的<code>GRUB_TIMEOUT=5</code>改成<code>GRUB_TIMEOUT=1</code>，改完后运行<code>grub2-mkconfig --output=/boot/grub2/grub.cfg</code>更新配置文件，以减少无谓的启动等待时间</li>
+<li>ifconfig 被 ip addr 替代，netstat 被 ss 替代，route 被 ip route替代，新的命令比旧命令更加易读、高效，且新的系统中默认都会带有ip addr, ss，旧的ifconfig, netstat等默认是没安装的。故建议尽量改用ip addr, ss来完成相应的功能。如果实在想用旧的ifconfig, ss命令，可安装软件包net-tools: <code>yum install -y net-tools</code></li>
+</ol>
+<h2 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h2><ol>
+<li>建议安装完成后，运行<code>yum update</code>更新系统</li>
+<li>建议启用epel仓库：<code>yum install -y epel-release</code></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/CentOS/">CentOS</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"1744486440"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2133502" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/01/23/qemu-kvm-install-guide/" title="KVM安装配置">
+  <strong>上一篇：</strong><br/>
+  <span>
+  KVM安装配置</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/12/23/install-socket-io-on-centos7/"  title="在CentOS 7上安装配置socket.io">
+ <strong>下一篇：</strong><br/> 
+ <span>在CentOS 7上安装配置socket.io
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载ISO文件及制作安装U盘"><span class="toc-number">1.</span> <span class="toc-text">下载ISO文件及制作安装U盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载ISO安装文件"><span class="toc-number">1.1.</span> <span class="toc-text">下载ISO安装文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作安装U盘"><span class="toc-number">1.2.</span> <span class="toc-text">制作安装U盘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小化安装CentOS"><span class="toc-number">2.</span> <span class="toc-text">最小化安装CentOS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CentOS7相对CentOS6-x的重大变化"><span class="toc-number">3.</span> <span class="toc-text">CentOS7相对CentOS6.x的重大变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置说明"><span class="toc-number">4.</span> <span class="toc-text">配置说明</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="joelhy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ArchLinux/" title="ArchLinux">ArchLinux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MariaDB/" title="MariaDB">MariaDB<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cryptography/" title="Cryptography">Cryptography<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GBK/" title="GBK">GBK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Composer/" title="Composer">Composer<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+<div class="doubanshow">
+<p class="asidetitle">Douban Show</p>
+<div>
+<script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
+</div>
+</div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1744486440&verifier=ef05663d&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Carpe Diem. <br/>
+			by joelhy</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/g14npr" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/joelhy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/1662247" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/joelhy" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/Joelhy.Huang" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		
+		<a href="https://www.douban.com/people/joelhy" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="joelhy">joelhy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'g14npr';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c7994595385c35d684ab33f94761d2c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

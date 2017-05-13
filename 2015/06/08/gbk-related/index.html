@@ -1,0 +1,557 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>GBK编码文件操作 | Carpe Diem.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="joelhy">
+    
+
+    
+    <meta name="description" content="本文介绍Linux上工作中针对GBK编码文件处理的相关工具使用技巧。 Sublime Text 自动加载GBK编码支持问题当使用ConvertToUTF8插件实现GBK编码支持时，每次打开一个GBK编码的文件前，Sublime Text都会提示一个编码选择框，例如：当需要打开的GBK编码文件很多时，每次都要选择编码就会影响效率及打断思维，因此最好能够直接识别成GBK编码而不需要选择。 解决打开~/">
+<meta name="keywords" content="GBK">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GBK编码文件操作">
+<meta property="og:url" content="http://yoursite.com/2015/06/08/gbk-related/index.html">
+<meta property="og:site_name" content="Carpe Diem.">
+<meta property="og:description" content="本文介绍Linux上工作中针对GBK编码文件处理的相关工具使用技巧。 Sublime Text 自动加载GBK编码支持问题当使用ConvertToUTF8插件实现GBK编码支持时，每次打开一个GBK编码的文件前，Sublime Text都会提示一个编码选择框，例如：当需要打开的GBK编码文件很多时，每次都要选择编码就会影响效率及打断思维，因此最好能够直接识别成GBK编码而不需要选择。 解决打开~/">
+<meta property="og:image" content="http://yoursite.com/img/sublime_text_show_selection.jpg">
+<meta property="og:image" content="http://yoursite.com/img/konsole_select_encoding.jpg">
+<meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GBK编码文件操作">
+<meta name="twitter:description" content="本文介绍Linux上工作中针对GBK编码文件处理的相关工具使用技巧。 Sublime Text 自动加载GBK编码支持问题当使用ConvertToUTF8插件实现GBK编码支持时，每次打开一个GBK编码的文件前，Sublime Text都会提示一个编码选择框，例如：当需要打开的GBK编码文件很多时，每次都要选择编码就会影响效率及打断思维，因此最好能够直接识别成GBK编码而不需要选择。 解决打开~/">
+<meta name="twitter:image" content="http://yoursite.com/img/sublime_text_show_selection.jpg">
+<meta name="twitter:creator" content="@joelhy">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Carpe Diem." title="Carpe Diem."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/08/gbk-related/" title="GBK编码文件操作" itemprop="url">GBK编码文件操作</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-08T10:49:14.000Z" itemprop="datePublished"> Published 2015-06-08</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sublime-Text-自动加载GBK编码支持"><span class="toc-number">1.</span> <span class="toc-text">Sublime Text 自动加载GBK编码支持</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题"><span class="toc-number">1.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决"><span class="toc-number">1.2.</span> <span class="toc-text">解决</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统编码为UTF-8时的GBK文件搜索"><span class="toc-number">2.</span> <span class="toc-text">系统编码为UTF-8时的GBK文件搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">2.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">2.2.</span> <span class="toc-text">方法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三"><span class="toc-number">2.3.</span> <span class="toc-text">方法三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qgit-显示GBK编码文件差异时乱码"><span class="toc-number">3.</span> <span class="toc-text">qgit 显示GBK编码文件差异时乱码</span></a></li></ol>
+		
+		</div>
+		
+		<p>本文介绍Linux上工作中针对GBK编码文件处理的相关工具使用技巧。</p>
+<h2 id="Sublime-Text-自动加载GBK编码支持"><a href="#Sublime-Text-自动加载GBK编码支持" class="headerlink" title="Sublime Text 自动加载GBK编码支持"></a>Sublime Text 自动加载GBK编码支持</h2><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>当使用ConvertToUTF8插件实现GBK编码支持时，每次打开一个GBK编码的文件前，Sublime Text都会提示一个编码选择框，例如：<br><img src="/img/sublime_text_show_selection.jpg" alt="Sublime Text 编码选择框"><br>当需要打开的GBK编码文件很多时，每次都要选择编码就会影响效率及打断思维，因此最好能够直接识别成GBK编码而不需要选择。</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>打开<code>~/.config/sublime-text-3/Packages/ConvertToUTF8/ConvertToUTF8.py</code>文件，注释掉<code>def check_encoding(view, encoding, confidence):</code>中的：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">else</span>:</div><div class="line">    <span class="keyword">if</span> not_detected:</div><div class="line">        <span class="comment"># using encoding detected by ST</span></div><div class="line">        encoding = view_encoding</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        show_selection(view, [</div><div class="line">            [<span class="string">'&#123;0&#125; (&#123;1:.0%&#125;)'</span>.format(encoding, confidence), encoding],</div><div class="line">            [<span class="string">'&#123;0&#125;'</span>.format(view_encoding), view_encoding]</div><div class="line">        ])</div><div class="line">        <span class="keyword">return</span></div></pre></td></tr></table></figure></p>
+<p>即改成如下形式：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_encoding</span><span class="params">(view, encoding, confidence)</span>:</span></div><div class="line">    view_encoding = view.encoding()</div><div class="line">    result = <span class="string">'Detected &#123;0&#125; vs &#123;1&#125; with &#123;2:.0%&#125; confidence'</span>.format(encoding, view_encoding, confidence) <span class="keyword">if</span> encoding <span class="keyword">else</span> <span class="string">'Encoding can not be detected'</span></div><div class="line">    view.set_status(<span class="string">'origin_encoding'</span>, result)</div><div class="line">    print(result)</div><div class="line">    not_detected = <span class="keyword">not</span> encoding <span class="keyword">or</span> confidence &lt; <span class="number">0.95</span> <span class="keyword">or</span> encoding == view_encoding</div><div class="line">    <span class="comment"># ST can't detect the encoding</span></div><div class="line">    <span class="keyword">if</span> view_encoding <span class="keyword">in</span> (<span class="string">'Undefined'</span>, view.settings().get(<span class="string">'fallback_encoding'</span>)):</div><div class="line">        <span class="keyword">if</span> not_detected:</div><div class="line">            show_selection(view)</div><div class="line">            <span class="keyword">return</span></div><div class="line">    <span class="comment">#else:</span></div><div class="line">        <span class="comment">#if not_detected:</span></div><div class="line">            <span class="comment"># using encoding detected by ST</span></div><div class="line">            <span class="comment">#encoding = view_encoding</span></div><div class="line">        <span class="comment">#else:</span></div><div class="line">            <span class="comment">#show_selection(view, [</span></div><div class="line">                <span class="comment">#['&#123;0&#125; (&#123;1:.0%&#125;)'.format(encoding, confidence), encoding],</span></div><div class="line">                <span class="comment">#['&#123;0&#125;'.format(view_encoding), view_encoding]</span></div><div class="line">            <span class="comment">#])</span></div><div class="line">            <span class="comment">#return</span></div><div class="line">    init_encoding_vars(view, encoding)</div></pre></td></tr></table></figure></p>
+<p>这样每次打开GBK编码就会自动识别，而不用手动选择编码了。</p>
+<h2 id="系统编码为UTF-8时的GBK文件搜索"><a href="#系统编码为UTF-8时的GBK文件搜索" class="headerlink" title="系统编码为UTF-8时的GBK文件搜索"></a>系统编码为UTF-8时的GBK文件搜索</h2><p>当操作系统的locale为UTF-8时，此时不能用grep, ack等直接搜索GBK编码的文件。</p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>在模拟终端(Konsole, GNOME Terminal)下执行<code>export LC_CTYPE=&quot;zh_CN.GBK&quot;</code>，并把终端的编码设置为’GBK’，例如下图在Konsole中设置编码：<br><img src="/img/konsole_select_encoding.jpg" alt="选择Konsole编码"></p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>以 LC_ALL=zh_CN.GBK konsole  方式 打开模拟终端。</p>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>基于 qt5 版的 konsole 不支持方法二的方式，需改成如下方式：</p>
+<ol>
+<li>新建profile，并把配置中的默认编码改成 gbk</li>
+<li>运行命令：<code>LC_CTYPE=&quot;zh_CN.GBK&quot; konsole --profile gbk</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/bash</div><div class="line">#LC_ALL=zh_CN.GB18030 konsole -e &quot;/usr/bin/bash&quot;</div><div class="line">LC_CTYPE=&quot;zh_CN.GBK&quot; konsole --profile gbk -e &quot;/usr/bin/bash&quot;</div><div class="line">#LC_CTYPE=&quot;zh_CN.GBK&quot; konsole --profile gbk</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="qgit-显示GBK编码文件差异时乱码"><a href="#qgit-显示GBK编码文件差异时乱码" class="headerlink" title="qgit 显示GBK编码文件差异时乱码"></a>qgit 显示GBK编码文件差异时乱码</h2><p>在命令行下切换到项目的根目录执行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cat &gt; .git/config &lt;&lt; EOF</div><div class="line">[i18n]</div><div class="line">    commitencoding = GB18030</div><div class="line">    logoutputencoding = GB18030</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/GBK/">GBK</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"1744486440"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2133502" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/06/18/backup-database-using-systemd-timer/" title="使用 systemd timer 备份数据库">
+  <strong>上一篇：</strong><br/>
+  <span>
+  使用 systemd timer 备份数据库</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/25/compile-php54/"  title="编译PHP 5.4.39">
+ <strong>下一篇：</strong><br/> 
+ <span>编译PHP 5.4.39
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sublime-Text-自动加载GBK编码支持"><span class="toc-number">1.</span> <span class="toc-text">Sublime Text 自动加载GBK编码支持</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题"><span class="toc-number">1.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决"><span class="toc-number">1.2.</span> <span class="toc-text">解决</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统编码为UTF-8时的GBK文件搜索"><span class="toc-number">2.</span> <span class="toc-text">系统编码为UTF-8时的GBK文件搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">2.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">2.2.</span> <span class="toc-text">方法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三"><span class="toc-number">2.3.</span> <span class="toc-text">方法三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qgit-显示GBK编码文件差异时乱码"><span class="toc-number">3.</span> <span class="toc-text">qgit 显示GBK编码文件差异时乱码</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="joelhy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ArchLinux/" title="ArchLinux">ArchLinux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MariaDB/" title="MariaDB">MariaDB<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cryptography/" title="Cryptography">Cryptography<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GBK/" title="GBK">GBK<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Composer/" title="Composer">Composer<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+<div class="doubanshow">
+<p class="asidetitle">Douban Show</p>
+<div>
+<script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
+</div>
+</div>
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1744486440&verifier=ef05663d&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Carpe Diem. <br/>
+			by joelhy</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/g14npr" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/joelhy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/1662247" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/joelhy" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/Joelhy.Huang" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		
+		<a href="https://www.douban.com/people/joelhy" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="joelhy">joelhy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'g14npr';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c7994595385c35d684ab33f94761d2c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
