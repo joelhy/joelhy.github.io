@@ -15,7 +15,7 @@
 <meta name="keywords" content="MHA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL MHA高可用架构">
-<meta property="og:url" content="http://yoursite.com/2015/02/06/mysql-mha/index.html">
+<meta property="og:url" content="http://joelhy.github.io/2015/02/06/mysql-mha/index.html">
 <meta property="og:site_name" content="Carpe Diem.">
 <meta property="og:description" content="MHA for MySQL是MySQL的一个高可用方案，本文介绍MHA的安装配置。MHA分管理节点和数据库节点，支持一主多从、多主多从等配置，本文为一主多从方式，原理都相同，详见官方文档。可实现主库挂掉之后自动将一个从库提升为主库，并自动保持新主库和从库的一致性。 环境介绍操作系统都为CentOS 7 x86_64，数据库版本为MariaDB 10，EPEL已启用（有些依赖的软件包需要从EPEL软">
 <meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
@@ -24,6 +24,8 @@
 <meta name="twitter:description" content="MHA for MySQL是MySQL的一个高可用方案，本文介绍MHA的安装配置。MHA分管理节点和数据库节点，支持一主多从、多主多从等配置，本文为一主多从方式，原理都相同，详见官方文档。可实现主库挂掉之后自动将一个从库提升为主库，并自动保持新主库和从库的一致性。 环境介绍操作系统都为CentOS 7 x86_64，数据库版本为MariaDB 10，EPEL已启用（有些依赖的软件包需要从EPEL软">
 <meta name="twitter:creator" content="@joelhy">
 
+    
+    <link rel="alternative" href="/atom.xml" title="Carpe Diem." type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -63,7 +65,7 @@
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:yoursite.com">
+						<input type="hidden" name="q" value="site:joelhy.github.io">
 					</form>
 					
 					</li>
@@ -222,16 +224,6 @@
 <aside class="clearfix">
 
   
-<div class="github-card">
-<p class="asidetitle">Github Card</p>
-<div class="github-card" data-github="joelhy" data-width="220" data-height="119" data-theme="medium">
-<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
-</div>
-  </div>
-
-
-
-  
 
   
 <div class="tagslist">
@@ -243,11 +235,11 @@
 			
 		
 			
-				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
+				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>3</sup></a></li>
+				<li><a href="/tags/benchmark/" title="benchmark">benchmark<sup>3</sup></a></li>
 			
 		
 			
@@ -263,11 +255,15 @@
 			
 		
 			
-				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
 			
 		
 			
@@ -275,15 +271,11 @@
 			
 		
 			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/socket-io/" title="socket.io">socket.io<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
 			
 		
 			
@@ -295,6 +287,10 @@
 			
 		
 			
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 			
 		
@@ -303,19 +299,15 @@
 			
 		
 			
-				<li><a href="/tags/Composer/" title="Composer">Composer<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+				<li><a href="/tags/Apache-Storm/" title="Apache Storm">Apache Storm<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/satis/" title="satis">satis<sup>1</sup></a></li>
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -338,6 +330,10 @@
 </div>
 </div>
 
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
 
   <div class="weiboshow">
   <p class="asidetitle">Weibo</p>
