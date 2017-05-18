@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://joelhy.github.io/"/>
-  <updated>2017-05-13T09:21:09.000Z</updated>
+  <updated>2017-05-18T01:01:03.000Z</updated>
   <id>http://joelhy.github.io/</id>
   
   <author>
@@ -14,6 +14,102 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>我的MBP基础软件安装记录</title>
+    <link href="http://joelhy.github.io/2017/05/18/MBP-software-install/"/>
+    <id>http://joelhy.github.io/2017/05/18/MBP-software-install/</id>
+    <published>2017-05-18T00:51:24.000Z</published>
+    <updated>2017-05-18T01:01:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul>
+<li>Tracepad<ul>
+<li>启用 Tap to click</li>
+<li>启用 三指移动窗口</li>
+</ul>
+</li>
+<li>Screensaver</li>
+<li>Hot corner<ul>
+<li>右上角关闭显示屏</li>
+<li>右下角启动屏保</li>
+</ul>
+</li>
+<li>Security -&gt; Lock Screen<ul>
+<li>时间改为5秒</li>
+</ul>
+</li>
+<li>iTerm2<ul>
+<li>背景改成半透明</li>
+</ul>
+</li>
+<li>Geany</li>
+</ul>
+<h2 id="基础软件安装"><a href="#基础软件安装" class="headerlink" title="基础软件安装"></a>基础软件安装</h2><h3 id="从-AppStore-安装"><a href="#从-AppStore-安装" class="headerlink" title="从 AppStore 安装"></a>从 AppStore 安装</h3><ul>
+<li>QQ</li>
+<li>WeChat</li>
+</ul>
+<h3 id="从官网安装"><a href="#从官网安装" class="headerlink" title="从官网安装"></a>从官网安装</h3><ul>
+<li>搜狗拼音输入法</li>
+<li>Homebrew<ul>
+<li>/usr/bin/ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/master/install" target="_blank" rel="external">https://raw.githubusercontent.com/Homebrew/install/master/install</a>)”</li>
+</ul>
+</li>
+<li>Homebrew-Cask<ul>
+<li>brew tap caskroom/cask</li>
+</ul>
+</li>
+<li>PHPStorm</li>
+<li>DataGrip</li>
+</ul>
+<h3 id="从第三方安装"><a href="#从第三方安装" class="headerlink" title="从第三方安装"></a>从第三方安装</h3><p>Microsoft Office 2016</p>
+<h3 id="从-Homebrew-安装"><a href="#从-Homebrew-安装" class="headerlink" title="从 Homebrew 安装"></a>从 Homebrew 安装</h3><ul>
+<li>brew install wget</li>
+<li>brew install tree</li>
+<li>brew install ag</li>
+<li>brew install ack</li>
+<li>brew install p7zip</li>
+<li>brew install unrar</li>
+<li>brew install enca</li>
+<li>brew install mtr</li>
+<li>brew install node</li>
+<li>brew install go</li>
+</ul>
+<h3 id="从-Homebrew-cask-安装"><a href="#从-Homebrew-cask-安装" class="headerlink" title="从 Homebrew-cask 安装"></a>从 Homebrew-cask 安装</h3><ul>
+<li>brew cask install iterm2</li>
+<li>brew cask install geany</li>
+<li>brew cask install firefox</li>
+<li>brew cask install virtualbox</li>
+<li>brew cask install typora</li>
+<li>brew cask install visual-studio-code<ul>
+<li>安装扩展<ul>
+<li>One Dark Pro</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>brew cask install xmind</li>
+<li>brew cask install mplayerx</li>
+<li>brew cask install vlc</li>
+<li>brew cask install sequel-pro</li>
+<li>brew cask install meld</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;配置&quot;&gt;&lt;a href=&quot;#配置&quot; class=&quot;headerlink&quot; title=&quot;配置&quot;&gt;&lt;/a&gt;配置&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tracepad&lt;ul&gt;
+&lt;li&gt;启用 Tap to click&lt;/li&gt;
+&lt;li&gt;启用 三指移动窗口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;
+    
+    </summary>
+    
+    
+      <category term="MBP" scheme="http://joelhy.github.io/tags/MBP/"/>
+    
+  </entry>
   
   <entry>
     <title>使用 satis 搭建 Composer 私有库</title>
@@ -926,96 +1022,6 @@ GoSublime
     
     
       <category term="Apache Storm" scheme="http://joelhy.github.io/tags/Apache-Storm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>FastDFS v5.06 部署</title>
-    <link href="http://joelhy.github.io/2015/01/27/FastDFS-v5-06-deploy/"/>
-    <id>http://joelhy.github.io/2015/01/27/FastDFS-v5-06-deploy/</id>
-    <published>2015-01-27T06:30:34.000Z</published>
-    <updated>2017-05-13T09:21:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="FastDFS-简介"><a href="#FastDFS-简介" class="headerlink" title="FastDFS 简介"></a>FastDFS 简介</h2><p>FastDFS是一个国产开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。FastDFS服务端有两个角色：跟踪器（tracker）和存储节点（storage）。跟踪器主要做调度工作，在访问上起负载均衡的作用。</p>
-<p>官方论坛： <a href="http://www.csource.org" target="_blank" rel="external">http://www.csource.org</a><br>下载地址: <a href="http://sourceforge.net/projects/fastdfs/files/" target="_blank" rel="external">http://sourceforge.net/projects/fastdfs/files/</a></p>
-<h3 id="github软件仓库"><a href="#github软件仓库" class="headerlink" title="github软件仓库"></a>github软件仓库</h3><ul>
-<li>libfastcommon – FastDFS和FastDHT的通用函数库，地址： <a href="https://github.com/happyfish100/libfastcommon.git" target="_blank" rel="external">https://github.com/happyfish100/libfastcommon.git</a></li>
-<li>FastDFS – FastDFS主代码，地址： <a href="https://github.com/happyfish100/fastdfs.git" target="_blank" rel="external">https://github.com/happyfish100/fastdfs.git</a></li>
-<li>fastdfs-nginx-module – FastDFS的nginx模块，地址：<a href="https://github.com/happyfish100/fastdfs-nginx-module.git" target="_blank" rel="external">https://github.com/happyfish100/fastdfs-nginx-module.git</a></li>
-</ul>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>本安装使用 CentOS 7 x86_64版操作系统，按照以下网络结构进行部署：<br><img src="/img/fastdfs_tracker-storage.png" alt="FastDFS网络结构"></p>
-<h3 id="下载安装文件"><a href="#下载安装文件" class="headerlink" title="下载安装文件"></a>下载安装文件</h3><p>FastDFS 5.x 取消了对 libevent 的依赖，添加了对 libfastcommon 的依赖。<br>本部署说明用到的软件版本：</p>
-<ul>
-<li>libfastcommon v1.13</li>
-<li>FastDFS v5.06</li>
-<li>fastdfs-nginx-module v1.17<br>可从上面的sourceforge或github中下载，或者直接下载本文附带的<a href="/attach/fdfs-5.06.tar.bz2">压缩包</a>。详细的安装说明可参照代码中的INSTALL。</li>
-</ul>
-<h3 id="安装FastDFS"><a href="#安装FastDFS" class="headerlink" title="安装FastDFS"></a>安装FastDFS</h3><p>在每一台tracker和storage服务器上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# tar xjvf fdfs-5.06.tar.bz2</div><div class="line">[root@localhost ~]# yum install -y gcc perl   # 安装依赖的软件包</div><div class="line">[root@localhost ~]# cd ~/fdfs/libfastcommon &amp;&amp; ./make.sh &amp;&amp; ./make.sh install</div><div class="line">[root@localhost ~]# cd ~/fdfs/fastdfs &amp;&amp; ./make.sh &amp;&amp; ./make.sh install</div></pre></td></tr></table></figure></p>
-<p>安装完成后，所有可执行文件在目录/usr/bin下，以fdfs_开头：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# ls /usr/bin/fdfs_*</div><div class="line">/usr/bin/fdfs_appender_test   /usr/bin/fdfs_monitor</div><div class="line">/usr/bin/fdfs_appender_test1  /usr/bin/fdfs_storaged</div><div class="line">/usr/bin/fdfs_append_file     /usr/bin/fdfs_test</div><div class="line">/usr/bin/fdfs_crc32           /usr/bin/fdfs_test1</div><div class="line">/usr/bin/fdfs_delete_file     /usr/bin/fdfs_trackerd</div><div class="line">/usr/bin/fdfs_download_file   /usr/bin/fdfs_upload_appender</div><div class="line">/usr/bin/fdfs_file_info       /usr/bin/fdfs_upload_file</div></pre></td></tr></table></figure></p>
-<p>配置文件在目录/etc/fdfs下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# ls /etc/fdfs</div><div class="line">client.conf.sample  storage.conf.sample  tracker.conf.sample</div></pre></td></tr></table></figure></p>
-<h2 id="FastDFS配置"><a href="#FastDFS配置" class="headerlink" title="FastDFS配置"></a>FastDFS配置</h2><h3 id="配置Tracker跟踪器"><a href="#配置Tracker跟踪器" class="headerlink" title="配置Tracker跟踪器"></a>配置Tracker跟踪器</h3><h4 id="开放tracker监听端口访问"><a href="#开放tracker监听端口访问" class="headerlink" title="开放tracker监听端口访问"></a>开放tracker监听端口访问</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --zone=public --add-port=22122/tcp --permanent</div><div class="line">firewall-cmd --reload</div></pre></td></tr></table></figure>
-<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mkdir -p /data/fastdfs</div><div class="line">cd /etc/fdfs</div><div class="line">cp tracker.conf.sample tracker.conf</div><div class="line">cp /root/fdfs/fastdfs/conf/http.conf .</div><div class="line">cp /root/fdfs/fastdfs/conf/mime.types .</div><div class="line">sed -i &apos;s:base_path=.*:base_path=/data/fastdfs:g&apos; tracker.conf</div><div class="line">sed -i &apos;s:http.server_port=.*:http.server_port=80:g&apos; tracker.conf</div></pre></td></tr></table></figure>
-<h4 id="设置开机自启动"><a href="#设置开机自启动" class="headerlink" title="设置开机自启动"></a>设置开机自启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">bash -c &apos;cat &gt; /usr/lib/systemd/system/fdfs_trackerd.service &lt;&lt; EOF</div><div class="line">[Unit]</div><div class="line">Description=fastdfs tracker server</div><div class="line">After=network.target</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=forking</div><div class="line">PIDFile=/data/fastdfs/data/fdfs_trackerd.pid</div><div class="line">ExecStart=/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf</div><div class="line">ExecReload=/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf restart</div><div class="line">ExecStop=/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf stop</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div><div class="line">EOF&apos;</div><div class="line">systemctl enable fdfs_trackerd.service</div><div class="line">systemctl start fdfs_trackerd.service</div></pre></td></tr></table></figure>
-<h4 id="确认tracker是否启动成功"><a href="#确认tracker是否启动成功" class="headerlink" title="确认tracker是否启动成功"></a>确认tracker是否启动成功</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /data/fastdfs/logs/trackerd.log</div></pre></td></tr></table></figure>
-<h4 id="安装并配置-nginx-反向代理"><a href="#安装并配置-nginx-反向代理" class="headerlink" title="安装并配置 nginx 反向代理"></a>安装并配置 nginx 反向代理</h4><ul>
-<li><p>防火墙开放http服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --permanent --zone=public --add-service=http</div><div class="line">firewall-cmd --reload</div></pre></td></tr></table></figure>
-</li>
-<li><p>安装并启用nginx</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yum install -y epel-release    # 安装 EPEL 软件仓库</div><div class="line">yum install -y nginx</div><div class="line">systemctl enable nginx</div><div class="line">systemctl start nginx</div></pre></td></tr></table></figure>
-</li>
-<li><p>配置反向代理<br>打开 /etc/nginx/nginx.conf，在 http {} 中添加：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">upstream fdfs &#123;</div><div class="line">    server   192.168.71.127:80;</div><div class="line">    server   192.168.71.128:80;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>在 server{} 中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location /M00 &#123;</div><div class="line">    proxy_pass http://fdfs;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="配置Storage存储节点"><a href="#配置Storage存储节点" class="headerlink" title="配置Storage存储节点"></a>配置Storage存储节点</h3><h4 id="开放tracker监听端口访问-1"><a href="#开放tracker监听端口访问-1" class="headerlink" title="开放tracker监听端口访问"></a>开放tracker监听端口访问</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --zone=public --add-port=23000/tcp --permanent</div><div class="line">firewall-cmd --reload</div></pre></td></tr></table></figure>
-<h4 id="修改配置文件-1"><a href="#修改配置文件-1" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mkdir -p /data/fastdfs</div><div class="line">cd /etc/fdfs</div><div class="line">cp storage.conf.sample storage.conf</div><div class="line">cp /root/fastdfs/fastdfs/conf/http.conf .</div><div class="line">cp /root/fastdfs/fastdfs/conf/mime.types .</div><div class="line">sed -i &apos;s:base_path=.*:base_path=/data/fastdfs:g&apos; storage.conf</div><div class="line">sed -i &apos;s:store_path0=.*:store_path0=/data/fastdfs:g&apos; storage.conf</div><div class="line">sed -i &apos;s/tracker_server=.*/tracker_server=192.168.71.126:22122/g&apos; storage.conf</div><div class="line">sed -i &apos;s:http.server_port=.*:http.server_port=80:g&apos; storage.conf</div></pre></td></tr></table></figure>
-<h4 id="设置开机自启动-1"><a href="#设置开机自启动-1" class="headerlink" title="设置开机自启动"></a>设置开机自启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">bash -c &apos;cat &gt; /usr/lib/systemd/system/fdfs_storaged.service &lt;&lt; EOF</div><div class="line">[Unit]</div><div class="line">Description=fastdfs storage server</div><div class="line">After=network.target</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=forking</div><div class="line">PIDFile=/data/fastdfs/data/fdfs_storaged.pid</div><div class="line">ExecStart=/usr/bin/fdfs_storaged /etc/fdfs/storage.conf</div><div class="line">ExecReload=/usr/bin/fdfs_storaged /etc/fdfs/storage.conf restart</div><div class="line">ExecStop=/usr/bin/fdfs_storaged /etc/fdfs/storage.conf stop</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div><div class="line">EOF&apos;</div><div class="line">systemctl enable fdfs_storaged.service</div><div class="line">systemctl start fdfs_storaged.service</div></pre></td></tr></table></figure>
-<h4 id="确认storage是否启动成功"><a href="#确认storage是否启动成功" class="headerlink" title="确认storage是否启动成功"></a>确认storage是否启动成功</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /data/fastdfs/logs/storaged.log</div></pre></td></tr></table></figure>
-<h3 id="client客户端配置"><a href="#client客户端配置" class="headerlink" title="client客户端配置"></a>client客户端配置</h3><p>在tracker, storage之外的一台主机上安装FastDFS，然后执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mkdir -p /data/fastdfs</div><div class="line">cd /etc/fdfs</div><div class="line">cp client.conf.sample client.conf</div><div class="line">sed -i &apos;s:base_path=.*:base_path=/data/fastdfs:g&apos; client.conf</div><div class="line">sed -i &apos;s/tracker_server=.*/tracker_server=192.168.71.126:22122/g&apos; client.conf</div></pre></td></tr></table></figure></p>
-<h3 id="FastDFS测试"><a href="#FastDFS测试" class="headerlink" title="FastDFS测试"></a>FastDFS测试</h3><ul>
-<li><p>上传测试:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">joelhy@arminix: ~ $ fdfs_upload_file /etc/fdfs/client.conf pom.xml</div><div class="line">group1/M00/00/00/wKhHf1S-oryAZCpgAAAE2uRlJkA126.xml</div></pre></td></tr></table></figure>
-</li>
-<li><p>查看文件信息:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">joelhy@arminix: ~ $ fdfs_file_info /etc/fdfs/client.conf</div><div class="line">group1/M00/00/00/wKhHf1S-oryAZCpgAAAE2uRlJkA126.xml</div><div class="line">source storage id: 0</div><div class="line">source ip address: 192.168.71.127</div><div class="line">file create timestamp: 2015-01-26 02:47:24</div><div class="line">file size: 1242</div><div class="line">file crc32: 3831834176 (0xE4652640)</div></pre></td></tr></table></figure>
-</li>
-<li><p>下载测试:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">joelhy@arminix: ~ $ fdfs_download_file /etc/fdfs/client.conf \</div><div class="line">    group1/M00/00/00/wKhHf1S-oryAZCpgAAAE2uRlJkA126.xml downtest.xml</div><div class="line">joelhy@arminix: ~ $ ls</div><div class="line">downtest.xml</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="FastDFS客户端"><a href="#FastDFS客户端" class="headerlink" title="FastDFS客户端"></a>FastDFS客户端</h2><h3 id="PHP扩展安装"><a href="#PHP扩展安装" class="headerlink" title="PHP扩展安装"></a>PHP扩展安装</h3><p>client主机上安装的是php v5.4.33<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd ~/fdfs/FastDFS/php_client</div><div class="line">/usr/local/php-5.4.33/bin/phpize</div><div class="line">./configure  --with-php-config=/usr/local/php-5.4.33/bin/php-config</div><div class="line">make &amp;&amp; make install</div><div class="line">mkdir /usr/local/php-5.4.33/etc/conf.d</div><div class="line">cp fastdfs_client.ini /usr/local/php-5.4.33/etc/conf.d</div></pre></td></tr></table></figure></p>
-<h3 id="PHP扩展使用"><a href="#PHP扩展使用" class="headerlink" title="PHP扩展使用"></a>PHP扩展使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">// fastdfs.php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fdfs</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> $fdfs, $tracker, $storage;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;fdfs = <span class="keyword">new</span> FastDFS();</div><div class="line"></div><div class="line">        <span class="comment">// get a connected tracker server</span></div><div class="line">        <span class="keyword">$this</span>-&gt;tracker = <span class="keyword">$this</span>-&gt;fdfs-&gt;tracker_get_connection();</div><div class="line">        <span class="keyword">if</span> (!<span class="keyword">$this</span>-&gt;tracker) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">'cannot connect to tracker server:['</span> .  </div><div class="line">                <span class="keyword">$this</span>-&gt;fdfs-&gt;get_last_error_no() . <span class="string">'] '</span> . </div><div class="line">                <span class="keyword">$this</span>-&gt;fdfs-&gt;get_last_error_info());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// get the storage server info and connect to it</span></div><div class="line">        <span class="keyword">$this</span>-&gt;storage = <span class="keyword">$this</span>-&gt;fdfs-&gt;tracker_query_storage_store();</div><div class="line">        <span class="keyword">$this</span>-&gt;server = <span class="keyword">$this</span>-&gt;fdfs-&gt;connect_server(</div><div class="line">            <span class="keyword">$this</span>-&gt;storage[<span class="string">'ip_addr'</span>], <span class="keyword">$this</span>-&gt;storage[<span class="string">'port'</span>]);</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;server === <span class="keyword">false</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">'cannot connect to storage server'</span> . </div><div class="line">                <span class="keyword">$this</span>-&gt;storage[<span class="string">'ip_addr'</span>] . <span class="string">':'</span> . </div><div class="line">                <span class="keyword">$this</span>-&gt;storage[<span class="string">'port'</span>] .  <span class="string">' :['</span> .  </div><div class="line">                <span class="keyword">$this</span>-&gt;fdfs-&gt;get_last);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">$this</span>-&gt;storage[<span class="string">'sock'</span>] = <span class="keyword">$this</span>-&gt;server[<span class="string">'sock'</span>];</div><div class="line">    &#125;</div><div class="line">   </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">upload</span><span class="params">($localfile, $ext_name)</span> </span>&#123;</div><div class="line">        <span class="comment">//$info = $this-&gt;fdfs-&gt;storage_upload_by_filename($localfile);</span></div><div class="line">        $info = <span class="keyword">$this</span>-&gt;fdfs-&gt;storage_upload_by_filename($localfile, $ext_name, </div><div class="line">            <span class="keyword">array</span>(), <span class="keyword">null</span>, <span class="keyword">$this</span>-&gt;tracker, <span class="keyword">$this</span>-&gt;storage);</div><div class="line">        <span class="keyword">if</span> (is_array($info)) &#123;</div><div class="line">            $group_name = $info[<span class="string">'group_name'</span>];</div><div class="line">            $remote_filename = $info[<span class="string">'filename'</span>];</div><div class="line">            $source_info = <span class="keyword">$this</span>-&gt;fdfs-&gt;get_file_info($group_name, </div><div class="line">                $remote_filename);</div><div class="line">            $source_ip = $source_info[<span class="string">'source_ip_addr'</span>];</div><div class="line">            $file_size = $source_info[<span class="string">'file_size'</span>];</div><div class="line">            <span class="keyword">return</span> compact(<span class="string">'group_name'</span>, <span class="string">'remote_filename'</span>, </div><div class="line">                <span class="string">'source_ip'</span>, <span class="string">'file_size'</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">download_to_buff</span><span class="params">($group_name, $remote_filename)</span> </span>&#123;</div><div class="line">        $content = <span class="keyword">$this</span>-&gt;fdfs-&gt;storage_download_file_to_buff(</div><div class="line">            $group_name, $remote_filename);</div><div class="line">        <span class="keyword">return</span> $content;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">download_to_file</span><span class="params">($group_name, </span></span></div><div class="line">            $remote_filename, $dst_localfile) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;fdfs-&gt;storage_download_file_to_file($group_name, </div><div class="line">            $remote_filename, $dst_localfile);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">delete</span><span class="params">($group_name, $remote_filename)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;fdfs-&gt;storage_delete_file($group_name, $remote_filename);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">exists</span><span class="params">($group_name, $remote_filename)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;fdfs-&gt;storage_file_exist($group_name, $remote_filename);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get_file_info</span><span class="params">($group_name, $remote_filename)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;fdfs-&gt;get_file_info($group_name, $remote_filename);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="PHP客户端上传图片测试"><a href="#PHP客户端上传图片测试" class="headerlink" title="PHP客户端上传图片测试"></a>PHP客户端上传图片测试</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># cat test.php</div><div class="line">&lt;?php</div><div class="line">require_once(&apos;fastdfs.php&apos;);</div><div class="line"></div><div class="line">$fdfs = new FDFS();</div><div class="line"></div><div class="line">$localfile = &apos;./test.xml&apos;;</div><div class="line">$fileinfo = $fdfs-&gt;upload($localfile);</div><div class="line"></div><div class="line">if ($fileinfo) &#123;</div><div class="line">  // update file info in the database etc</div><div class="line">&#125;</div><div class="line"></div><div class="line">var_dump($fileinfo);</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># php test.php </div><div class="line">array(4) &#123;</div><div class="line">  [&quot;group_name&quot;]=&gt;</div><div class="line">  string(6) &quot;group1&quot;</div><div class="line">  [&quot;remote_filename&quot;]=&gt;</div><div class="line">  string(44) &quot;M00/00/00/wKhHf1S-qbuAISbeAAAE2uRlJkA789.xml&quot;</div><div class="line">  [&quot;source_ip&quot;]=&gt;</div><div class="line">  string(14) &quot;192.168.71.127&quot;</div><div class="line">  [&quot;file_size&quot;]=&gt;</div><div class="line">  int(1242)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="fastdfs-nginx-module-安装配置"><a href="#fastdfs-nginx-module-安装配置" class="headerlink" title="fastdfs-nginx-module 安装配置"></a>fastdfs-nginx-module 安装配置</h2><p>fastdfs-nginx-module用于解决同步延迟问题：</p>
-<blockquote>
-<blockquote>
-<p>同组之间的服务器需要复制文件,有延迟的问题.<br>假设Tracker服务器将文件上传到了192.168.1.80,文件ID已经返回客户端,<br>这时,后台会将这个文件复制到192.168.1.30,如果复制没有完成,客户端就用这个ID在192.168.1.30取文件,肯定会出现错误<br>这个fastdfs-nginx-module可以重定向连接到源服务器取文件,避免客户端由于复制延迟的问题,出现错误。</p>
-</blockquote>
-</blockquote>
-<p>fastdfs-nginx-module模块只需要安装到storage上。</p>
-<h3 id="storage-server-安装-nginx-服务器"><a href="#storage-server-安装-nginx-服务器" class="headerlink" title="storage server 安装 nginx 服务器"></a>storage server 安装 nginx 服务器</h3><h3 id="防火墙开放http服务"><a href="#防火墙开放http服务" class="headerlink" title="防火墙开放http服务"></a>防火墙开放http服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --permanent --zone=public --add-service=http</div><div class="line">firewall-cmd --reload</div></pre></td></tr></table></figure>
-<h3 id="安装并启用nginx"><a href="#安装并启用nginx" class="headerlink" title="安装并启用nginx"></a>安装并启用nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yum install -y epel-release    # 安装 EPEL 软件仓库</div><div class="line">yum install -y nginx</div><div class="line">systemctl enable nginx</div><div class="line">systemctl start nginx</div></pre></td></tr></table></figure>
-<h3 id="查看前面安装的nginx编译参数"><a href="#查看前面安装的nginx编译参数" class="headerlink" title="查看前面安装的nginx编译参数"></a>查看前面安装的nginx编译参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# nginx -V</div><div class="line">nginx version: nginx/1.6.2</div><div class="line">built by gcc 4.8.2 20140120 (Red Hat 4.8.2-16) (GCC) </div><div class="line">TLS SNI support enabled</div><div class="line">configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/tmp/client_body --http-proxy-temp-path=/var/lib/nginx/tmp/proxy --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi --http-scgi-temp-path=/var/lib/nginx/tmp/scgi --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=nginx --group=nginx --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module --with-http_image_filter_module --with-http_geoip_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_perl_module --with-mail --with-mail_ssl_module --with-pcre --with-google_perftools_module --with-debug --with-cc-opt=&apos;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m64 -mtune=generic&apos; --with-ld-opt=&apos;-Wl,-z,relro -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -Wl,-E&apos;</div></pre></td></tr></table></figure>
-<h3 id="下载nginx源码"><a href="#下载nginx源码" class="headerlink" title="下载nginx源码"></a>下载nginx源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -O http://nginx.org/download/nginx-1.6.2.tar.gz</div></pre></td></tr></table></figure>
-<h3 id="安装nginx依赖的软件包"><a href="#安装nginx依赖的软件包" class="headerlink" title="安装nginx依赖的软件包"></a>安装nginx依赖的软件包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yum install -y redhat-rpm-config pcre-devel openssl-devel libxml2-devel \</div><div class="line">    libxslt-devel gd-devel perl-ExtUtils-Embed GeoIP-devel gperftools \</div><div class="line">    gperftools-devel</div></pre></td></tr></table></figure>
-<h3 id="重新编译nginx"><a href="#重新编译nginx" class="headerlink" title="重新编译nginx"></a>重新编译nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">tar xvf nginx-1.6.2.tar.gz</div><div class="line">cd nginx-1.6.2</div><div class="line">./configure --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/tmp/client_body --http-proxy-temp-path=/var/lib/nginx/tmp/proxy --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi --http-scgi-temp-path=/var/lib/nginx/tmp/scgi --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=nginx --group=nginx --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module --with-http_image_filter_module --with-http_geoip_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_perl_module --with-mail --with-mail_ssl_module --with-pcre --with-google_perftools_module --with-debug --with-cc-opt=&apos;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m64 -mtune=generic&apos; --with-ld-opt=&apos;-Wl,-z,relro -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -Wl,-E&apos; --add-module=/root/fastdfs/fastdfs-nginx-module/src</div><div class="line"></div><div class="line">mv /usr/sbin/nginx /usr/sbin/nginx.`date +&apos;%Y%m%d&apos;`</div><div class="line">cp objs/nginx /usr/sbin/nginx</div></pre></td></tr></table></figure>
-<h3 id="fastdfs模块配置"><a href="#fastdfs模块配置" class="headerlink" title="fastdfs模块配置"></a>fastdfs模块配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cp /root/fastdfs/fastdfs-nginx-module/src/mod_fastdfs.conf /etc/fdfs/</div><div class="line">touch /data/fastdfs/logs/mod_fastdfs.log</div><div class="line">chown nginx:nginx /data/fastdfs/logs/mod_fastdfs.log</div><div class="line">vi /etc/fdfs/mod_fastdfs.conf</div></pre></td></tr></table></figure>
-<p>修改:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">base_path=/data/fastdfs</div><div class="line">tracker_server=192.168.71.126:22122</div><div class="line">store_path0=/data/fastdfs</div><div class="line">log_filename=/data/fastdfs/logs/mod_fastdfs.log</div></pre></td></tr></table></figure></p>
-<h3 id="Storage服务器nginx配置"><a href="#Storage服务器nginx配置" class="headerlink" title="Storage服务器nginx配置"></a>Storage服务器nginx配置</h3><p>server{} 里添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">location /M00 &#123;</div><div class="line">   alias /data/fastdfs/data;</div><div class="line">   ngx_fastdfs_module;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="重启Nginx"><a href="#重启Nginx" class="headerlink" title="重启Nginx"></a>重启Nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">systemctl stop nginx</div><div class="line">systemctl start nginx</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;FastDFS-简介&quot;&gt;&lt;a href=&quot;#FastDFS-简介&quot; class=&quot;headerlink&quot; title=&quot;FastDFS 简介&quot;&gt;&lt;/a&gt;FastDFS 简介&lt;/h2&gt;&lt;p&gt;FastDFS是一个国产开源的轻量级分布式文件系统，它对文件进行管理，功能包
-    
-    </summary>
-    
-    
-      <category term="FastDFS" scheme="http://joelhy.github.io/tags/FastDFS/"/>
     
   </entry>
   

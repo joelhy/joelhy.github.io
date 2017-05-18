@@ -4,24 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>PHP memcache扩展和memcached扩展比较 | Carpe Diem.</title>
+    <title>我的MBP基础软件安装记录 | Carpe Diem.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="joelhy">
     
 
     
-    <meta name="description" content="PHP有两个memcache相关的扩展：memcache 和 memcached (多了个英文字母d)。两者都是用来连接 memcache服务器的。他们的区别如下：  memcached 扩展只能用于 Linux系统，memcache 扩展既可以用于 windows 也可以用于 Linux。之所以 memcached扩展，只能用于 Linux是因为 它依赖于Linux下的 libmemcached">
-<meta name="keywords" content="PHP">
+    <meta name="description" content="配置 Tracepad 启用 Tap to click 启用 三指移动窗口   Screensaver Hot corner 右上角关闭显示屏 右下角启动屏保   Security -&amp;gt; Lock Screen 时间改为5秒   iTerm2 背景改成半透明   Geany  基础软件安装从 AppStore 安装 QQ WeChat  从官网安装 搜狗拼音输入法 Homebrew /usr">
+<meta name="keywords" content="MBP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP memcache扩展和memcached扩展比较">
-<meta property="og:url" content="http://joelhy.github.io/2014/11/18/php-memcache-vs-memcached/index.html">
+<meta property="og:title" content="我的MBP基础软件安装记录">
+<meta property="og:url" content="http://joelhy.github.io/2017/05/18/MBP-software-install/index.html">
 <meta property="og:site_name" content="Carpe Diem.">
-<meta property="og:description" content="PHP有两个memcache相关的扩展：memcache 和 memcached (多了个英文字母d)。两者都是用来连接 memcache服务器的。他们的区别如下：  memcached 扩展只能用于 Linux系统，memcache 扩展既可以用于 windows 也可以用于 Linux。之所以 memcached扩展，只能用于 Linux是因为 它依赖于Linux下的 libmemcached">
-<meta property="og:updated_time" content="2017-05-13T09:21:09.000Z">
+<meta property="og:description" content="配置 Tracepad 启用 Tap to click 启用 三指移动窗口   Screensaver Hot corner 右上角关闭显示屏 右下角启动屏保   Security -&amp;gt; Lock Screen 时间改为5秒   iTerm2 背景改成半透明   Geany  基础软件安装从 AppStore 安装 QQ WeChat  从官网安装 搜狗拼音输入法 Homebrew /usr">
+<meta property="og:updated_time" content="2017-05-18T01:01:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP memcache扩展和memcached扩展比较">
-<meta name="twitter:description" content="PHP有两个memcache相关的扩展：memcache 和 memcached (多了个英文字母d)。两者都是用来连接 memcache服务器的。他们的区别如下：  memcached 扩展只能用于 Linux系统，memcache 扩展既可以用于 windows 也可以用于 Linux。之所以 memcached扩展，只能用于 Linux是因为 它依赖于Linux下的 libmemcached">
+<meta name="twitter:title" content="我的MBP基础软件安装记录">
+<meta name="twitter:description" content="配置 Tracepad 启用 Tap to click 启用 三指移动窗口   Screensaver Hot corner 右上角关闭显示屏 右下角启动屏保   Security -&amp;gt; Lock Screen 时间改为5秒   iTerm2 背景改成半透明   Geany  基础软件安装从 AppStore 安装 QQ WeChat  从官网安装 搜狗拼音输入法 Homebrew /usr">
 <meta name="twitter:creator" content="@joelhy">
 
     
@@ -80,14 +80,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/18/php-memcache-vs-memcached/" title="PHP memcache扩展和memcached扩展比较" itemprop="url">PHP memcache扩展和memcached扩展比较</a>
+      <a href="/2017/05/18/MBP-software-install/" title="我的MBP基础软件安装记录" itemprop="url">我的MBP基础软件安装记录</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
 		
   <p class="article-time">
-    <time datetime="2014-11-18T06:11:30.000Z" itemprop="datePublished"> Published 2014-11-18</time>
+    <time datetime="2017-05-18T00:51:24.000Z" itemprop="datePublished"> Published 2017-05-18</time>
     
   </p>
 </header>
@@ -96,20 +96,81 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础软件安装"><span class="toc-number">2.</span> <span class="toc-text">基础软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从-AppStore-安装"><span class="toc-number">2.1.</span> <span class="toc-text">从 AppStore 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从官网安装"><span class="toc-number">2.2.</span> <span class="toc-text">从官网安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从第三方安装"><span class="toc-number">2.3.</span> <span class="toc-text">从第三方安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从-Homebrew-安装"><span class="toc-number">2.4.</span> <span class="toc-text">从 Homebrew 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从-Homebrew-cask-安装"><span class="toc-number">2.5.</span> <span class="toc-text">从 Homebrew-cask 安装</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<p>PHP有两个memcache相关的扩展：<a href="http://pecl.php.net/package/memcache" target="_blank" rel="external">memcache</a> 和 <a href="http://pecl.php.net/package/memcached" target="_blank" rel="external">memcache<strong>d</strong></a> (多了个英文字母d)。两者都是用来连接 memcache服务器的。他们的区别如下：</p>
-<ol>
-<li>memcached 扩展只能用于 Linux系统，memcache 扩展既可以用于 windows 也可以用于 Linux。之所以 memcached扩展，只能用于 Linux是因为 它依赖于Linux下的 libmemcached 库。</li>
-<li>memcached扩展对 <a href="http://code.sixapart.com/svn/memcached/trunk/server/doc/protocol.txt" target="_blank" rel="external">memcached 协议</a> 的支持更完整。</li>
-<li>当 Memcached::get() 方法返回 false时，有可能存储的值就是 false，或者memcache服务器中不存在该key的值，此时 可以调用 Memcached::getResultCode() 方法判断是值为 false，还是该key不存在；而 memcache 扩展的 Memcache::get() 方法，返回 false时，没法知道是哪种情况。</li>
-<li>memcached 扩展支持 <a href="http://www.php.net/manual/en/memcached.cas.php" target="_blank" rel="external">Cas tokens</a>，cas 用于解决多个进程同时修改相同数据的更新问题，在高并发下很有用。</li>
-<li>memcached扩展和 memcache 扩展的相同功能方法的参数可能不同，例如 Memcache::set()方法就比 Memcached::set() 方法多了个 $flag 参数。</li>
-<li>在Ubuntu/Debian中，安装可使用 <code>sudo apt-get install php5-memcached</code>；安装 memcached 扩展，可使用 php5-memcache 安装 memcache 扩展。</li>
-<li>更详细的区别，请看 stackflow的文章： <a href="http://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-of-memcached" target="_blank" rel="external">http://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-of-memcached</a></li>
-</ol>
+		<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul>
+<li>Tracepad<ul>
+<li>启用 Tap to click</li>
+<li>启用 三指移动窗口</li>
+</ul>
+</li>
+<li>Screensaver</li>
+<li>Hot corner<ul>
+<li>右上角关闭显示屏</li>
+<li>右下角启动屏保</li>
+</ul>
+</li>
+<li>Security -&gt; Lock Screen<ul>
+<li>时间改为5秒</li>
+</ul>
+</li>
+<li>iTerm2<ul>
+<li>背景改成半透明</li>
+</ul>
+</li>
+<li>Geany</li>
+</ul>
+<h2 id="基础软件安装"><a href="#基础软件安装" class="headerlink" title="基础软件安装"></a>基础软件安装</h2><h3 id="从-AppStore-安装"><a href="#从-AppStore-安装" class="headerlink" title="从 AppStore 安装"></a>从 AppStore 安装</h3><ul>
+<li>QQ</li>
+<li>WeChat</li>
+</ul>
+<h3 id="从官网安装"><a href="#从官网安装" class="headerlink" title="从官网安装"></a>从官网安装</h3><ul>
+<li>搜狗拼音输入法</li>
+<li>Homebrew<ul>
+<li>/usr/bin/ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/master/install" target="_blank" rel="external">https://raw.githubusercontent.com/Homebrew/install/master/install</a>)”</li>
+</ul>
+</li>
+<li>Homebrew-Cask<ul>
+<li>brew tap caskroom/cask</li>
+</ul>
+</li>
+<li>PHPStorm</li>
+<li>DataGrip</li>
+</ul>
+<h3 id="从第三方安装"><a href="#从第三方安装" class="headerlink" title="从第三方安装"></a>从第三方安装</h3><p>Microsoft Office 2016</p>
+<h3 id="从-Homebrew-安装"><a href="#从-Homebrew-安装" class="headerlink" title="从 Homebrew 安装"></a>从 Homebrew 安装</h3><ul>
+<li>brew install wget</li>
+<li>brew install tree</li>
+<li>brew install ag</li>
+<li>brew install ack</li>
+<li>brew install p7zip</li>
+<li>brew install unrar</li>
+<li>brew install enca</li>
+<li>brew install mtr</li>
+<li>brew install node</li>
+<li>brew install go</li>
+</ul>
+<h3 id="从-Homebrew-cask-安装"><a href="#从-Homebrew-cask-安装" class="headerlink" title="从 Homebrew-cask 安装"></a>从 Homebrew-cask 安装</h3><ul>
+<li>brew cask install iterm2</li>
+<li>brew cask install geany</li>
+<li>brew cask install firefox</li>
+<li>brew cask install virtualbox</li>
+<li>brew cask install typora</li>
+<li>brew cask install visual-studio-code<ul>
+<li>安装扩展<ul>
+<li>One Dark Pro</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>brew cask install xmind</li>
+<li>brew cask install mplayerx</li>
+<li>brew cask install vlc</li>
+<li>brew cask install sequel-pro</li>
+<li>brew cask install meld</li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -118,7 +179,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/PHP/">PHP</a>
+  <span></span> <a href="/tags/MBP/">MBP</a>
   </div>
 
 </div>
@@ -163,14 +224,14 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/12/03/php-x-sendfile/" title="使用X-Sendfile机制加快PHP下文件的下载">
-  <strong>上一篇：</strong><br/>
-  <span>
-  使用X-Sendfile机制加快PHP下文件的下载</span>
+
+<div class="next">
+<a href="/2016/08/10/composer-private-packages-with-satis/"  title="使用 satis 搭建 Composer 私有库">
+ <strong>下一篇：</strong><br/> 
+ <span>使用 satis 搭建 Composer 私有库
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -188,7 +249,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础软件安装"><span class="toc-number">2.</span> <span class="toc-text">基础软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从-AppStore-安装"><span class="toc-number">2.1.</span> <span class="toc-text">从 AppStore 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从官网安装"><span class="toc-number">2.2.</span> <span class="toc-text">从官网安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从第三方安装"><span class="toc-number">2.3.</span> <span class="toc-text">从第三方安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从-Homebrew-安装"><span class="toc-number">2.4.</span> <span class="toc-text">从 Homebrew 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从-Homebrew-cask-安装"><span class="toc-number">2.5.</span> <span class="toc-text">从 Homebrew-cask 安装</span></a></li></ol></li></ol>
  
   </div>
 
