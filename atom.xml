@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://joelhy.github.io/"/>
-  <updated>2017-05-18T02:13:11.000Z</updated>
+  <updated>2017-05-23T12:24:43.000Z</updated>
   <id>http://joelhy.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://joelhy.github.io/2017/05/18/MBP-software-install/"/>
     <id>http://joelhy.github.io/2017/05/18/MBP-software-install/</id>
     <published>2017-05-18T00:51:24.000Z</published>
-    <updated>2017-05-18T02:13:11.000Z</updated>
+    <updated>2017-05-23T12:24:43.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul>
 <li>Tracepad<ul>
@@ -60,7 +60,11 @@
 <li>PHPStorm</li>
 <li>DataGrip</li>
 </ul>
-<h3 id="从第三方安装"><a href="#从第三方安装" class="headerlink" title="从第三方安装"></a>从第三方安装</h3><p>Microsoft Office 2016</p>
+<h3 id="从第三方安装"><a href="#从第三方安装" class="headerlink" title="从第三方安装"></a>从第三方安装</h3><ul>
+<li>Microsoft Office 2016</li>
+<li>安装PHP最新版</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl <span class="_">-s</span> http://php-osx.liip.ch/install.sh | bash <span class="_">-s</span> 7.1</div></pre></td></tr></table></figure>
 <h3 id="从-Homebrew-安装"><a href="#从-Homebrew-安装" class="headerlink" title="从 Homebrew 安装"></a>从 Homebrew 安装</h3><ul>
 <li>brew install wget</li>
 <li>brew install tree</li>
@@ -72,6 +76,7 @@
 <li>brew install mtr</li>
 <li>brew install node</li>
 <li>brew install go</li>
+<li>brew install psysh</li>
 </ul>
 <h3 id="从-Homebrew-cask-安装"><a href="#从-Homebrew-cask-安装" class="headerlink" title="从 Homebrew-cask 安装"></a>从 Homebrew-cask 安装</h3><ul>
 <li>brew cask install iterm2</li>

@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
 				<h2 class="blog-motto"></h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -64,7 +64,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:joelhy.github.io">
 					</form>
 					
@@ -87,14 +87,14 @@
 		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
 		
   <p class="article-time">
-    <time datetime="2015-02-06T03:40:22.000Z" itemprop="datePublished"> Published 2015-02-06</time>
+    <time datetime="2015-02-06T03:40:22.000Z" itemprop="datePublished"> 發表於 2015-02-06</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境说明"><span class="toc-number">1.</span> <span class="toc-text">环境说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#各个服务器的共同配置"><span class="toc-number">2.</span> <span class="toc-text">各个服务器的共同配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置-主服务器"><span class="toc-number">3.</span> <span class="toc-text">配置 主服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#确保log-bin是启用的"><span class="toc-number">3.1.</span> <span class="toc-text">确保log-bin是启用的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建帐号并赋予replication的权限"><span class="toc-number">3.2.</span> <span class="toc-text">创建帐号并赋予replication的权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看主库binary-log的文件位置"><span class="toc-number">3.3.</span> <span class="toc-text">查看主库binary log的文件位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解锁-主库"><span class="toc-number">3.4.</span> <span class="toc-text">解锁 主库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在-从服务器-上的操作"><span class="toc-number">4.</span> <span class="toc-text">在 从服务器 上的操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#导入备份的主库数据"><span class="toc-number">4.1.</span> <span class="toc-text">导入备份的主库数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置relay-log"><span class="toc-number">4.2.</span> <span class="toc-text">设置relay-log</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置主从复制"><span class="toc-number">4.3.</span> <span class="toc-text">设置主从复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开启主从复制"><span class="toc-number">4.4.</span> <span class="toc-text">开启主从复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看从库状态"><span class="toc-number">4.5.</span> <span class="toc-text">查看从库状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试主从复制是否正常"><span class="toc-number">5.</span> <span class="toc-text">测试主从复制是否正常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">6.</span> <span class="toc-text">参考文献</span></a></li></ol>
 		
@@ -224,24 +224,24 @@
 </section>
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目錄</strong>
  
  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境说明"><span class="toc-number">1.</span> <span class="toc-text">环境说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#各个服务器的共同配置"><span class="toc-number">2.</span> <span class="toc-text">各个服务器的共同配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置-主服务器"><span class="toc-number">3.</span> <span class="toc-text">配置 主服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#确保log-bin是启用的"><span class="toc-number">3.1.</span> <span class="toc-text">确保log-bin是启用的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建帐号并赋予replication的权限"><span class="toc-number">3.2.</span> <span class="toc-text">创建帐号并赋予replication的权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看主库binary-log的文件位置"><span class="toc-number">3.3.</span> <span class="toc-text">查看主库binary log的文件位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解锁-主库"><span class="toc-number">3.4.</span> <span class="toc-text">解锁 主库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在-从服务器-上的操作"><span class="toc-number">4.</span> <span class="toc-text">在 从服务器 上的操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#导入备份的主库数据"><span class="toc-number">4.1.</span> <span class="toc-text">导入备份的主库数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置relay-log"><span class="toc-number">4.2.</span> <span class="toc-text">设置relay-log</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置主从复制"><span class="toc-number">4.3.</span> <span class="toc-text">设置主从复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开启主从复制"><span class="toc-number">4.4.</span> <span class="toc-text">开启主从复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看从库状态"><span class="toc-number">4.5.</span> <span class="toc-text">查看从库状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试主从复制是否正常"><span class="toc-number">5.</span> <span class="toc-text">测试主从复制是否正常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">6.</span> <span class="toc-text">参考文献</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -331,7 +331,7 @@
   
 
 <div class="doubanshow">
-<p class="asidetitle">Douban Show</p>
+<p class="asidetitle">豆瓣秀</p>
 <div>
 <script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
 </div>
@@ -339,7 +339,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -545,7 +545,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
