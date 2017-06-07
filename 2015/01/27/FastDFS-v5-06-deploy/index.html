@@ -52,7 +52,7 @@
 				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
 				<h2 class="blog-motto"></h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -66,7 +66,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:joelhy.github.io">
 					</form>
 					
@@ -89,14 +89,14 @@
 		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
 		
   <p class="article-time">
-    <time datetime="2015-01-27T06:30:34.000Z" itemprop="datePublished"> 發表於 2015-01-27</time>
+    <time datetime="2015-01-27T06:30:34.000Z" itemprop="datePublished"> Published 2015-01-27</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#FastDFS-简介"><span class="toc-number">1.</span> <span class="toc-text">FastDFS 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#github软件仓库"><span class="toc-number">1.1.</span> <span class="toc-text">github软件仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载安装文件"><span class="toc-number">2.1.</span> <span class="toc-text">下载安装文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装FastDFS"><span class="toc-number">2.2.</span> <span class="toc-text">安装FastDFS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FastDFS配置"><span class="toc-number">3.</span> <span class="toc-text">FastDFS配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置Tracker跟踪器"><span class="toc-number">3.1.</span> <span class="toc-text">配置Tracker跟踪器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#开放tracker监听端口访问"><span class="toc-number">3.1.1.</span> <span class="toc-text">开放tracker监听端口访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改配置文件"><span class="toc-number">3.1.2.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置开机自启动"><span class="toc-number">3.1.3.</span> <span class="toc-text">设置开机自启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#确认tracker是否启动成功"><span class="toc-number">3.1.4.</span> <span class="toc-text">确认tracker是否启动成功</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装并配置-nginx-反向代理"><span class="toc-number">3.1.5.</span> <span class="toc-text">安装并配置 nginx 反向代理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置Storage存储节点"><span class="toc-number">3.2.</span> <span class="toc-text">配置Storage存储节点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#开放tracker监听端口访问-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">开放tracker监听端口访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改配置文件-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置开机自启动-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">设置开机自启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#确认storage是否启动成功"><span class="toc-number">3.2.4.</span> <span class="toc-text">确认storage是否启动成功</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#client客户端配置"><span class="toc-number">3.3.</span> <span class="toc-text">client客户端配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FastDFS测试"><span class="toc-number">3.4.</span> <span class="toc-text">FastDFS测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FastDFS客户端"><span class="toc-number">4.</span> <span class="toc-text">FastDFS客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP扩展安装"><span class="toc-number">4.1.</span> <span class="toc-text">PHP扩展安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP扩展使用"><span class="toc-number">4.2.</span> <span class="toc-text">PHP扩展使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP客户端上传图片测试"><span class="toc-number">4.3.</span> <span class="toc-text">PHP客户端上传图片测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fastdfs-nginx-module-安装配置"><span class="toc-number">5.</span> <span class="toc-text">fastdfs-nginx-module 安装配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#storage-server-安装-nginx-服务器"><span class="toc-number">5.1.</span> <span class="toc-text">storage server 安装 nginx 服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防火墙开放http服务"><span class="toc-number">5.2.</span> <span class="toc-text">防火墙开放http服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装并启用nginx"><span class="toc-number">5.3.</span> <span class="toc-text">安装并启用nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看前面安装的nginx编译参数"><span class="toc-number">5.4.</span> <span class="toc-text">查看前面安装的nginx编译参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载nginx源码"><span class="toc-number">5.5.</span> <span class="toc-text">下载nginx源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装nginx依赖的软件包"><span class="toc-number">5.6.</span> <span class="toc-text">安装nginx依赖的软件包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重新编译nginx"><span class="toc-number">5.7.</span> <span class="toc-text">重新编译nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fastdfs模块配置"><span class="toc-number">5.8.</span> <span class="toc-text">fastdfs模块配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Storage服务器nginx配置"><span class="toc-number">5.9.</span> <span class="toc-text">Storage服务器nginx配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启Nginx"><span class="toc-number">5.10.</span> <span class="toc-text">重启Nginx</span></a></li></ol></li></ol>
 		
@@ -253,24 +253,24 @@
 </section>
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目錄</strong>
+  <strong class="toc-title">Contents</strong>
  
  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#FastDFS-简介"><span class="toc-number">1.</span> <span class="toc-text">FastDFS 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#github软件仓库"><span class="toc-number">1.1.</span> <span class="toc-text">github软件仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载安装文件"><span class="toc-number">2.1.</span> <span class="toc-text">下载安装文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装FastDFS"><span class="toc-number">2.2.</span> <span class="toc-text">安装FastDFS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FastDFS配置"><span class="toc-number">3.</span> <span class="toc-text">FastDFS配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置Tracker跟踪器"><span class="toc-number">3.1.</span> <span class="toc-text">配置Tracker跟踪器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#开放tracker监听端口访问"><span class="toc-number">3.1.1.</span> <span class="toc-text">开放tracker监听端口访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改配置文件"><span class="toc-number">3.1.2.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置开机自启动"><span class="toc-number">3.1.3.</span> <span class="toc-text">设置开机自启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#确认tracker是否启动成功"><span class="toc-number">3.1.4.</span> <span class="toc-text">确认tracker是否启动成功</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装并配置-nginx-反向代理"><span class="toc-number">3.1.5.</span> <span class="toc-text">安装并配置 nginx 反向代理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置Storage存储节点"><span class="toc-number">3.2.</span> <span class="toc-text">配置Storage存储节点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#开放tracker监听端口访问-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">开放tracker监听端口访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改配置文件-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置开机自启动-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">设置开机自启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#确认storage是否启动成功"><span class="toc-number">3.2.4.</span> <span class="toc-text">确认storage是否启动成功</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#client客户端配置"><span class="toc-number">3.3.</span> <span class="toc-text">client客户端配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FastDFS测试"><span class="toc-number">3.4.</span> <span class="toc-text">FastDFS测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FastDFS客户端"><span class="toc-number">4.</span> <span class="toc-text">FastDFS客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP扩展安装"><span class="toc-number">4.1.</span> <span class="toc-text">PHP扩展安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP扩展使用"><span class="toc-number">4.2.</span> <span class="toc-text">PHP扩展使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP客户端上传图片测试"><span class="toc-number">4.3.</span> <span class="toc-text">PHP客户端上传图片测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fastdfs-nginx-module-安装配置"><span class="toc-number">5.</span> <span class="toc-text">fastdfs-nginx-module 安装配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#storage-server-安装-nginx-服务器"><span class="toc-number">5.1.</span> <span class="toc-text">storage server 安装 nginx 服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防火墙开放http服务"><span class="toc-number">5.2.</span> <span class="toc-text">防火墙开放http服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装并启用nginx"><span class="toc-number">5.3.</span> <span class="toc-text">安装并启用nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看前面安装的nginx编译参数"><span class="toc-number">5.4.</span> <span class="toc-text">查看前面安装的nginx编译参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载nginx源码"><span class="toc-number">5.5.</span> <span class="toc-text">下载nginx源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装nginx依赖的软件包"><span class="toc-number">5.6.</span> <span class="toc-text">安装nginx依赖的软件包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重新编译nginx"><span class="toc-number">5.7.</span> <span class="toc-text">重新编译nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fastdfs模块配置"><span class="toc-number">5.8.</span> <span class="toc-text">fastdfs模块配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Storage服务器nginx配置"><span class="toc-number">5.9.</span> <span class="toc-text">Storage服务器nginx配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启Nginx"><span class="toc-number">5.10.</span> <span class="toc-text">重启Nginx</span></a></li></ol></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -360,7 +360,7 @@
   
 
 <div class="doubanshow">
-<p class="asidetitle">豆瓣秀</p>
+<p class="asidetitle">Douban Show</p>
 <div>
 <script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
 </div>
@@ -368,7 +368,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -574,7 +574,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
