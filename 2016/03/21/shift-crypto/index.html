@@ -108,7 +108,7 @@
 <ul>
 <li>字频分析</li>
 </ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$str = <span class="string">'xultpaajcxitltlxaarpjhtiwtgxktghidhipxciwtvgtpilpitghlxiwiwtxgqadds'</span>;</div><div class="line"> </div><div class="line">$result = array_count_values(str_split($str));</div><div class="line">asort($result, SORT_NUMERIC);</div><div class="line">print_r(array_slice($result, <span class="number">-5</span>));</div><div class="line"><span class="comment">/*</span></div><div class="line">Array</div><div class="line">(</div><div class="line">    [p] =&gt; 5</div><div class="line">    [l] =&gt; 5</div><div class="line">    [x] =&gt; 7</div><div class="line">    [i] =&gt; 9</div><div class="line">    [t] =&gt; 10</div><div class="line">)</div><div class="line">*/$shift = ord(<span class="string">'e'</span>) - ord(<span class="string">'t'</span>);  <span class="comment">// 最高频字符 t 映射成 e</span></div><div class="line">$begin = ord(<span class="string">'a'</span>);</div><div class="line">$end = ord(<span class="string">'z'</span>);</div><div class="line"> </div><div class="line">$arr = [];</div><div class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; strlen($str); $i++) &#123;</div><div class="line">    $ord = ord($str[$i]) + $shift;</div><div class="line">    <span class="keyword">if</span> ($ord &lt; $begin) &#123;</div><div class="line">       $ord += <span class="number">26</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ($ord &gt; $end) &#123;</div><div class="line">      $ord -= <span class="number">26</span>;</div><div class="line">    &#125;</div><div class="line">    $arr[] = chr($ord);</div><div class="line">&#125;</div><div class="line"><span class="keyword">echo</span> implode(<span class="string">''</span>, $arr) . <span class="string">"\n"</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$str = <span class="string">'xultpaajcxitltlxaarpjhtiwtgxktghidhipxciwtvgtpilpitghlxiwiwtxgqadds'</span>;</div><div class="line"> </div><div class="line">$result = array_count_values(str_split($str));</div><div class="line">asort($result, SORT_NUMERIC);</div><div class="line">print_r(array_slice($result, <span class="number">-5</span>));</div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">Array</span></div><div class="line"><span class="comment">(</span></div><div class="line"><span class="comment">    [p] =&gt; 5</span></div><div class="line"><span class="comment">    [l] =&gt; 5</span></div><div class="line"><span class="comment">    [x] =&gt; 7</span></div><div class="line"><span class="comment">    [i] =&gt; 9</span></div><div class="line"><span class="comment">    [t] =&gt; 10</span></div><div class="line"><span class="comment">)</span></div><div class="line"><span class="comment">*/</span>$shift = ord(<span class="string">'e'</span>) - ord(<span class="string">'t'</span>);  <span class="comment">// 最高频字符 t 映射成 e</span></div><div class="line">$begin = ord(<span class="string">'a'</span>);</div><div class="line">$end = ord(<span class="string">'z'</span>);</div><div class="line"> </div><div class="line">$arr = [];</div><div class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; strlen($str); $i++) &#123;</div><div class="line">    $ord = ord($str[$i]) + $shift;</div><div class="line">    <span class="keyword">if</span> ($ord &lt; $begin) &#123;</div><div class="line">       $ord += <span class="number">26</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ($ord &gt; $end) &#123;</div><div class="line">      $ord -= <span class="number">26</span>;</div><div class="line">    &#125;</div><div class="line">    $arr[] = chr($ord);</div><div class="line">&#125;</div><div class="line"><span class="keyword">echo</span> implode(<span class="string">''</span>, $arr) . <span class="string">"\n"</span>;</div></pre></td></tr></table></figure>
 <ul>
 <li>暴力破解</li>
 </ul>
@@ -247,7 +247,7 @@ www.historyisaweapon.com/defcon1/tecumosages.html
 			
 		
 			
-				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
 			
 		
 			
@@ -259,7 +259,11 @@ www.historyisaweapon.com/defcon1/tecumosages.html
 			
 		
 			
-				<li><a href="/tags/VirtualBox/" title="VirtualBox">VirtualBox<sup>1</sup></a></li>
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
 			
 		
 			
@@ -267,11 +271,23 @@ www.historyisaweapon.com/defcon1/tecumosages.html
 			
 		
 			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/MBP/" title="MBP">MBP<sup>1</sup></a></li>
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
 			
 		
 			
@@ -283,23 +299,7 @@ www.historyisaweapon.com/defcon1/tecumosages.html
 			
 		
 			
-				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+				<li><a href="/tags/Apache-Storm/" title="Apache Storm">Apache Storm<sup>1</sup></a></li>
 			
 		
 		</ul>

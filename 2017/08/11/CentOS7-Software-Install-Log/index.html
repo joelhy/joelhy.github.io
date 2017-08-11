@@ -126,7 +126,7 @@
 </ul>
 <p><code>/etc/hosts</code> 文件设置</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">54.231.49.3     s3.amazonaws.com</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">yum-config-manager \</div><div class="line">    --add-repo \</div><div class="line">    https://download.docker.com/linux/centos/docker-ce.repo</div><div class="line">dnf install -y docker-ce</div><div class="line"><span class="comment">#dnf install -y docker-compose</span></div><div class="line">systemctl start docker</div><div class="line">systemctl <span class="built_in">enable</span> docker</div><div class="line">yum-config-manager --disable docker-ce   <span class="comment"># 平常关闭这个repo，不然update太慢</span></div><div class="line">curl <span class="_">-s</span>SL https://get.daocloud.io/daotools/set_mirror.sh | sh <span class="_">-s</span> https://registry.docker-cn.com  <span class="comment"># 设置 docker 镜像加速</span></div><div class="line">systemctl restart docker  <span class="comment"># 重启后镜像加速才能生效</span></div><div class="line"></div><div class="line"><span class="comment">#curl -L https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose</span></div><div class="line">curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compose-`uname <span class="_">-s</span>`-`uname -m` &gt; /usr/<span class="built_in">local</span>/bin/docker-compose</div><div class="line">chmod +x /usr/<span class="built_in">local</span>/bin/docker-compose</div><div class="line"></div><div class="line"><span class="comment">#dnf install -y python-pip python-devel</span></div><div class="line"><span class="comment">#pip install --upgrade pip</span></div><div class="line"><span class="comment">#pip install docker-compose</span></div><div class="line"></div><div class="line">cat &gt; /usr/<span class="built_in">local</span>/bin/dc &lt;&lt;EOF</div><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># 用于 docker-compose up 有指定`-p=$&#123;PWD//\//_&#125;`时，后续查看网络、日志信息等操作</span></div><div class="line">/usr/<span class="built_in">local</span>/bin/docker-compose -p=<span class="variable">$&#123;PWD//\//_&#125;</span> <span class="variable">$@</span></div><div class="line">EOF</div><div class="line">chmod +x /usr/<span class="built_in">local</span>/bin/dc</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">yum-config-manager \</div><div class="line">    --add-repo \</div><div class="line">    https://download.docker.com/linux/centos/docker-ce.repo</div><div class="line">dnf install -y docker-ce</div><div class="line"><span class="comment">#dnf install -y docker-compose</span></div><div class="line">systemctl start docker</div><div class="line">systemctl <span class="built_in">enable</span> docker</div><div class="line">yum-config-manager --<span class="built_in">disable</span> docker-ce   <span class="comment"># 平常关闭这个repo，不然update太慢</span></div><div class="line">curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s https://registry.docker-cn.com  <span class="comment"># 设置 docker 镜像加速</span></div><div class="line">systemctl restart docker  <span class="comment"># 重启后镜像加速才能生效</span></div><div class="line"></div><div class="line"><span class="comment">#curl -L https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose</span></div><div class="line">curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compose-`uname -s`-`uname -m` &gt; /usr/<span class="built_in">local</span>/bin/docker-compose</div><div class="line">chmod +x /usr/<span class="built_in">local</span>/bin/docker-compose</div><div class="line"></div><div class="line"><span class="comment">#dnf install -y python-pip python-devel</span></div><div class="line"><span class="comment">#pip install --upgrade pip</span></div><div class="line"><span class="comment">#pip install docker-compose</span></div><div class="line"></div><div class="line">cat &gt; /usr/<span class="built_in">local</span>/bin/dc &lt;&lt;EOF</div><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># 用于 docker-compose up 有指定`-p=$&#123;PWD//\//_&#125;`时，后续查看网络、日志信息等操作</span></div><div class="line">/usr/<span class="built_in">local</span>/bin/docker-compose -p=<span class="variable">$&#123;PWD//\//_&#125;</span> <span class="variable">$@</span></div><div class="line">EOF</div><div class="line">chmod +x /usr/<span class="built_in">local</span>/bin/dc</div></pre></td></tr></table></figure>
 <ul>
 <li>安装 golang</li>
 </ul>
@@ -134,7 +134,7 @@
 <ul>
 <li>安装 nodejs</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">curl <span class="_">-s</span>L https://rpm.nodesource.com/setup_8.x | bash -</div><div class="line">dnf install -y nodejs  <span class="comment"># nodesource 的 nodejs 包里已带 npm</span></div><div class="line">yum-config-manager --disable nodesource   <span class="comment"># 平常关闭这个repo，不然update太慢</span></div><div class="line"></div><div class="line"><span class="comment"># 安装 yarn</span></div><div class="line">wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo</div><div class="line">dnf install -y yarn</div><div class="line">yum-config-manager --disable yarn   <span class="comment"># 平常关闭这个repo，不然update太慢</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">curl -sL https://rpm.nodesource.com/setup_8.x | bash -</div><div class="line">dnf install -y nodejs  <span class="comment"># nodesource 的 nodejs 包里已带 npm</span></div><div class="line">yum-config-manager --<span class="built_in">disable</span> nodesource   <span class="comment"># 平常关闭这个repo，不然update太慢</span></div><div class="line"></div><div class="line"><span class="comment"># 安装 yarn</span></div><div class="line">wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo</div><div class="line">dnf install -y yarn</div><div class="line">yum-config-manager --<span class="built_in">disable</span> yarn   <span class="comment"># 平常关闭这个repo，不然update太慢</span></div></pre></td></tr></table></figure>
 <ul>
 <li>安装 PHP CLI</li>
 </ul>
@@ -142,7 +142,7 @@
 <ul>
 <li>安装 Python v3</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dnf install -y python36u</div><div class="line">ln <span class="_">-s</span> /usr/bin/python3.6 /usr/bin/python3</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dnf install -y python36u</div><div class="line">ln -s /usr/bin/python3.6 /usr/bin/python3</div></pre></td></tr></table></figure>
 <ul>
 <li>安装 ab、ag等</li>
 </ul>
@@ -284,7 +284,7 @@
 			
 		
 			
-				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
 			
 		
 			
@@ -296,7 +296,11 @@
 			
 		
 			
-				<li><a href="/tags/VirtualBox/" title="VirtualBox">VirtualBox<sup>1</sup></a></li>
+				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
 			
 		
 			
@@ -304,11 +308,23 @@
 			
 		
 			
+				<li><a href="/tags/FastDFS/" title="FastDFS">FastDFS<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/MBP/" title="MBP">MBP<sup>1</sup></a></li>
+				<li><a href="/tags/Shell/" title="Shell">Shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crontab/" title="crontab">crontab<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
 			
 		
 			
@@ -320,23 +336,7 @@
 			
 		
 			
-				<li><a href="/tags/systemd/" title="systemd">systemd<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MHA/" title="MHA">MHA<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/虚拟化技术/" title="虚拟化技术">虚拟化技术<sup>1</sup></a></li>
+				<li><a href="/tags/Apache-Storm/" title="Apache Storm">Apache Storm<sup>1</sup></a></li>
 			
 		
 		</ul>
