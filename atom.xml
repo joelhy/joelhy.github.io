@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://joelhy.github.io/"/>
-  <updated>2017-06-07T09:20:42.000Z</updated>
+  <updated>2017-08-11T12:15:39.000Z</updated>
   <id>http://joelhy.github.io/</id>
   
   <author>
@@ -16,11 +16,97 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>CentOS 7 软件安装日志</title>
+    <link href="http://joelhy.github.io/2017/08/11/CentOS7-Software-Install-Log/"/>
+    <id>http://joelhy.github.io/2017/08/11/CentOS7-Software-Install-Log/</id>
+    <published>2017-08-11T12:14:02.000Z</published>
+    <updated>2017-08-11T12:15:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="docker-server-操作日志"><a href="#docker-server-操作日志" class="headerlink" title="docker server 操作日志"></a>docker server 操作日志</h2><h3 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h3><ul>
+<li>安装 dnf</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install epel-release -y</div><div class="line">yum install dnf -y</div></pre></td></tr></table></figure>
+<ul>
+<li>启用 bash 自动完成</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dnf install -y bash-completion bash-completion-extras</div></pre></td></tr></table></figure>
+<ul>
+<li>启用 IUS 库</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://centos7.iuscommunity.org/ius-release.rpm</div><div class="line">dnf install -y ius-release*.rpm    <span class="comment"># sudo rpm -Uvh ius-release*.rpm</span></div></pre></td></tr></table></figure>
+<ul>
+<li>安装 git</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dnf install -y git2u</div></pre></td></tr></table></figure>
+<ul>
+<li>安装 zsh</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dnf install -y zsh</div><div class="line">sh -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>"</span></div></pre></td></tr></table></figure>
+<p>编辑 .zshrc 启用 git, docker, docker-compose 插件</p>
+<ul>
+<li>安装 docker</li>
+</ul>
+<p><code>/etc/hosts</code> 文件设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">54.231.49.3     s3.amazonaws.com</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">yum-config-manager \</div><div class="line">    --add-repo \</div><div class="line">    https://download.docker.com/linux/centos/docker-ce.repo</div><div class="line">dnf install -y docker-ce</div><div class="line"><span class="comment">#dnf install -y docker-compose</span></div><div class="line">systemctl start docker</div><div class="line">systemctl <span class="built_in">enable</span> docker</div><div class="line">yum-config-manager --disable docker-ce   <span class="comment"># 平常关闭这个repo，不然update太慢</span></div><div class="line">curl <span class="_">-s</span>SL https://get.daocloud.io/daotools/set_mirror.sh | sh <span class="_">-s</span> https://registry.docker-cn.com  <span class="comment"># 设置 docker 镜像加速</span></div><div class="line">systemctl restart docker  <span class="comment"># 重启后镜像加速才能生效</span></div><div class="line"></div><div class="line"><span class="comment">#curl -L https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose</span></div><div class="line">curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compose-`uname <span class="_">-s</span>`-`uname -m` &gt; /usr/<span class="built_in">local</span>/bin/docker-compose</div><div class="line">chmod +x /usr/<span class="built_in">local</span>/bin/docker-compose</div><div class="line"></div><div class="line"><span class="comment">#dnf install -y python-pip python-devel</span></div><div class="line"><span class="comment">#pip install --upgrade pip</span></div><div class="line"><span class="comment">#pip install docker-compose</span></div><div class="line"></div><div class="line">cat &gt; /usr/<span class="built_in">local</span>/bin/dc &lt;&lt;EOF</div><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># 用于 docker-compose up 有指定`-p=$&#123;PWD//\//_&#125;`时，后续查看网络、日志信息等操作</span></div><div class="line">/usr/<span class="built_in">local</span>/bin/docker-compose -p=<span class="variable">$&#123;PWD//\//_&#125;</span> <span class="variable">$@</span></div><div class="line">EOF</div><div class="line">chmod +x /usr/<span class="built_in">local</span>/bin/dc</div></pre></td></tr></table></figure>
+<ul>
+<li>安装 golang</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz</div><div class="line">tar -C /usr/<span class="built_in">local</span> -xzf go1.8.3.linux-amd64.tar.gz</div></pre></td></tr></table></figure>
+<ul>
+<li>安装 nodejs</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">curl <span class="_">-s</span>L https://rpm.nodesource.com/setup_8.x | bash -</div><div class="line">dnf install -y nodejs  <span class="comment"># nodesource 的 nodejs 包里已带 npm</span></div><div class="line">yum-config-manager --disable nodesource   <span class="comment"># 平常关闭这个repo，不然update太慢</span></div><div class="line"></div><div class="line"><span class="comment"># 安装 yarn</span></div><div class="line">wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo</div><div class="line">dnf install -y yarn</div><div class="line">yum-config-manager --disable yarn   <span class="comment"># 平常关闭这个repo，不然update太慢</span></div></pre></td></tr></table></figure>
+<ul>
+<li>安装 PHP CLI</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dnf install -y php71u-cli php71u-pdo php71u-json php71u-soap php71u-bcmath php71u-mysqlnd php71u-opcache php71u-mbstring php71u-pecl-memcached php71u-pecl-redis php71u-gd php71u-intl</div><div class="line">dnf install -y composer  <span class="comment"># 安装 composer</span></div></pre></td></tr></table></figure>
+<ul>
+<li>安装 Python v3</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dnf install -y python36u</div><div class="line">ln <span class="_">-s</span> /usr/bin/python3.6 /usr/bin/python3</div></pre></td></tr></table></figure>
+<ul>
+<li>安装 ab、ag等</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dnf install -y httpd-tools</div><div class="line">dnf install -y the_silver_searcher</div><div class="line">dnf install -y enca</div><div class="line">dnf install -y tree</div></pre></td></tr></table></figure>
+<ul>
+<li>配置 zsh 别名</li>
+</ul>
+<p>打开 ~/.zshrc，加入如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">alias</span> sc=<span class="string">"/usr/bin/systemctl"</span></div><div class="line"><span class="built_in">alias</span> g=<span class="string">"/usr/bin/git"</span></div><div class="line"><span class="built_in">alias</span> gpl=<span class="string">"/usr/bin/git pull --rebase"</span></div><div class="line"><span class="built_in">alias</span> gcd=<span class="string">"/usr/bin/git checkout dev"</span></div><div class="line"><span class="built_in">alias</span> gw=<span class="string">"/usr/bin/git whatchanged"</span></div><div class="line"><span class="built_in">alias</span> d=<span class="string">"/usr/bin/docker"</span></div><div class="line"><span class="built_in">alias</span> dkc=<span class="string">"/usr/bin/docker-compose"</span></div></pre></td></tr></table></figure>
+<ul>
+<li>GitHub 下载加速</li>
+</ul>
+<p><code>/etc/hosts</code> 文件设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">219.76.4.4 github-cloud.s3.amazonaws.com</div></pre></td></tr></table></figure>
+<ul>
+<li>共享 composer, yarn 的 cache 目录</li>
+</ul>
+<p>新建文件<code>/etc/profile.d/cache-dir.sh</code>，内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">COMPOSER_CACHE_DIR=/home/shares/composer/cache</div><div class="line">YARN_CACHE_FOLDER=/home/shares/yarn/cache</div><div class="line"></div><div class="line"><span class="built_in">export</span> COMPOSER_CACHE_DIR</div><div class="line"><span class="built_in">export</span> YARN_CACHE_FOLDER</div></pre></td></tr></table></figure>
+<ul>
+<li>安装 php-cs-fixer</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">curl -L http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -o /usr/<span class="built_in">local</span>/bin/php-cs-fixer</div><div class="line">chmod +x /usr/<span class="built_in">local</span>/bin/php-cs-fixer</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;docker-server-操作日志&quot;&gt;&lt;a href=&quot;#docker-server-操作日志&quot; class=&quot;headerlink&quot; title=&quot;docker server 操作日志&quot;&gt;&lt;/a&gt;docker server 操作日志&lt;/h2&gt;&lt;h3 id=&quot;安
+    
+    </summary>
+    
+    
+      <category term="CentOS" scheme="http://joelhy.github.io/tags/CentOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title>我的MBP基础软件安装记录</title>
     <link href="http://joelhy.github.io/2017/05/18/MBP-software-install/"/>
     <id>http://joelhy.github.io/2017/05/18/MBP-software-install/</id>
     <published>2017-05-18T00:51:24.000Z</published>
-    <updated>2017-06-07T09:20:42.000Z</updated>
+    <updated>2017-08-09T13:06:38.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul>
 <li>Tracepad<ul>
@@ -62,11 +148,13 @@
 </ul>
 <h3 id="从第三方安装"><a href="#从第三方安装" class="headerlink" title="从第三方安装"></a>从第三方安装</h3><ul>
 <li>Microsoft Office 2016</li>
-<li>安装PHP最新版</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl <span class="_">-s</span> http://php-osx.liip.ch/install.sh | bash <span class="_">-s</span> 7.1</div></pre></td></tr></table></figure>
 <h3 id="从-Homebrew-安装"><a href="#从-Homebrew-安装" class="headerlink" title="从 Homebrew 安装"></a>从 Homebrew 安装</h3><ul>
-<li>brew install wget</li>
+<li><p>安装PHPv7.1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">brew tap homebrew/dupes</div><div class="line">brew tap homebrew/versions</div><div class="line">brew tap homebrew/homebrew-php</div><div class="line">brew install php71 --with-pear</div><div class="line">pear install doc.php.net/pman</div></pre></td></tr></table></figure>
+</li>
+<li><p>brew install wget</p>
+</li>
 <li>brew install tree</li>
 <li>brew install ag</li>
 <li>brew install ack</li>
@@ -76,13 +164,19 @@
 <li>brew install mtr</li>
 <li>brew install node</li>
 <li>brew install go</li>
-<li>brew install psysh</li>
+<li>brew install psysh &amp;&amp; mkdir -p ~/.local/share/psysh/ &amp;&amp; wget <a href="http://psysh.org/manual/en/php_manual.sqlite" target="_blank" rel="external">http://psysh.org/manual/en/php_manual.sqlite</a> -O ~/.local/share/psysh/php_manual.sqlite</li>
 <li>brew install pandoc</li>
 <li>brew install cloc</li>
 <li>brew install redis</li>
 <li>brew install w3m</li>
+<li>brew install rename</li>
+<li>brew install qcachegrind</li>
+<li>brew install sshfs</li>
+<li>brew install autojump</li>
+<li>brew install findutils –with-default-names</li>
 </ul>
 <h3 id="从-Homebrew-cask-安装"><a href="#从-Homebrew-cask-安装" class="headerlink" title="从 Homebrew-cask 安装"></a>从 Homebrew-cask 安装</h3><ul>
+<li>brew cask install osxfuse</li>
 <li>brew cask install iterm2</li>
 <li>brew cask install geany</li>
 <li>brew cask install firefox</li>
@@ -103,6 +197,7 @@
 <li>brew cask install neteasemusic</li>
 <li>brew cask install postman</li>
 <li>brew cask install vivaldi</li>
+<li>brew cask install filezilla</li>
 </ul>
 ]]></content>
     
@@ -975,64 +1070,6 @@ GoSublime
       <category term="CentOS" scheme="http://joelhy.github.io/tags/CentOS/"/>
     
       <category term="MariaDB" scheme="http://joelhy.github.io/tags/MariaDB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Arch Linux上搭建Apache Storm</title>
-    <link href="http://joelhy.github.io/2015/01/28/running-storm-on-archlinux/"/>
-    <id>http://joelhy.github.io/2015/01/28/running-storm-on-archlinux/</id>
-    <published>2015-01-28T06:17:42.000Z</published>
-    <updated>2017-05-13T09:21:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Apache-Storm依赖的软件"><a href="#Apache-Storm依赖的软件" class="headerlink" title="Apache Storm依赖的软件"></a>Apache Storm依赖的软件</h2><ol>
-<li>Java</li>
-<li>Python 2.x</li>
-<li>unzip</li>
-<li>ZeroMQ</li>
-<li>JZMQ</li>
-<li>Apache ZooKeeper</li>
-</ol>
-<h2 id="安装OpenJDK"><a href="#安装OpenJDK" class="headerlink" title="安装OpenJDK"></a>安装OpenJDK</h2><p>Arch Linux需要设置JAVA_HOME<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pacman -S extra/jdk8-openjdk</div><div class="line">echo &quot;export JAVA_HOME=/usr/lib/jvm/java-8-openjdk&quot; &gt;&gt; /etc/profile.d/jre.sh</div></pre></td></tr></table></figure></p>
-<h2 id="安装python2-unzip"><a href="#安装python2-unzip" class="headerlink" title="安装python2, unzip"></a>安装python2, unzip</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S python2 unzip</div></pre></td></tr></table></figure>
-<h2 id="安装编译工具"><a href="#安装编译工具" class="headerlink" title="安装编译工具"></a>安装编译工具</h2><p>Apache Storm 用到 ZeroMQ v2.1.7，而Arch Linux官方软件仓库中的是4.x版本，故ZeroMQ需要使用源码编译安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S gcc libtool pkg-config make autoconf git util-linux</div></pre></td></tr></table></figure></p>
-<h2 id="编译安装ZeroMQ-JZMQ"><a href="#编译安装ZeroMQ-JZMQ" class="headerlink" title="编译安装ZeroMQ, JZMQ"></a>编译安装ZeroMQ, JZMQ</h2><h3 id="编译安装ZeroMQ"><a href="#编译安装ZeroMQ" class="headerlink" title="编译安装ZeroMQ"></a>编译安装ZeroMQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">curl -O http://download.zeromq.org/zeromq-2.1.7.tar.gz</div><div class="line">tar xzvf zeromq-2.1.7.tar.gz</div><div class="line">cd zeromq-2.1.7</div><div class="line">make</div><div class="line">make install</div><div class="line">ldconfig  # 更新LD_LIBRARY_PATH</div></pre></td></tr></table></figure>
-<h3 id="编译安装JZMQ"><a href="#编译安装JZMQ" class="headerlink" title="编译安装JZMQ"></a>编译安装JZMQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/nathanmarz/jzmq.git</div><div class="line">cd jzmq</div><div class="line">./autogen.sh</div><div class="line">./configure --with-zeromq=/usr/local</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
-<p>make时可能会出错，解决办法是修改jzmq/src/Makefile.am,将classdist_noinst.stamp修改为classnoinst.stamp</p>
-<p>验证libjzmq确实使用的zeromq是自行编译的版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ldd /usr/local/lib/libjzmq.so</div></pre></td></tr></table></figure></p>
-<p>如果libzmq.so.1确实指向/usr/local/lib中的版本，则说明版本使用正确。</p>
-<h3 id="安装Apache-ZooKeeper"><a href="#安装Apache-ZooKeeper" class="headerlink" title="安装Apache ZooKeeper"></a>安装Apache ZooKeeper</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yaourt -S zookeeper</div><div class="line">vi /usr/bin/zkServer.sh</div></pre></td></tr></table></figure>
-<p>因为zookeeper只对IPv6地址进行监听，为了强制其只监听IPv4地址，需要修改 /usr/bin/zkServer.sh，在<code>nohup &quot;$JAVA&quot; &quot;-Dzookeeper.log.dir=${ZOO_LOG_DIR}&quot; &quot;-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}&quot; \</code>后添加一行:<br><code>&quot;-Djava.net.preferIPv4Stack=true&quot; \</code></p>
-<p>启动Apache ZooKeeper<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/bin/zkServer.sh start</div></pre></td></tr></table></figure></p>
-<h2 id="安装Apache-Storm"><a href="#安装Apache-Storm" class="headerlink" title="安装Apache Storm"></a>安装Apache Storm</h2><h3 id="方法一：使用Arch-Linux-AUR仓库中的软件包"><a href="#方法一：使用Arch-Linux-AUR仓库中的软件包" class="headerlink" title="方法一：使用Arch Linux AUR仓库中的软件包"></a>方法一：使用Arch Linux AUR仓库中的软件包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yaourt -S storm</div><div class="line">systemctl start storm-nimbus.service</div><div class="line">systemctl start storm-supervisor.service</div><div class="line">systemctl start storm-ui.service</div></pre></td></tr></table></figure>
-<h3 id="方法二：使用官方编译好的安装包"><a href="#方法二：使用官方编译好的安装包" class="headerlink" title="方法二：使用官方编译好的安装包"></a>方法二：使用官方编译好的安装包</h3><p>用浏览器打开 <a href="http://www.apache.org/dyn/closer.cgi/storm/apache-storm-0.9.3/apache-storm-0.9.3.tar.gz" target="_blank" rel="external">http://www.apache.org/dyn/closer.cgi/storm/apache-storm-0.9.3/apache-storm-0.9.3.tar.gz</a> 页面，从中选择一个镜像站下载软件包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">curl -O http://mirror.bit.edu.cn/apache/storm/apache-storm-0.9.3/apache-storm-0.9.3.tar.gz</div><div class="line">tar xzvf apache-storm-0.9.3.tar.gz</div><div class="line">cd apache-storm-0.9.3/bin</div></pre></td></tr></table></figure></p>
-<p>使用konsole或gnome-terminal等终端模拟器，在不同的标签页分别执行<code>./storm nimbus</code>, <code>./storm supervisor</code>, <code>./storm ui</code></p>
-<p>如果ui启动成功，可以使用浏览器来访问localhost:8080查看整个cluster的状况了</p>
-<h2 id="部署Topology到cluster"><a href="#部署Topology到cluster" class="headerlink" title="部署Topology到cluster"></a>部署Topology到cluster</h2><p>以官方apache-storm-0.9.3.tar.gz中带的starter为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./storm jar ../examples/storm-starter/storm-starter-topologies-0.9.3.jar storm.starter.ExclamationTopology exclamationTopology</div></pre></td></tr></table></figure></p>
-<p>一切顺利的话，可以看到输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1574 [main] INFO  backtype.storm.StormSubmitter - Finished submitting topology: exclamationTopology</div></pre></td></tr></table></figure></p>
-<p>如果需要 kill 该 topology，则需要运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./storm kill exclamationTopology</div></pre></td></tr></table></figure></p>
-<h2 id="使用PHP写Topology示例"><a href="#使用PHP写Topology示例" class="headerlink" title="使用PHP写Topology示例"></a>使用PHP写Topology示例</h2><p>本示例基于storm-starter的word count程序创建。<br><a href="/attach/motiondetect.tar.bz2">附件</a>是本示例的完整代码，代码目录结构如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">joelhy@arminix: /tmp $ tree motiondetect</div><div class="line">motiondetect</div><div class="line">├── multilang</div><div class="line">│   └── resources</div><div class="line">│       ├── RandomSentenceSpout.php</div><div class="line">│       ├── splitsentence.php</div><div class="line">│       └── storm.php</div><div class="line">├── pom.xml</div><div class="line">└── src</div><div class="line">    └── surveil</div><div class="line">        └── motiondetect</div><div class="line">            └── WordCountTopologyPhp.java</div><div class="line"></div><div class="line">5 directories, 5 files</div></pre></td></tr></table></figure></p>
-<p>创建过程说明如下</p>
-<h3 id="安装Apache-Storm到本地repository中"><a href="#安装Apache-Storm到本地repository中" class="headerlink" title="安装Apache Storm到本地repository中"></a>安装Apache Storm到本地repository中</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pacman -S maven</div><div class="line">git clone git://github.com/apache/storm.git</div><div class="line">git checkout v0.9.3</div><div class="line">mvn install -DskipTests=true</div></pre></td></tr></table></figure>
-<p>如果由于下载依赖关系失败等原因导致安装失败，可下载 <a href="http://pan.baidu.com/s/1qW6vylY" target="_blank" rel="external">http://pan.baidu.com/s/1qW6vylY</a> 中的软件包到~/.m2/repository目录中，再重试。</p>
-<h3 id="基于storm-starter的pom-xml建立-pom-xml-文件"><a href="#基于storm-starter的pom-xml建立-pom-xml-文件" class="headerlink" title="基于storm-starter的pom.xml建立 pom.xml 文件"></a>基于storm-starter的pom.xml建立 pom.xml 文件</h3><p>其中groupId, artifactId, packaging, version, name 是需要修改的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;groupId&gt;com.example.surveil&lt;/groupId&gt;</div><div class="line">&lt;artifactId&gt;motiondetect&lt;/artifactId&gt;</div><div class="line">&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line">&lt;version&gt;0.1&lt;/version&gt;</div><div class="line">&lt;name&gt;motiondetect&lt;/name&gt;</div></pre></td></tr></table></figure></p>
-<h3 id="创建maven所需的目录结构"><a href="#创建maven所需的目录结构" class="headerlink" title="创建maven所需的目录结构"></a>创建maven所需的目录结构</h3><p>使用mkdir创建如下目录结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">joelhy@arminix: /tmp/motiondetect $ tree -d .</div><div class="line">.</div><div class="line">├── multilang</div><div class="line">│   └── resources</div><div class="line">└── src</div><div class="line">    └── surveil</div><div class="line">        └── motiondetect</div></pre></td></tr></table></figure></p>
-<h3 id="引入storm的PHP支持类文件"><a href="#引入storm的PHP支持类文件" class="headerlink" title="引入storm的PHP支持类文件"></a>引入storm的PHP支持类文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd multilang/resources/</div><div class="line">curl -O https://raw.githubusercontent.com/Lazyshot/storm-php/master/lib/storm.php</div></pre></td></tr></table></figure>
-<h3 id="实现业务逻辑"><a href="#实现业务逻辑" class="headerlink" title="实现业务逻辑"></a>实现业务逻辑</h3><p>仿照storm-starter下的nodejs版wordcount<br>在目录 multilang/resources/ 目录下创建文件RandomSentenceSpout.php, splitsentence.php<br>在目录 src/surveil/motiondetect/ 中创建文件WordCountTopologyPhp.java<br>文件的具体内容见附件</p>
-<h3 id="编译代码"><a href="#编译代码" class="headerlink" title="编译代码"></a>编译代码</h3><p>在motiondetect目录下运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn clean install -DskipTests=true</div></pre></td></tr></table></figure></p>
-<p>运行完后在motiondetect目录下会生成target目录，里面有编译相关的文件</p>
-<h3 id="部署Topolgy"><a href="#部署Topolgy" class="headerlink" title="部署Topolgy"></a>部署Topolgy</h3><p>命令行下运行如下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">storm jar target/motiondetect-0.1-jar-with-dependencies.jar surveil.motiondetect.WordCountTopologyNode wc</div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Apache-Storm依赖的软件&quot;&gt;&lt;a href=&quot;#Apache-Storm依赖的软件&quot; class=&quot;headerlink&quot; title=&quot;Apache Storm依赖的软件&quot;&gt;&lt;/a&gt;Apache Storm依赖的软件&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;Java
-    
-    </summary>
-    
-    
-      <category term="Apache Storm" scheme="http://joelhy.github.io/tags/Apache-Storm/"/>
     
   </entry>
   
