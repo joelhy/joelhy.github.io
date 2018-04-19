@@ -106,7 +106,7 @@
     <link href="http://joelhy.github.io/2017/05/18/MBP-software-install/"/>
     <id>http://joelhy.github.io/2017/05/18/MBP-software-install/</id>
     <published>2017-05-18T00:51:24.000Z</published>
-    <updated>2017-08-09T13:06:38.000Z</updated>
+    <updated>2018-04-19T03:54:32.988Z</updated>
     
     <content type="html"><![CDATA[<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul>
 <li>Tracepad<ul>
@@ -144,14 +144,15 @@
 </ul>
 </li>
 <li>PHPStorm</li>
-<li>DataGrip</li>
+<li>php composer</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">curl -OL https://github.com/composer/composer/releases/download/1.5.1/composer.phar</div><div class="line">mv composer.phar /usr/<span class="built_in">local</span>/bin/composer</div><div class="line">chmod +x /usr/<span class="built_in">local</span>/bin/composer</div></pre></td></tr></table></figure>
 <h3 id="从第三方安装"><a href="#从第三方安装" class="headerlink" title="从第三方安装"></a>从第三方安装</h3><ul>
 <li>Microsoft Office 2016</li>
 </ul>
 <h3 id="从-Homebrew-安装"><a href="#从-Homebrew-安装" class="headerlink" title="从 Homebrew 安装"></a>从 Homebrew 安装</h3><ul>
 <li><p>安装PHPv7.1</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">brew tap homebrew/dupes</div><div class="line">brew tap homebrew/versions</div><div class="line">brew tap homebrew/homebrew-php</div><div class="line">brew install php71 --with-pear</div><div class="line">pear install doc.php.net/pman</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">brew tap homebrew/dupes</div><div class="line">brew tap homebrew/versions</div><div class="line">brew tap homebrew/homebrew-php</div><div class="line">brew install php71 --with-pear</div><div class="line">brew install homebrew/php/php71-mongodb</div><div class="line">brew install homebrew/php/php71-xdebug</div><div class="line">pear install doc.php.net/pman</div></pre></td></tr></table></figure>
 </li>
 <li><p>brew install wget</p>
 </li>
@@ -174,6 +175,7 @@
 <li>brew install sshfs</li>
 <li>brew install autojump</li>
 <li>brew install findutils –with-default-names</li>
+<li>brew install tcping</li>
 </ul>
 <h3 id="从-Homebrew-cask-安装"><a href="#从-Homebrew-cask-安装" class="headerlink" title="从 Homebrew-cask 安装"></a>从 Homebrew-cask 安装</h3><ul>
 <li>brew cask install osxfuse</li>
