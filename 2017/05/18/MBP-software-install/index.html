@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://joelhy.github.io/2017/05/18/MBP-software-install/index.html">
 <meta property="og:site_name" content="Carpe Diem.">
 <meta property="og:description" content="配置 Tracepad 启用 Tap to click 启用 三指移动窗口   Screensaver -&amp;gt; Hot corner 右上角关闭显示屏 右下角启动屏保   Security &amp;amp; Privacy -&amp;gt; General -&amp;gt; Lock Screen 时间改为5秒   iTerm2 背景改成半透明   Geany  基础软件安装从 AppStore 安装 QQ W">
-<meta property="og:updated_time" content="2018-07-24T03:35:02.272Z">
+<meta property="og:updated_time" content="2018-09-20T02:21:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的MBP基础软件安装记录">
 <meta name="twitter:description" content="配置 Tracepad 启用 Tap to click 启用 三指移动窗口   Screensaver -&amp;gt; Hot corner 右上角关闭显示屏 右下角启动屏保   Security &amp;amp; Privacy -&amp;gt; General -&amp;gt; Lock Screen 时间改为5秒   iTerm2 背景改成半透明   Geany  基础软件安装从 AppStore 安装 QQ W">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="Carpe Diem.">Carpe Diem.</a></h1>
 				<h2 class="blog-motto"></h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -64,7 +64,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:joelhy.github.io">
 					</form>
 					
@@ -87,14 +87,14 @@
 		<a href="/about" title="joelhy" target="_blank" itemprop="author">joelhy</a>
 		
   <p class="article-time">
-    <time datetime="2017-05-18T00:51:24.000Z" itemprop="datePublished"> 发表于 2017-05-18</time>
+    <time datetime="2017-05-18T00:51:24.000Z" itemprop="datePublished"> Published 2017-05-18</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础软件安装"><span class="toc-number">2.</span> <span class="toc-text">基础软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从-AppStore-安装"><span class="toc-number">2.1.</span> <span class="toc-text">从 AppStore 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从官网安装"><span class="toc-number">2.2.</span> <span class="toc-text">从官网安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从第三方安装"><span class="toc-number">2.3.</span> <span class="toc-text">从第三方安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从-Homebrew-安装"><span class="toc-number">2.4.</span> <span class="toc-text">从 Homebrew 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从-Homebrew-cask-安装"><span class="toc-number">2.5.</span> <span class="toc-text">从 Homebrew-cask 安装</span></a></li></ol></li></ol>
 		
@@ -143,8 +143,8 @@
 <li>Microsoft Office 2016</li>
 </ul>
 <h3 id="从-Homebrew-安装"><a href="#从-Homebrew-安装" class="headerlink" title="从 Homebrew 安装"></a>从 Homebrew 安装</h3><ul>
-<li><p>安装PHPv7.1</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">brew tap homebrew/dupes</div><div class="line">brew tap homebrew/versions</div><div class="line">brew tap homebrew/homebrew-php</div><div class="line">brew install php71 --with-pear</div><div class="line">brew install homebrew/php/php71-mongodb</div><div class="line">brew install homebrew/php/php71-xdebug</div><div class="line">pear install doc.php.net/pman</div></pre></td></tr></table></figure>
+<li><p>安装PHP7</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">brew install php</div><div class="line">brew install php-code-sniffer</div><div class="line">brew isntall php-cs-fixer</div><div class="line">brew install phpunit</div><div class="line">pecl install memcached redis mongodb xdebug igbinary</div><div class="line">pear install doc.php.net/pman</div></pre></td></tr></table></figure>
 </li>
 <li><p>brew install wget</p>
 </li>
@@ -158,7 +158,6 @@
 <li>brew install mtr</li>
 <li>brew install node</li>
 <li>brew install go</li>
-<li>brew install psysh &amp;&amp; mkdir -p ~/.local/share/psysh/ &amp;&amp; wget <a href="http://psysh.org/manual/en/php_manual.sqlite" target="_blank" rel="external">http://psysh.org/manual/en/php_manual.sqlite</a> -O ~/.local/share/psysh/php_manual.sqlite</li>
 <li>brew install pandoc</li>
 <li>brew install cloc</li>
 <li>brew install redis</li>
@@ -275,24 +274,24 @@
 </section>
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
+  <strong class="toc-title">Contents</strong>
  
  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础软件安装"><span class="toc-number">2.</span> <span class="toc-text">基础软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从-AppStore-安装"><span class="toc-number">2.1.</span> <span class="toc-text">从 AppStore 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从官网安装"><span class="toc-number">2.2.</span> <span class="toc-text">从官网安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从第三方安装"><span class="toc-number">2.3.</span> <span class="toc-text">从第三方安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从-Homebrew-安装"><span class="toc-number">2.4.</span> <span class="toc-text">从 Homebrew 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从-Homebrew-cask-安装"><span class="toc-number">2.5.</span> <span class="toc-text">从 Homebrew-cask 安装</span></a></li></ol></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -382,7 +381,7 @@
   
 
 <div class="doubanshow">
-<p class="asidetitle">豆瓣秀</p>
+<p class="asidetitle">Douban Show</p>
 <div>
 <script type="text/javascript" src="http://www.douban.com/service/badge/joelhy/?show=collection&amp;n=12&amp;columns=3&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book|movie" ></script>
 </div>
@@ -390,7 +389,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -596,7 +595,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
